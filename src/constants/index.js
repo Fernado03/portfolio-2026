@@ -12,6 +12,26 @@ export const HERO_CONTENT = {
     github: "https://github.com/Fernado03",
 };
 
+export const FYP_CONTENT = {
+    tagline: "Final Year Thesis",
+    title: "Comparative Study of Hybrid Fusion for Robust Multimodal Emotion Recognition",
+    description: "Addressed the gap between lab performance and real-world application in Emotion Recognition. This study benchmarked Contextual vs. Statistical fusion strategies against noise and missing data, concluding that Ensemble methods offer the highest reliability (71.6% F1) while Contextual Bi-GRU offers the best efficiency.",
+    features: [
+        "The Gauntlet: Rigorous robustness testing against Gaussian noise & missing modalities.",
+        "Contextual Bi-GRU: Architecture capturing temporal emotion changes better than statistical baselines.",
+        "Ensemble Strategy: Achieved 71.6% F1-score, maintaining stability even under noise."
+    ],
+    techStack: ["Python", "PyTorch", "WavLM", "DINOv2", "ModernBERT"],
+    image: "/projects/fyp_cover_ai.png",
+    gallery: [
+        { src: "/projects/noise_robustness.png", caption: "Impact of Noise on Model Performance (The Gauntlet)" },
+        { src: "/projects/modal_reliance.png", caption: "Modal Reliance Analysis: Impact of Missing Modalities" },
+        { src: "/projects/confusion_matrix.png", caption: "Confusion Matrix: Highlighting Angry vs. Frustrated Ambiguity" },
+    ],
+    demoLink: "",
+    githubLink: "",
+};
+
 export const PROJECTS = [
     {
         id: 1,
@@ -93,6 +113,20 @@ export const ABOUT_CONTENT = {
     narrative: "Final-year Data Science student (CGPA 3.75) and Gold Medalist with a hybrid technical background. Specializing in Generative AI and RAG, I combine advanced data analysis with full-stack engineering skills (React, Node.js) to architect and deploy complete, scalable AI solutions.",
     profileImage: "/profile_picture.png",
     hackathons: "Led teams in 4+ hackathons (MarineHack, JomHack), managing 48-hour sprints to secure 1 Gold & 1 Silver medal. Oversaw full-stack architecture, task delegation, and final product pitching.",
+    experience: [
+        {
+            role: "Ketua Exco Akademik dan Kerjaya",
+            organization: "Persatuan Mahasiswa Fakulti Komputeran dan Informatik (PMFKI)",
+            period: "Nov 2023 - Aug 2024",
+            description: "Full-time • 10 mos | Universiti Malaysia Sabah"
+        },
+        {
+            role: "Timbalan Setiausaha",
+            organization: "Persatuan Mahasiswa Fakulti Komputeran dan Informatik (PMFKI)",
+            period: "Nov 2022 - Aug 2023",
+            description: "Full-time • 10 mos | Universiti Malaysia Sabah • On-site"
+        }
+    ]
 };
 
 export const SKILLS = [
