@@ -6,9 +6,7 @@ const FYPShowcase = () => {
     const [selectedImage, setSelectedImage] = React.useState(null);
 
     return (
-        <section id="fyp" className="py-20 relative overflow-hidden border-b border-white/5">
-            {/* ... (background remains) */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none" />
+        <section id="fyp" className="py-20 relative overflow-hidden">
 
             <div className="container mx-auto px-6">
                 <motion.div

@@ -5,38 +5,6 @@ import { HERO_CONTENT } from "../constants";
 const Hero = () => {
     return (
         <section className="min-h-screen flex items-center justify-center pt-20 relative">
-            {/* Background Gradients */}
-            {/* Abstract Background Elements */}
-            <div className="absolute inset-0 z-0 pointer-events-none">
-                {/* Tech Grid Pattern - Moved to App.jsx for global consistency */}
-
-                {/* Glowing Orbs */}
-                <motion.div
-                    animate={{
-                        scale: [1, 1.2, 1],
-                        opacity: [0.3, 0.5, 0.3],
-                    }}
-                    transition={{
-                        duration: 8,
-                        repeat: Infinity,
-                        repeatType: "reverse"
-                    }}
-                    className="absolute top-[-20%] left-[20%] w-[40rem] h-[40rem] bg-purple-600/20 rounded-full blur-[100px]"
-                />
-                <motion.div
-                    animate={{
-                        scale: [1, 1.1, 1],
-                        x: [0, 30, 0],
-                    }}
-                    transition={{
-                        duration: 10,
-                        repeat: Infinity,
-                        repeatType: "reverse"
-                    }}
-                    className="absolute bottom-[-20%] right-[10%] w-[30rem] h-[30rem] bg-cyan-500/10 rounded-full blur-[80px]"
-                />
-                <div className="absolute top-[20%] right-[20%] w-[20rem] h-[20rem] bg-blue-500/10 rounded-full blur-[80px]" />
-            </div>
 
             <div className="container mx-auto px-6 text-center z-10 relative">
                 <motion.div

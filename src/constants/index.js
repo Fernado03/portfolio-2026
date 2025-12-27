@@ -54,7 +54,7 @@ export const PROJECTS = [
         description: "AI-powered matchmaking engine connecting under-resourced schools with NGOs. Features smart need-matching and a verified donor network. Designed for accessibility to bridge the gap between rural needs and available aid.",
         techStack: ["AI Chatbot", "Telegram API", "NLP", "Python"],
         image: "/projects/matchkami_cover_slide.jpg",
-        link: "", // No GitHub repo
+        privateRepo: true,
         documentLink: "/documents/matchkami.pdf",
     },
     {
@@ -144,14 +144,17 @@ export const SKILLS = [
     {
         category: "Languages",
         items: ["Python", "Java", "C++", "R", "SQL", "JavaScript", "HTML/CSS"],
+        icon: "/skills/tech_languages_icon.png",
     },
     {
         category: "AI & ML",
         items: ["Deep Learning", "NLP", "LLMs (Gemini Pro)", "RAG", "Computer Vision", "Generative AI"],
+        icon: "/skills/ai_ml_icon.png",
     },
     {
         category: "Frameworks & Tools",
         items: ["TensorFlow", "PyTorch", "React (Vite)", "Node.js", "Tailwind CSS", "Docker", "GCP", "Git"],
+        icon: "/skills/frameworks_tools_icon.png",
     },
 ];
 
