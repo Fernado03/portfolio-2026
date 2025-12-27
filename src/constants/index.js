@@ -110,7 +110,7 @@ export const ABOUT_CONTENT = {
             details: "CGPA: 4.00 | Best Computer Science Student Award",
         }
     ],
-    narrative: "Final-year Data Science student (CGPA 3.75) and Gold Medalist with a hybrid technical background. Specializing in Generative AI and RAG, I combine advanced data analysis with full-stack engineering skills (React, Node.js) to architect and deploy complete, scalable AI solutions.",
+    narrative: "Final-year Data Science student at Universiti Malaysia Sabah (CGPA 3.75), based in Kuching, Sarawak. What started as an addiction to mobile games sparked a childhood dream of becoming a programmer. That curiosity led me to Data Science, where I discovered my passion for AI, machine learning, and the thrill of turning raw data into insights. Now a Gold Medalist, I specialize in Generative AI and RAG systems, combining data analysis with full-stack engineering (React, Node.js) to build complete, scalable solutions. Currently seeking internships in AI/ML or Data Science roles — though I'm equally comfortable building web applications. When I'm not training models or debugging code, you'll probably find me fishing. 🎣",
     profileImages: [
         "/about/profile_picture.png",
         "/about/1748327868606.jpg",

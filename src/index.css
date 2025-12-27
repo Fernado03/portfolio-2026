@@ -2,13 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Gradient animation for Hero section */
+@keyframes gradient {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-slate-950 text-white antialiased;
+    @apply bg-slate-50 text-slate-900 antialiased dark:bg-slate-950 dark:text-white;
   }
 
   /* Custom cursor - hide default */
@@ -26,27 +39,40 @@
   }
 }
 
-/* Custom Scrollbar */
+/* Custom Scrollbar - Light Theme */
 ::-webkit-scrollbar {
   width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0f172a;
+  background: #f1f5f9;
 }
 
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, #06b6d4, #8b5cf6);
   border-radius: 10px;
-  border: 2px solid #0f172a;
+  border: 2px solid #f1f5f9;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, #22d3ee, #a78bfa);
 }
 
+/* Dark theme scrollbar */
+.dark ::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  border: 2px solid #0f172a;
+}
+
 /* Firefox scrollbar */
 * {
   scrollbar-width: thin;
+  scrollbar-color: #8b5cf6 #f1f5f9;
+}
+
+.dark * {
   scrollbar-color: #8b5cf6 #0f172a;
 }

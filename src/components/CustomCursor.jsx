@@ -135,11 +135,13 @@ const CustomCursor = () => {
                 <motion.div
                     animate={{
                         scale: isHovering ? 1.5 : 1,
-                        opacity: isHidden ? 0 : 0.5,
-                        borderColor: isHovering ? "rgba(34, 211, 238, 0.8)" : "rgba(255, 255, 255, 0.3)",
+                        opacity: isHidden ? 0 : 0.6,
                     }}
                     transition={{ duration: 0.3 }}
-                    className="w-10 h-10 rounded-full border-2 border-white/30"
+                    className={`w-10 h-10 rounded-full border-2 transition-colors ${isHovering
+                            ? "border-cyan-500"
+                            : "border-slate-400 dark:border-white/40"
+                        }`}
                 />
             </motion.div>
         </>

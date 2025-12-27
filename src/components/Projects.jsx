@@ -6,18 +6,30 @@ const Projects = () => {
     const [selectedImage, setSelectedImage] = React.useState(null);
 
     return (
-        <section id="projects" className="py-20 relative">
+        <section id="projects" className="min-h-[85vh] py-20 relative overflow-hidden">
+            {/* Floating Decorations */}
+            <motion.div
+                animate={{ y: [0, -12, 0], scale: [1, 1.1, 1] }}
+                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute top-[12%] left-[6%] w-12 h-12 border-2 border-purple-400/20 dark:border-purple-400/30 rounded-full"
+            />
+            <motion.div
+                animate={{ rotate: [45, 55, 45], y: [0, 8, 0] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                className="absolute bottom-[20%] right-[10%] w-6 h-6 bg-gradient-to-br from-pink-400/20 to-purple-400/20 dark:from-pink-500/30 dark:to-purple-500/30 rotate-45"
+            />
+
             <div className="container mx-auto px-6">
                 <motion.h2
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
-                    className="text-3xl md:text-5xl font-bold text-center mb-16 text-white"
+                    className="text-3xl md:text-5xl font-bold text-center mb-16 text-slate-900 dark:text-white"
                 >
                     Featured <span className="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">Projects</span>
                 </motion.h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
                     {PROJECTS.map((project, index) => (
                         <motion.div
                             key={project.id}
@@ -25,10 +37,10 @@ const Projects = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: index * 0.1 }}
                             whileHover={{ y: -10 }}
-                            className="bg-slate-900 rounded-xl overflow-hidden border border-slate-800 hover:border-purple-500/50 transition-colors shadow-lg group"
+                            className="h-full flex flex-col bg-white dark:bg-slate-900 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 hover:border-purple-500/50 transition-colors shadow-lg group"
                         >
                             <div
-                                className="h-48 bg-slate-800 relative overflow-hidden group-hover:opacity-90 transition-opacity cursor-pointer"
+                                className="h-48 bg-slate-100 dark:bg-slate-800 relative overflow-hidden group-hover:opacity-90 transition-opacity cursor-pointer"
                                 onClick={() => setSelectedImage(project.image)}
                             >
                                 <img
@@ -36,7 +48,7 @@ const Projects = () => {
                                     alt={project.title}
                                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-60" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-white dark:from-slate-900 to-transparent opacity-60" />
 
                                 {/* Lightbox Hint */}
                                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/40 z-10">
@@ -46,34 +58,34 @@ const Projects = () => {
                                 </div>
 
                                 <div className="absolute bottom-4 left-4 z-20">
-                                    <span className="bg-purple-500/20 text-purple-300 text-xs px-2 py-1 rounded-full border border-purple-500/30">
+                                    <span className="bg-purple-500/20 text-purple-600 dark:text-purple-300 text-xs px-2 py-1 rounded-full border border-purple-500/30">
                                         {project.category}
                                     </span>
                                 </div>
                             </div>
 
-                            <div className="p-6">
+                            <div className="p-6 flex flex-col flex-grow">
                                 <div className="flex justify-between items-start mb-2">
-                                    <h3 className="text-xl font-bold text-white group-hover:text-purple-400 transition-colors">{project.title}</h3>
+                                    <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-purple-500 dark:group-hover:text-purple-400 transition-colors">{project.title}</h3>
                                 </div>
 
                                 {project.role && (
-                                    <p className="text-sm font-semibold text-cyan-400 mb-3">{project.role}</p>
+                                    <p className="text-sm font-semibold text-cyan-600 dark:text-cyan-400 mb-3">{project.role}</p>
                                 )}
 
                                 {project.badge && (
-                                    <span className="inline-block bg-yellow-500/10 text-yellow-400 text-xs px-2 py-1 rounded border border-yellow-500/20 mb-4">
+                                    <span className="inline-block bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 text-xs px-2 py-1 rounded border border-yellow-500/20 mb-4">
                                         ★ {project.badge}
                                     </span>
                                 )}
 
-                                <p className="text-gray-400 text-sm mb-6 leading-relaxed">
+                                <p className="text-slate-600 dark:text-gray-400 text-sm mb-6 leading-relaxed line-clamp-3 flex-grow">
                                     {project.description}
                                 </p>
 
                                 <div className="flex flex-wrap gap-2 mb-6">
                                     {project.techStack.map((tech) => (
-                                        <span key={tech} className="text-xs text-slate-400 bg-slate-950 px-2 py-1 rounded border border-slate-800">
+                                        <span key={tech} className="text-xs text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-950 px-2 py-1 rounded border border-slate-200 dark:border-slate-800">
                                             {tech}
                                         </span>
                                     ))}
@@ -85,7 +97,7 @@ const Projects = () => {
                                             href={project.link}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="inline-flex items-center text-sm font-medium text-purple-400 hover:text-purple-300 transition-colors"
+                                            className="inline-flex items-center text-sm font-medium text-purple-600 dark:text-purple-400 hover:text-purple-500 dark:hover:text-purple-300 transition-colors"
                                         >
                                             {project.linkText || "GitHub"}
                                             <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -95,7 +107,7 @@ const Projects = () => {
                                     )}
 
                                     {project.privateRepo && (
-                                        <span className="inline-flex items-center text-sm font-medium text-gray-500">
+                                        <span className="inline-flex items-center text-sm font-medium text-slate-500 dark:text-gray-500">
                                             <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                                             </svg>
@@ -108,7 +120,7 @@ const Projects = () => {
                                             href={project.documentLink}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="inline-flex items-center text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors"
+                                            className="inline-flex items-center text-sm font-medium text-cyan-600 dark:text-cyan-400 hover:text-cyan-500 dark:hover:text-cyan-300 transition-colors"
                                         >
                                             Case Study
                                             <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -154,3 +166,4 @@ const Projects = () => {
 };
 
 export default Projects;
+

@@ -6,7 +6,19 @@ const FYPShowcase = () => {
     const [selectedImage, setSelectedImage] = React.useState(null);
 
     return (
-        <section id="fyp" className="py-20 relative overflow-hidden">
+        <section id="fyp" className="min-h-screen flex items-center py-20 relative overflow-hidden">
+            {/* Floating Decorations */}
+            <motion.div
+                animate={{ y: [0, -15, 0], rotate: [0, 5, 0] }}
+                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute top-[10%] right-[8%] w-14 h-14 border-2 border-indigo-400/25 dark:border-indigo-400/20 rotate-[30deg]"
+                style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}
+            />
+            <motion.div
+                animate={{ y: [0, 10, 0], opacity: [0.3, 0.6, 0.3] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                className="absolute bottom-[15%] left-[5%] w-4 h-4 bg-purple-400/30 dark:bg-purple-500/40 rounded-full"
+            />
 
             <div className="container mx-auto px-6">
                 <motion.div
@@ -15,8 +27,8 @@ const FYPShowcase = () => {
                     transition={{ duration: 0.6 }}
                     className="text-center mb-16"
                 >
-                    <span className="text-indigo-400 font-semibold tracking-wider uppercase text-sm">{FYP_CONTENT.tagline}</span>
-                    <h2 className="text-4xl md:text-5xl font-bold mt-2 text-white">
+                    <span className="text-indigo-600 dark:text-indigo-400 font-semibold tracking-wider uppercase text-sm">{FYP_CONTENT.tagline}</span>
+                    <h2 className="text-4xl md:text-5xl font-bold mt-2 text-slate-900 dark:text-white">
                         FYP <span className="text-indigo-500">Showcase</span>
                     </h2>
                 </motion.div>
@@ -31,14 +43,14 @@ const FYPShowcase = () => {
                         onClick={() => setSelectedImage(FYP_CONTENT.image)}
                     >
                         <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-                        <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-slate-900/50 aspect-video shadow-2xl">
+                        <div className="relative rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900/50 aspect-video shadow-2xl">
                             <img
                                 src={FYP_CONTENT.image}
                                 alt={FYP_CONTENT.title}
                                 className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
                             />
                             {/* Overlay Badge */}
-                            <div className="absolute top-4 left-4 bg-slate-900/90 backdrop-blur-md border border-indigo-500/30 text-indigo-300 text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
+                            <div className="absolute top-4 left-4 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-indigo-500/30 text-indigo-600 dark:text-indigo-300 text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
                                 Final Year Project
                             </div>
                             {/* Click hint */}
@@ -57,30 +69,43 @@ const FYPShowcase = () => {
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
                     >
-                        <h3 className="text-3xl font-bold text-white mb-4 leading-tight">{FYP_CONTENT.title}</h3>
-                        <p className="text-gray-400 text-lg mb-6 leading-relaxed">{FYP_CONTENT.description}</p>
+                        <h3 className="text-3xl font-bold text-slate-900 dark:text-white mb-4 leading-tight">{FYP_CONTENT.title}</h3>
+                        <p className="text-slate-600 dark:text-gray-400 text-lg mb-8 leading-loose">{FYP_CONTENT.description}</p>
                         <div className="mb-8">
-                            <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                            <h4 className="text-slate-900 dark:text-white font-semibold mb-3 flex items-center gap-2">
                                 <span className="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
                                 Key Innovations
                             </h4>
-                            <ul className="space-y-2">
+                            <ul className="space-y-3">
                                 {FYP_CONTENT.features.map((feature, idx) => (
-                                    <li key={idx} className="flex items-start gap-3 text-gray-400 text-sm">
+                                    <li key={idx} className="flex items-start gap-3 text-slate-600 dark:text-gray-400 text-sm">
                                         <svg className="w-5 h-5 text-indigo-500 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
                                         {feature}
                                     </li>
                                 ))}
                             </ul>
                         </div>
+                        <div className="w-full h-px bg-gradient-to-r from-transparent via-slate-300 dark:via-slate-700 to-transparent mb-6" />
                         <div className="flex flex-wrap gap-3 mb-8">
                             {FYP_CONTENT.techStack.map((tech, idx) => (
-                                <span key={idx} className="bg-white/5 border border-white/10 text-gray-300 text-xs px-3 py-1 rounded-full hover:bg-white/10 transition-colors">{tech}</span>
+                                <span key={idx} className="bg-slate-200/50 dark:bg-white/5 border border-slate-300 dark:border-white/10 text-slate-700 dark:text-gray-300 text-xs px-3 py-1 rounded-full hover:bg-slate-300/50 dark:hover:bg-white/10 transition-colors">{tech}</span>
                             ))}
                         </div>
                         <div className="flex gap-4">
-                            {FYP_CONTENT.demoLink && <a href={FYP_CONTENT.demoLink} target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-all hover:scale-105 shadow-lg shadow-indigo-600/20">Live Demo</a>}
-                            {FYP_CONTENT.githubLink && <a href={FYP_CONTENT.githubLink} target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-white/5 hover:bg-white/10 text-white font-semibold rounded-lg border border-white/10 transition-all hover:scale-105">GitHub Repo</a>}
+                            {FYP_CONTENT.demoLink ? (
+                                <a href={FYP_CONTENT.demoLink} target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-all hover:scale-105 shadow-lg shadow-indigo-600/20">Live Demo</a>
+                            ) : (
+                                <span className="px-6 py-3 bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-semibold rounded-lg border border-slate-300 dark:border-slate-700 cursor-not-allowed">
+                                    🔒 Demo Coming Soon
+                                </span>
+                            )}
+                            {FYP_CONTENT.githubLink ? (
+                                <a href={FYP_CONTENT.githubLink} target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-slate-200 dark:bg-white/5 hover:bg-slate-300 dark:hover:bg-white/10 text-slate-900 dark:text-white font-semibold rounded-lg border border-slate-300 dark:border-white/10 transition-all hover:scale-105">GitHub Repo</a>
+                            ) : (
+                                <span className="px-6 py-3 bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-semibold rounded-lg border border-slate-300 dark:border-slate-700 cursor-not-allowed">
+                                    🔒 Repo Coming Soon
+                                </span>
+                            )}
                         </div>
                     </motion.div>
                 </div>
@@ -92,7 +117,7 @@ const FYPShowcase = () => {
                     transition={{ duration: 0.8, delay: 0.4 }}
                     className="mt-20"
                 >
-                    <h3 className="text-2xl font-bold text-white mb-8 text-center flex items-center justify-center gap-3">
+                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-8 text-center flex items-center justify-center gap-3">
                         <span className="w-8 h-px bg-indigo-500/50"></span>
                         Research Findings
                         <span className="w-8 h-px bg-indigo-500/50"></span>
@@ -102,14 +127,14 @@ const FYPShowcase = () => {
                         {FYP_CONTENT.gallery?.map((item, idx) => (
                             <div
                                 key={idx}
-                                className="group relative bg-slate-900/50 border border-white/10 rounded-xl overflow-hidden hover:border-indigo-500/30 transition-all cursor-pointer"
+                                className="group relative bg-slate-100 dark:bg-slate-900/50 border border-slate-200 dark:border-white/10 rounded-xl overflow-hidden hover:border-indigo-500/30 transition-all cursor-pointer"
                                 onClick={() => setSelectedImage(item.src)}
                             >
                                 <div className="aspect-[4/3] overflow-hidden relative">
                                     <img
                                         src={item.src}
                                         alt={item.caption}
-                                        className="w-full h-full object-contain bg-slate-950/80 group-hover:scale-105 transition-transform duration-500 contrast-110 saturate-110"
+                                        className="w-full h-full object-contain bg-slate-50 dark:bg-slate-950/80 group-hover:scale-105 transition-transform duration-500 contrast-110 saturate-110"
                                     />
                                     {/* Hover overlay hint */}
                                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -117,7 +142,7 @@ const FYPShowcase = () => {
                                     </div>
                                 </div>
                                 <div className="p-4">
-                                    <p className="text-gray-400 text-sm font-medium border-l-2 border-indigo-500 pl-3 leading-tight">
+                                    <p className="text-slate-600 dark:text-gray-400 text-sm font-medium border-l-2 border-indigo-500 pl-3 leading-tight">
                                         {item.caption}
                                     </p>
                                 </div>
@@ -158,3 +183,4 @@ const FYPShowcase = () => {
 };
 
 export default FYPShowcase;
+
