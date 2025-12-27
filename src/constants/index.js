@@ -111,7 +111,18 @@ export const ABOUT_CONTENT = {
         }
     ],
     narrative: "Final-year Data Science student (CGPA 3.75) and Gold Medalist with a hybrid technical background. Specializing in Generative AI and RAG, I combine advanced data analysis with full-stack engineering skills (React, Node.js) to architect and deploy complete, scalable AI solutions.",
-    profileImage: "/profile_picture.png",
+    profileImages: [
+        "/about/profile_picture.png",
+        "/about/1748327868606.jpg",
+        "/about/FIS.jpg",
+        "/about/photo_2025-05-25_00-26-26.jpg",
+        "/about/photo_2025-10-16_16-39-26.jpg",
+        "/about/IMG_2382 (1).jpg",
+        "/about/WhatsApp Image 2025-12-11 at 20.37.04.jpeg",
+        "/about/IMG_5574.jpg",
+        "/about/IMG_5529.jpg",
+        "/about/IMG_5514.jpg"
+    ],
     hackathons: "Led teams in 4+ hackathons (MarineHack, JomHack), managing 48-hour sprints to secure 1 Gold & 1 Silver medal. Oversaw full-stack architecture, task delegation, and final product pitching.",
     experience: [
         {

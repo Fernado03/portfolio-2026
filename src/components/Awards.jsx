@@ -4,7 +4,7 @@ import { AWARDS } from "../constants";
 
 const Awards = () => {
     return (
-        <section id="awards" className="py-20 bg-slate-950 relative">
+        <section id="awards" className="py-20 relative">
             <div className="container mx-auto px-6 max-w-4xl">
                 <motion.h2
                     initial={{ opacity: 0, y: 20 }}

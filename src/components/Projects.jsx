@@ -6,7 +6,7 @@ const Projects = () => {
     const [selectedImage, setSelectedImage] = React.useState(null);
 
     return (
-        <section id="projects" className="py-20 bg-slate-950 relative">
+        <section id="projects" className="py-20 relative">
             <div className="container mx-auto px-6">
                 <motion.h2
                     initial={{ opacity: 0, y: 20 }}

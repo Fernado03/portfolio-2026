@@ -3,7 +3,7 @@ import { HERO_CONTENT } from "../constants";
 
 const Footer = () => {
     return (
-        <footer className="bg-slate-950 py-8 border-t border-slate-900">
+        <footer className="py-8 border-t border-slate-800 relative text-center">
             <div className="container mx-auto px-6 text-center">
                 <p className="text-gray-500 mb-4">
                     Built with <span className="text-cyan-400">React</span> + <span className="text-blue-500">Tailwind</span>
