@@ -223,7 +223,7 @@ const ChatBot = () => {
                     throw new Error("Add VITE_GEMINI_API_KEY to .env for local development");
                 }
                 const response = await fetch(
-                    `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.0-flash:generateContent?key=${apiKey}`,
+                    `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`,
                     {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
