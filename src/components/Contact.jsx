@@ -1,10 +1,37 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { HERO_CONTENT } from "../constants";
 
 const Contact = () => {
+    const [copied, setCopied] = useState(false);
+
+    const copyEmail = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        navigator.clipboard.writeText(HERO_CONTENT.email);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
+
     return (
         <section id="contact" className="min-h-[70vh] flex items-center py-20 relative overflow-hidden">
+            {/* Copied Toast */}
+            <AnimatePresence>
+                {copied && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 50 }}
+                        className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 bg-green-500 text-white px-6 py-3 rounded-full shadow-lg flex items-center gap-2"
+                    >
+                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        Email copied!
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
             {/* Floating Decorations */}
             <motion.div
                 animate={{ y: [0, -10, 0], rotate: [0, 180, 360] }}
@@ -39,19 +66,44 @@ const Contact = () => {
                     transition={{ duration: 0.6, delay: 0.2 }}
                     className="grid md:grid-cols-2 gap-6"
                 >
-                    {/* Email Card */}
+                    {/* Email Card with Copy Button */}
+                    <div className="group p-6 bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-cyan-500/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_40px_rgba(6,182,212,0.15)] flex items-center gap-4">
+                        <a href={`mailto:${HERO_CONTENT.email}`} className="flex items-center gap-4 flex-1">
+                            <div className="p-3 bg-cyan-500/10 rounded-lg text-cyan-500 dark:text-cyan-400 group-hover:bg-cyan-500/20 transition-colors">
+                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <p className="text-slate-500 dark:text-gray-400 text-sm">Personal Email</p>
+                                <p className="text-slate-900 dark:text-white font-medium group-hover:text-cyan-500 dark:group-hover:text-cyan-400 transition-colors text-sm">{HERO_CONTENT.email}</p>
+                            </div>
+                        </a>
+                        <button
+                            onClick={copyEmail}
+                            className="p-2 hover:bg-cyan-500/10 rounded-lg text-slate-400 hover:text-cyan-500 transition-colors"
+                            title="Copy email"
+                            aria-label="Copy email to clipboard"
+                        >
+                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    {/* University Email Card */}
                     <a
-                        href={`mailto:${HERO_CONTENT.email}`}
-                        className="group p-6 bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-cyan-500/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_40px_rgba(6,182,212,0.15)] flex items-center gap-4"
+                        href={`mailto:${HERO_CONTENT.universityEmail}`}
+                        className="group p-6 bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-indigo-500/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_40px_rgba(99,102,241,0.15)] flex items-center gap-4"
                     >
-                        <div className="p-3 bg-cyan-500/10 rounded-lg text-cyan-500 dark:text-cyan-400 group-hover:bg-cyan-500/20 transition-colors">
+                        <div className="p-3 bg-indigo-500/10 rounded-lg text-indigo-500 dark:text-indigo-400 group-hover:bg-indigo-500/20 transition-colors">
                             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                             </svg>
                         </div>
                         <div>
-                            <p className="text-slate-500 dark:text-gray-400 text-sm">Email me at</p>
-                            <p className="text-slate-900 dark:text-white font-medium group-hover:text-cyan-500 dark:group-hover:text-cyan-400 transition-colors">{HERO_CONTENT.email}</p>
+                            <p className="text-slate-500 dark:text-gray-400 text-sm">University Email</p>
+                            <p className="text-slate-900 dark:text-white font-medium group-hover:text-indigo-500 dark:group-hover:text-indigo-400 transition-colors text-sm">{HERO_CONTENT.universityEmail}</p>
                         </div>
                     </a>
 

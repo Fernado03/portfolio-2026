@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { HERO_CONTENT } from "../constants";
+import Hero3D from "./Hero3D";
 
 const Hero = () => {
     // Mouse position for parallax
@@ -26,20 +27,24 @@ const Hero = () => {
     const fullName = HERO_CONTENT.name;
 
     useEffect(() => {
-        // Typing effect
-        let index = 0;
-        const typingInterval = setInterval(() => {
-            if (index <= fullName.length) {
-                setDisplayedName(fullName.slice(0, index));
-                index++;
-            } else {
-                clearInterval(typingInterval);
-                // Blink cursor after typing completes
-                setTimeout(() => setShowCursor(false), 1500);
-            }
-        }, 120);
+        // Delay typing effect to start after preloader (2s preloader + 0.5s buffer)
+        const startDelay = setTimeout(() => {
+            let index = 0;
+            const typingInterval = setInterval(() => {
+                if (index <= fullName.length) {
+                    setDisplayedName(fullName.slice(0, index));
+                    index++;
+                } else {
+                    clearInterval(typingInterval);
+                    // Blink cursor after typing completes
+                    setTimeout(() => setShowCursor(false), 1500);
+                }
+            }, 120);
 
-        return () => clearInterval(typingInterval);
+            return () => clearInterval(typingInterval);
+        }, 2500);
+
+        return () => clearTimeout(startDelay);
     }, [fullName]);
 
     // Mouse move handler
@@ -62,6 +67,9 @@ const Hero = () => {
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
         >
+            {/* 3D Hero Element */}
+            <Hero3D />
+
             {/* Floating Decorative Elements */}
             <motion.div
                 animate={{

@@ -41,6 +41,7 @@ const Skills = () => {
                                 <img
                                     src={skillGroup.icon}
                                     alt={`${skillGroup.category} illustration`}
+                                    loading="lazy"
                                     className="w-full h-full object-cover object-bottom filter saturate-0 group-hover:saturate-100 transition-all duration-700"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-white dark:from-slate-900 via-white/80 dark:via-slate-900/80 to-white/20 dark:to-slate-900/20" />

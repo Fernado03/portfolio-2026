@@ -47,6 +47,7 @@ const FYPShowcase = () => {
                             <img
                                 src={FYP_CONTENT.image}
                                 alt={FYP_CONTENT.title}
+                                loading="lazy"
                                 className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
                             />
                             {/* Overlay Badge */}
@@ -134,6 +135,7 @@ const FYPShowcase = () => {
                                     <img
                                         src={item.src}
                                         alt={item.caption}
+                                        loading="lazy"
                                         className="w-full h-full object-contain bg-slate-50 dark:bg-slate-950/80 group-hover:scale-105 transition-transform duration-500 contrast-110 saturate-110"
                                     />
                                     {/* Hover overlay hint */}

@@ -53,8 +53,8 @@ const Navbar = () => {
                     {/* Theme Toggle Button */}
                     <button
                         onClick={toggleTheme}
-                        className="p-2 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-gray-300 hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors"
-                        aria-label="Toggle theme"
+                        className="p-2 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-gray-300 hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900"
+                        aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
                     >
                         {isDark ? (
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -72,8 +72,8 @@ const Navbar = () => {
                 <div className="md:hidden flex items-center gap-2">
                     <button
                         onClick={toggleTheme}
-                        className="p-2 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-gray-300 hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors"
-                        aria-label="Toggle theme"
+                        className="p-2 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-gray-300 hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors focus-visible:ring-2 focus-visible:ring-cyan-500"
+                        aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
                     >
                         {isDark ? (
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -86,8 +86,10 @@ const Navbar = () => {
                         )}
                     </button>
                     <button
-                        className="text-slate-600 dark:text-gray-300 focus:outline-none"
+                        className="p-2 text-slate-600 dark:text-gray-300 focus-visible:ring-2 focus-visible:ring-cyan-500 rounded-lg"
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                        aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+                        aria-expanded={isMobileMenuOpen}
                     >
                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             {isMobileMenuOpen ? (
