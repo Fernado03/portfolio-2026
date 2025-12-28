@@ -195,28 +195,58 @@ const ChatBot = () => {
         setIsLoading(true);
 
         try {
-            // Call our secure API endpoint - API key stays on server!
-            const response = await fetch("/api/chat", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    systemPrompt: SYSTEM_PROMPT,
-                    messages: [
-                        ...messages.slice(1), // Skip the initial greeting
-                        { role: "user", content: userMessage }
-                    ]
-                })
-            });
+            let assistantResponse;
 
-            const data = await response.json();
+            // Check if we're in production (Vercel) or local dev
+            const isProduction = !import.meta.env.DEV;
 
-            if (data.response) {
-                setMessages((prev) => [
-                    ...prev,
-                    { role: "assistant", content: data.response }
-                ]);
-            } else if (data.error) {
-                throw new Error(data.error);
+            if (isProduction) {
+                // Production: Use secure API route (key hidden on server)
+                const response = await fetch("/api/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        systemPrompt: SYSTEM_PROMPT,
+                        messages: [
+                            ...messages.slice(1),
+                            { role: "user", content: userMessage }
+                        ]
+                    })
+                });
+                const data = await response.json();
+                if (data.error) throw new Error(data.error);
+                assistantResponse = data.response;
+            } else {
+                // Local dev: Use VITE_ prefixed key directly
+                const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+                if (!apiKey) {
+                    throw new Error("Add VITE_GEMINI_API_KEY to .env for local development");
+                }
+                const response = await fetch(
+                    `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.0-flash:generateContent?key=${apiKey}`,
+                    {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            contents: [
+                                { role: "user", parts: [{ text: SYSTEM_PROMPT }] },
+                                { role: "model", parts: [{ text: "Got it! I'll help visitors learn about Fernado." }] },
+                                ...messages.slice(1).map((msg) => ({
+                                    role: msg.role === "user" ? "user" : "model",
+                                    parts: [{ text: msg.content }]
+                                })),
+                                { role: "user", parts: [{ text: userMessage }] }
+                            ],
+                            generationConfig: { temperature: 0.7, maxOutputTokens: 1024 }
+                        })
+                    }
+                );
+                const data = await response.json();
+                assistantResponse = data.candidates?.[0]?.content?.parts?.[0]?.text;
+            }
+
+            if (assistantResponse) {
+                setMessages((prev) => [...prev, { role: "assistant", content: assistantResponse }]);
             } else {
                 throw new Error("Invalid response");
             }
@@ -224,7 +254,7 @@ const ChatBot = () => {
             console.error("Chat error:", error);
             setMessages((prev) => [
                 ...prev,
-                { role: "assistant", content: "Sorry, I encountered an error. Please try again!" }
+                { role: "assistant", content: `Sorry, I encountered an error: ${error.message}` }
             ]);
         } finally {
             setIsLoading(false);
