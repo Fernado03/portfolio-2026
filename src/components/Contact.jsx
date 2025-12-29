@@ -155,7 +155,9 @@ const Contact = () => {
 
                     {/* Phone Card */}
                     <a
-                        href={`tel:${HERO_CONTENT.phone}`}
+                        href={`https://wa.me/${HERO_CONTENT.phone.replace('+', '')}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="group p-6 bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-green-500/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_40px_rgba(34,197,94,0.15)] flex items-center gap-4"
                     >
                         <div className="p-3 bg-green-500/10 rounded-lg text-green-500 dark:text-green-400 group-hover:bg-green-500/20 transition-colors">
