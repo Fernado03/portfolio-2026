@@ -5,10 +5,10 @@ import { HERO_CONTENT } from "../constants";
 const Contact = () => {
     const [copied, setCopied] = useState(false);
 
-    const copyEmail = (e) => {
+    const handleCopy = (e, text) => {
         e.preventDefault();
         e.stopPropagation();
-        navigator.clipboard.writeText(HERO_CONTENT.email);
+        navigator.clipboard.writeText(text);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
     };
@@ -80,7 +80,7 @@ const Contact = () => {
                             </div>
                         </a>
                         <button
-                            onClick={copyEmail}
+                            onClick={(e) => handleCopy(e, HERO_CONTENT.email)}
                             className="p-2 hover:bg-cyan-500/10 rounded-lg text-slate-400 hover:text-cyan-500 transition-colors"
                             title="Copy email"
                             aria-label="Copy email to clipboard"
@@ -92,20 +92,30 @@ const Contact = () => {
                     </div>
 
                     {/* University Email Card */}
-                    <a
-                        href={`mailto:${HERO_CONTENT.universityEmail}`}
-                        className="group p-6 bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-indigo-500/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_40px_rgba(99,102,241,0.15)] flex items-center gap-4"
-                    >
-                        <div className="p-3 bg-indigo-500/10 rounded-lg text-indigo-500 dark:text-indigo-400 group-hover:bg-indigo-500/20 transition-colors">
-                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    {/* University Email Card */}
+                    <div className="group p-6 bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-indigo-500/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_40px_rgba(99,102,241,0.15)] flex items-center gap-4">
+                        <a href={`mailto:${HERO_CONTENT.universityEmail}`} className="flex items-center gap-4 flex-1">
+                            <div className="p-3 bg-indigo-500/10 rounded-lg text-indigo-500 dark:text-indigo-400 group-hover:bg-indigo-500/20 transition-colors">
+                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                </svg>
+                            </div>
+                            <div>
+                                <p className="text-slate-500 dark:text-gray-400 text-sm">University Email</p>
+                                <p className="text-slate-900 dark:text-white font-medium group-hover:text-indigo-500 dark:group-hover:text-indigo-400 transition-colors text-sm">{HERO_CONTENT.universityEmail}</p>
+                            </div>
+                        </a>
+                        <button
+                            onClick={(e) => handleCopy(e, HERO_CONTENT.universityEmail)}
+                            className="p-2 hover:bg-indigo-500/10 rounded-lg text-slate-400 hover:text-indigo-500 transition-colors"
+                            title="Copy university email"
+                            aria-label="Copy university email to clipboard"
+                        >
+                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
                             </svg>
-                        </div>
-                        <div>
-                            <p className="text-slate-500 dark:text-gray-400 text-sm">University Email</p>
-                            <p className="text-slate-900 dark:text-white font-medium group-hover:text-indigo-500 dark:group-hover:text-indigo-400 transition-colors text-sm">{HERO_CONTENT.universityEmail}</p>
-                        </div>
-                    </a>
+                        </button>
+                    </div>
 
                     {/* LinkedIn Card */}
                     <a
