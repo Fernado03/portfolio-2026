@@ -15,6 +15,7 @@ import ChatBot from "./components/ChatBot";
 import Preloader from "./components/Preloader";
 import EasterEgg from "./components/EasterEgg";
 import ScrollToTop from "./components/ScrollToTop";
+import SpeedInsightsComponent from "./components/SpeedInsights";
 import { ThemeProvider } from "./context/ThemeContext";
 import { Analytics } from "@vercel/analytics/react";
 
@@ -88,6 +89,7 @@ function App() {
         <Contact />
         <Footer />
         <Analytics />
+        <SpeedInsightsComponent />
       </div>
     </ThemeProvider>
   );
