@@ -4,7 +4,7 @@ export const HERO_CONTENT = {
     title: "Data Scientist & Full-Stack Developer",
     subtitle: "Specializing in Generative AI, RAG Systems, and Scalable Web Architecture.",
     availability: "🟢 Open for Internship (Mar - Aug 2026)",
-    resumeLink: "/resume.pdf",
+    resumeLink: "/Fernado_George_DataScience_Intern_Resume.pdf",
     email: "milobio351@gmail.com",
     universityEmail: "fernado_george_bi22@iluv.ums.edu.my",
     phone: "+60143207322",

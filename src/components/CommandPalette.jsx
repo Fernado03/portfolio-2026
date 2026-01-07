@@ -18,7 +18,7 @@ const CommandPalette = () => {
         { id: "skills", label: "Go to Skills", icon: "⚡", action: () => scrollTo("#skills"), category: "Navigation" },
         { id: "awards", label: "Go to Awards", icon: "🏆", action: () => scrollTo("#awards"), category: "Navigation" },
         { id: "contact", label: "Go to Contact", icon: "📧", action: () => scrollTo("#contact"), category: "Navigation" },
-        { id: "resume", label: "Download Resume", icon: "📄", action: () => window.open("/resume.pdf", "_blank"), category: "Actions" },
+        { id: "resume", label: "Download Resume", icon: "📄", action: () => window.open("/Fernado_George_DataScience_Intern_Resume.pdf", "_blank"), category: "Actions" },
         { id: "theme", label: `Switch to ${isDark ? "Light" : "Dark"} Mode`, icon: isDark ? "☀️" : "🌙", action: toggleTheme, category: "Actions" },
         { id: "github", label: "Open GitHub", icon: "🐙", action: () => window.open("https://github.com/Fernado03", "_blank"), category: "Links" },
         { id: "linkedin", label: "Open LinkedIn", icon: "💼", action: () => window.open("https://linkedin.com/in/fernado-george", "_blank"), category: "Links" },
@@ -143,8 +143,8 @@ const CommandPalette = () => {
                                                 onClick={() => executeCommand(cmd)}
                                                 onMouseEnter={() => setSelectedIndex(index)}
                                                 className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors ${index === selectedIndex
-                                                        ? "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400"
-                                                        : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                                                    ? "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400"
+                                                    : "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
                                                     }`}
                                             >
                                                 <span className="text-lg">{cmd.icon}</span>
