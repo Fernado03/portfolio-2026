@@ -30,6 +30,10 @@ export const FYP_CONTENT = {
     ],
     demoLink: "",
     githubLink: "",
+    award: {
+        title: "Best Research Award 2026",
+        image: "/awards/best_research_award.jpg"
+    }
 };
 
 export const PROJECTS = [
@@ -159,9 +163,13 @@ export const SKILLS = [
 ];
 
 export const AWARDS = [
-    "Gold Medal - Festival Idea Sabah 2025",
-    "2nd Prize - JomHack Varsity Challenge 2025",
-    "Top 8 Finalist - MarineHack 2025",
-    "Best Computer Science Student Award (Matriculation)",
-    "Top 8 Finalist - ELLM Startup Initiative",
+    {
+        title: "Best Research Award - Final Year Project 2026",
+        image: "/awards/best_research_award.jpg",
+    },
+    { title: "Gold Medal - Festival Idea Sabah 2025" },
+    { title: "2nd Prize - JomHack Varsity Challenge 2025" },
+    { title: "Top 8 Finalist - MarineHack 2025" },
+    { title: "Best Computer Science Student Award (Matriculation)" },
+    { title: "Top 8 Finalist - ELLM Startup Initiative" },
 ];
