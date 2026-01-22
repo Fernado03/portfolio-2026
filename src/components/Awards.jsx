@@ -97,31 +97,28 @@ const Awards = () => {
                                 whileHover={{ x: 8, scale: 1.01 }}
                                 className={`flex items-center justify-between p-5 bg-gradient-to-r from-white dark:from-slate-900 to-slate-50 dark:to-slate-800 rounded-xl border-2 ${style.border} transition-all duration-300 hover:${style.glow} cursor-default group relative overflow-hidden`}
                             >
-                                <div className="flex items-center gap-4 relative z-10">
-                                    <span className="text-3xl group-hover:scale-110 transition-transform">{style.icon}</span>
-                                    <span className="text-lg font-medium text-slate-700 dark:text-gray-200 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
-                                        {name}
-                                    </span>
-                                </div>
-                                <div className="flex items-center gap-4 relative z-10">
+                                <div className="flex items-center gap-4 relative z-10 w-full">
                                     {award.image && (
-                                        <div className="hidden sm:block w-12 h-12 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 group-hover:scale-110 transition-transform">
+                                        <div className="hidden sm:block h-24 w-auto aspect-[3/4] rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 shadow-sm group-hover:scale-105 transition-transform bg-white dark:bg-slate-800">
                                             <img src={award.image} alt={name} className="w-full h-full object-cover" />
                                         </div>
                                     )}
-                                    {year && (
-                                        <span className={`px-3 py-1 text-xs font-semibold rounded-full border ${style.badge}`}>
-                                            {year}
-                                        </span>
-                                    )}
-                                </div>
-                                {/* Background Image Fade for Image Awards */}
-                                {award.image && (
-                                    <div className="absolute right-0 top-0 bottom-0 w-1/3 z-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 mask-image-gradient">
-                                        <img src={award.image} alt="" className="w-full h-full object-cover opacity-20 blur-[1px]" />
-                                        <div className="absolute inset-0 bg-gradient-to-l from-transparent to-white/90 dark:to-slate-900/90"></div>
+                                    <div>
+                                        <div className="flex items-center gap-3">
+                                            <span className="text-3xl group-hover:scale-110 transition-transform">{style.icon}</span>
+                                            <span className="text-lg font-medium text-slate-700 dark:text-gray-200 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
+                                                {name}
+                                            </span>
+                                        </div>
+                                        {year && (
+                                            <div className="mt-2 text-left">
+                                                <span className={`inline-block px-3 py-1 text-xs font-semibold rounded-full border ${style.badge}`}>
+                                                    {year}
+                                                </span>
+                                            </div>
+                                        )}
                                     </div>
-                                )}
+                                </div>
                             </motion.div>
                         );
                     })}
