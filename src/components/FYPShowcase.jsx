@@ -82,7 +82,7 @@ const FYPShowcase = () => {
                             >
                                 <div className="p-3 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full text-white text-2xl shadow-lg shadow-yellow-500/30">🏆</div>
                                 <div>
-                                    <p className="text-[10px] font-bold text-yellow-600 dark:text-yellow-400 uppercase tracking-[0.2em] mb-1">Authenticated</p>
+                                    <p className="text-[10px] font-bold text-yellow-600 dark:text-yellow-400 uppercase tracking-[0.2em] mb-1">Winner</p>
                                     <p className="font-bold text-lg text-slate-900 dark:text-white leading-none">{FYP_CONTENT.award.title}</p>
                                 </div>
                                 <div className="ml-auto text-xs text-slate-500 dark:text-slate-400 font-medium flex items-center gap-2 group-hover:text-yellow-600 dark:group-hover:text-yellow-400 transition-colors">

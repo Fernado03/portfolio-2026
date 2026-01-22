@@ -97,28 +97,26 @@ const Awards = () => {
                                 whileHover={{ x: 8, scale: 1.01 }}
                                 className={`flex items-center justify-between p-5 bg-gradient-to-r from-white dark:from-slate-900 to-slate-50 dark:to-slate-800 rounded-xl border-2 ${style.border} transition-all duration-300 hover:${style.glow} cursor-default group relative overflow-hidden`}
                             >
-                                <div className="flex items-center gap-4 relative z-10 w-full">
+                                <div className="flex items-center gap-6 relative z-10 flex-1">
                                     {award.image && (
-                                        <div className="hidden sm:block h-24 w-auto aspect-[3/4] rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 shadow-sm group-hover:scale-105 transition-transform bg-white dark:bg-slate-800">
-                                            <img src={award.image} alt={name} className="w-full h-full object-cover" />
+                                        <div className="hidden sm:block h-24 w-auto aspect-[3/4] rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 shadow-sm group-hover:scale-105 transition-transform bg-white dark:bg-slate-800 shrink-0">
+                                            <img src={award.image} alt={name} className="w-full h-full object-contain" />
                                         </div>
                                     )}
-                                    <div>
-                                        <div className="flex items-center gap-3">
-                                            <span className="text-3xl group-hover:scale-110 transition-transform">{style.icon}</span>
-                                            <span className="text-lg font-medium text-slate-700 dark:text-gray-200 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
-                                                {name}
-                                            </span>
-                                        </div>
-                                        {year && (
-                                            <div className="mt-2 text-left">
-                                                <span className={`inline-block px-3 py-1 text-xs font-semibold rounded-full border ${style.badge}`}>
-                                                    {year}
-                                                </span>
-                                            </div>
-                                        )}
+                                    <div className="flex items-center gap-4">
+                                        <span className="text-3xl group-hover:scale-110 transition-transform shrink-0">{style.icon}</span>
+                                        <span className="text-lg font-medium text-slate-700 dark:text-gray-200 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
+                                            {name}
+                                        </span>
                                     </div>
                                 </div>
+                                {year && (
+                                    <div className="ml-4 relative z-10">
+                                        <span className={`inline-block px-3 py-1 text-xs font-semibold rounded-full border ${style.badge}`}>
+                                            {year}
+                                        </span>
+                                    </div>
+                                )}
                             </motion.div>
                         );
                     })}
