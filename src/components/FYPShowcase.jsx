@@ -183,11 +183,11 @@ const FYPShowcase = () => {
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="relative max-w-5xl max-h-[90vh] w-full"
+                        className="relative max-w-7xl w-auto max-h-[90vh] flex items-center justify-center p-2"
                         onClick={(e) => e.stopPropagation()} // Prevent closing when clicking image
                     >
                         <button
-                            className="absolute -top-12 right-0 text-white/70 hover:text-white transition-colors"
+                            className="absolute -top-10 right-0 text-white/70 hover:text-white transition-colors z-50"
                             onClick={() => setSelectedImage(null)}
                         >
                             <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
@@ -195,7 +195,7 @@ const FYPShowcase = () => {
                         <img
                             src={selectedImage}
                             alt="Full screen preview"
-                            className="w-full h-full object-contain rounded-lg shadow-2xl border border-white/10 contrast-110 saturate-110"
+                            className="max-h-[85vh] max-w-[95vw] w-auto h-auto object-contain rounded-lg shadow-2xl border border-white/10 contrast-110 saturate-110"
                         />
                     </motion.div>
                 </div>
