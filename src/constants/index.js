@@ -28,8 +28,9 @@ export const FYP_CONTENT = {
         { src: "/projects/modal_reliance.png", caption: "Modal Reliance Analysis: Impact of Missing Modalities" },
         { src: "/projects/confusion_matrix.png", caption: "Confusion Matrix: Highlighting Angry vs. Frustrated Ambiguity" },
     ],
-    demoLink: "",
-    githubLink: "",
+    demoLink: "https://thesis-presentation-beryl.vercel.app/",
+    githubLink: "https://github.com/Fernado03/thesis-presentation",
+    thesisLink: "/documents/Thesis_BI22110436.pdf",
     award: {
         title: "Best Research Award 2026",
         image: "/awards/best_research_award.jpg"
