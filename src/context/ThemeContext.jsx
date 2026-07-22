@@ -12,8 +12,8 @@ export const useTheme = () => {
 
 export const ThemeProvider = ({ children }) => {
     const [isDark, setIsDark] = useState(() => {
-        // Default to dark mode
-        return true;
+        // Light mode is the primary visual surface.
+        return false;
     });
 
     useEffect(() => {

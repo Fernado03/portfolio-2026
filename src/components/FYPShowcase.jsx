@@ -28,12 +28,8 @@ const FYPShowcase = () => {
                     whileInView="visible"
                     viewport={{ once: true }}
                     transition={spring}
-                    className="border-y border-line py-4 mb-12 flex items-center gap-4"
+                    className="mb-10 inline-flex w-fit max-w-full items-center gap-5 border-l-2 border-accent py-3 pl-4 pr-4"
                 >
-                    <div className="flex-1 min-w-0">
-                        <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent mb-1">Award</p>
-                        <p className="text-ink font-medium">{FYP_CONTENT.award.title}</p>
-                    </div>
                     {FYP_CONTENT.award.image && (
                         <button
                             type="button"
@@ -50,6 +46,11 @@ const FYPShowcase = () => {
                             />
                         </button>
                     )}
+                    <div className="min-w-0">
+                        <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent mb-1">Award</p>
+                        <p className="text-ink font-medium">{FYP_CONTENT.award.title}</p>
+                        <p className="mt-1 font-mono text-xs text-ink-muted">Click poster to view full size</p>
+                    </div>
                 </motion.div>
             )}
 
