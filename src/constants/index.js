@@ -107,12 +107,14 @@ export const ABOUT_CONTENT = {
             university: "Universiti Malaysia Sabah",
             year: "2022 – Present",
             details: "CGPA: 3.75 | Dean's List",
+            monogram: "UMS",
         },
         {
             degree: "Science Module II",
             university: "Sarawak College Matriculation",
             year: "2021 – 2022",
             details: "CGPA: 4.00 | Best Computer Science Student Award",
+            monogram: "KMS",
         }
     ],
     profileImages: [
@@ -133,6 +135,7 @@ export const ABOUT_CONTENT = {
             role: "AI/ML Development Intern",
             organization: "Breakfast Byte Sdn. Bhd.",
             period: "Mar 2026 - Present",
+            logo: "/logos/breakfast-byte.com.png",
             description: "Kuching, Sarawak • Built KI Konnekt, a Gradio-based AI assistant for a German client integrating local Ollama RAG + OpenAI workflows (hybrid BM25/FAISS retrieval, streaming, multi-format document pipelines). Engineered an end-to-end computer-vision pipeline for a Sarawak car-wash client converting daily CCTV footage into structured records — vehicle-session detection, multi-bay assignment, license-plate OCR, and wash-action classification with a local operator dashboard."
         },
         {

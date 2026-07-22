@@ -14,6 +14,8 @@ const Experience = () => {
             subtitle: edu.university,
             period: edu.year,
             details: edu.details,
+            logo: edu.logo,
+            monogram: edu.monogram,
         })),
         // Experience entries
         ...ABOUT_CONTENT.experience.map(exp => ({
@@ -22,6 +24,8 @@ const Experience = () => {
             subtitle: exp.organization,
             period: exp.period,
             details: exp.description,
+            logo: exp.logo,
+            monogram: exp.monogram,
         })),
     ].sort((a, b) => {
         // Sort by start year descending (most recent first)
@@ -72,12 +76,34 @@ const Experience = () => {
 
                             {/* Right content */}
                             <div className="md:col-span-9">
-                                <h3 className="font-display font-semibold text-xl text-ink">
-                                    {item.title}
-                                </h3>
-                                <p className={`text-sm mt-1 ${isExperience ? "text-accent" : "text-ink-muted"}`}>
-                                    {item.subtitle}
-                                </p>
+                                <div className="flex items-start gap-4">
+                                    {/* Logo / monogram tile */}
+                                    {(item.logo || item.monogram) && (
+                                        <div className="shrink-0 w-12 h-12 rounded-lg border border-line bg-bg-subtle flex items-center justify-center overflow-hidden">
+                                            {item.logo ? (
+                                                <img
+                                                    src={item.logo}
+                                                    alt={`${item.subtitle} logo`}
+                                                    loading="lazy"
+                                                    decoding="async"
+                                                    className="w-8 h-8 object-contain"
+                                                />
+                                            ) : (
+                                                <span className="font-mono text-xs font-medium text-ink-muted tracking-tight">
+                                                    {item.monogram}
+                                                </span>
+                                            )}
+                                        </div>
+                                    )}
+                                    <div className="min-w-0">
+                                        <h3 className="font-display font-semibold text-xl text-ink">
+                                            {item.title}
+                                        </h3>
+                                        <p className={`text-sm mt-1 ${isExperience ? "text-accent" : "text-ink-muted"}`}>
+                                            {item.subtitle}
+                                        </p>
+                                    </div>
+                                </div>
                                 {item.details && (
                                     <p className="text-sm text-ink-muted leading-relaxed mt-3 max-w-[65ch]">
                                         {item.details}
