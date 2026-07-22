@@ -8,12 +8,22 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: "#0f172a", // Example dark theme base
-        secondary: "#334155",
-        accent: "#38bdf8",
+        accent: {
+          DEFAULT: 'var(--accent)',
+          strong: 'var(--accent-strong)',
+          muted: 'var(--accent-muted)',
+        },
+        bg: 'var(--bg)',
+        'bg-subtle': 'var(--bg-subtle)',
+        'bg-elev': 'var(--bg-elev)',
+        ink: 'var(--ink)',
+        'ink-muted': 'var(--ink-muted)',
+        line: 'var(--line)',
       },
       fontFamily: {
+        display: ['Outfit', 'Inter', 'sans-serif'],
         sans: ['Inter', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
       },
     },
   },

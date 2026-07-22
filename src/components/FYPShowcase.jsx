@@ -1,184 +1,221 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FYP_CONTENT } from "../constants";
+import { FADE_IN_VARIANTS, STAGGER_CONTAINER } from "../constants/animations";
+import Section from "./ui/Section";
+import SectionHeader from "./ui/SectionHeader";
+import Chip from "./ui/Chip";
+import Button from "./ui/Button";
+
+const spring = { type: "spring", stiffness: 100, damping: 20 };
+
+// Split "Title: detail" or "Title (detail)" captions into title/body for the findings list.
+const splitCaption = (caption) => {
+    const colon = caption.indexOf(":");
+    if (colon > 0) {
+        return { title: caption.slice(0, colon).trim(), body: caption.slice(colon + 1).trim() };
+    }
+    const paren = caption.indexOf("(");
+    if (paren > 0) {
+        return {
+            title: caption.slice(0, paren).trim(),
+            body: caption.slice(paren).replace(/^\(|\)$/g, "").trim(),
+        };
+    }
+    return { title: caption, body: null };
+};
 
 const FYPShowcase = () => {
     const [selectedImage, setSelectedImage] = React.useState(null);
 
     return (
-        <section id="fyp" className="min-h-screen flex items-center py-20 relative overflow-hidden">
-            {/* Floating Decorations */}
-            <motion.div
-                animate={{ y: [0, -15, 0], rotate: [0, 5, 0] }}
-                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-[10%] right-[8%] w-14 h-14 border-2 border-indigo-400/25 dark:border-indigo-400/20 rotate-[30deg]"
-                style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)" }}
-            />
-            <motion.div
-                animate={{ y: [0, 10, 0], opacity: [0.3, 0.6, 0.3] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                className="absolute bottom-[15%] left-[5%] w-4 h-4 bg-purple-400/30 dark:bg-purple-500/40 rounded-full"
+        <Section id="fyp" className="min-h-[100dvh] flex flex-col justify-center py-20">
+            <SectionHeader
+                eyebrow="Final year project"
+                title="Multimodal emotion recognition"
+                description={FYP_CONTENT.tagline}
             />
 
-            <div className="container mx-auto px-6">
+            <div className="grid lg:grid-cols-2 gap-12 items-start">
+                {/* Visual Side */}
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    className="text-center mb-16"
+                    variants={FADE_IN_VARIANTS}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    transition={spring}
+                    className="group cursor-pointer"
+                    onClick={() => setSelectedImage(FYP_CONTENT.image)}
                 >
-                    <span className="text-indigo-600 dark:text-indigo-400 font-semibold tracking-wider uppercase text-sm">{FYP_CONTENT.tagline}</span>
-                    <h2 className="text-4xl md:text-5xl font-bold mt-2 text-slate-900 dark:text-white">
-                        FYP <span className="text-indigo-500">Showcase</span>
-                    </h2>
+                    <div className="rounded-xl border border-line overflow-hidden bg-bg-subtle aspect-video">
+                        <img
+                            src={FYP_CONTENT.image}
+                            alt={FYP_CONTENT.title}
+                            loading="lazy"
+                            className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                        />
+                    </div>
+                    <p className="mt-3 font-mono text-xs text-ink-muted flex items-center gap-2 group-hover:text-accent transition-colors">
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                        </svg>
+                        Click to enlarge
+                    </p>
                 </motion.div>
 
-                <div className="grid lg:grid-cols-2 gap-12 items-center">
-                    {/* Visual Side */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.6 }}
-                        className="relative group cursor-pointer"
-                        onClick={() => setSelectedImage(FYP_CONTENT.image)}
-                    >
-                        <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-                        <div className="relative rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900/50 aspect-video shadow-2xl">
-                            <img
-                                src={FYP_CONTENT.image}
-                                alt={FYP_CONTENT.title}
-                                loading="lazy"
-                                className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-                            />
-                            {/* Overlay Badge */}
-                            <div className="absolute top-4 left-4 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-indigo-500/30 text-indigo-600 dark:text-indigo-300 text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
-                                Final Year Project
-                            </div>
-                            {/* Click hint */}
-                            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/40">
-                                <span className="text-white text-sm font-medium flex items-center gap-2">
-                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" /></svg>
-                                    Click to Enlarge
-                                </span>
-                            </div>
-                        </div>
-                    </motion.div>
-
-                    {/* Content Side ... (remains same until Gallery) */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.6, delay: 0.2 }}
-                    >
-                        <h3 className="text-3xl font-bold text-slate-900 dark:text-white mb-4 leading-tight">{FYP_CONTENT.title}</h3>
-
-                        {FYP_CONTENT.award && (
-                            <motion.div
-                                initial={{ opacity: 0, x: -20 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                transition={{ delay: 0.3 }}
-                                className="flex items-center gap-4 mb-8 p-4 rounded-xl bg-gradient-to-r from-yellow-500/10 via-yellow-500/5 to-transparent border border-yellow-500/20 cursor-pointer hover:bg-yellow-500/10 transition-all hover:scale-[1.02] shadow-sm hover:shadow-yellow-500/10 group"
-                                onClick={() => setSelectedImage(FYP_CONTENT.award.image)}
-                            >
-                                <div className="p-3 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full text-white text-2xl shadow-lg shadow-yellow-500/30">🏆</div>
-                                <div>
-                                    <p className="text-[10px] font-bold text-yellow-600 dark:text-yellow-400 uppercase tracking-[0.2em] mb-1">Winner</p>
-                                    <p className="font-bold text-lg text-slate-900 dark:text-white leading-none">{FYP_CONTENT.award.title}</p>
-                                </div>
-                                <div className="ml-auto text-xs text-slate-500 dark:text-slate-400 font-medium flex items-center gap-2 group-hover:text-yellow-600 dark:group-hover:text-yellow-400 transition-colors">
-                                    View Poster
-                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
-                                </div>
-                            </motion.div>
-                        )}
-                        <p className="text-slate-600 dark:text-gray-400 text-lg mb-8 leading-loose">{FYP_CONTENT.description}</p>
-                        <div className="mb-8">
-                            <h4 className="text-slate-900 dark:text-white font-semibold mb-3 flex items-center gap-2">
-                                <span className="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
-                                Key Innovations
-                            </h4>
-                            <ul className="space-y-3">
-                                {FYP_CONTENT.features.map((feature, idx) => (
-                                    <li key={idx} className="flex items-start gap-3 text-slate-600 dark:text-gray-400 text-sm">
-                                        <svg className="w-5 h-5 text-indigo-500 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                                        {feature}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                        <div className="w-full h-px bg-gradient-to-r from-transparent via-slate-300 dark:via-slate-700 to-transparent mb-6" />
-                        <div className="flex flex-wrap gap-3 mb-8">
-                            {FYP_CONTENT.techStack.map((tech, idx) => (
-                                <span key={idx} className="bg-slate-200/50 dark:bg-white/5 border border-slate-300 dark:border-white/10 text-slate-700 dark:text-gray-300 text-xs px-3 py-1 rounded-full hover:bg-slate-300/50 dark:hover:bg-white/10 transition-colors">{tech}</span>
-                            ))}
-                        </div>
-                        <div className="flex gap-4">
-                            {FYP_CONTENT.demoLink ? (
-                                <a href={FYP_CONTENT.demoLink} target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-all hover:scale-105 shadow-lg shadow-indigo-600/20">Live Demo</a>
-                            ) : (
-                                <span className="px-6 py-3 bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-semibold rounded-lg border border-slate-300 dark:border-slate-700 cursor-not-allowed">
-                                    🔒 Demo Coming Soon
-                                </span>
-                            )}
-                            {FYP_CONTENT.githubLink ? (
-                                <a href={FYP_CONTENT.githubLink} target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-slate-200 dark:bg-white/5 hover:bg-slate-300 dark:hover:bg-white/10 text-slate-900 dark:text-white font-semibold rounded-lg border border-slate-300 dark:border-white/10 transition-all hover:scale-105">GitHub Repo</a>
-                            ) : (
-                                <span className="px-6 py-3 bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-semibold rounded-lg border border-slate-300 dark:border-slate-700 cursor-not-allowed">
-                                    🔒 Repo Coming Soon
-                                </span>
-                            )}
-                            {FYP_CONTENT.thesisLink && (
-                                <a href={FYP_CONTENT.thesisLink} target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-indigo-600/10 hover:bg-indigo-600/20 text-indigo-600 dark:text-indigo-400 font-semibold rounded-lg border border-indigo-600/20 transition-all hover:scale-105 flex items-center gap-2">
-                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
-                                    Read Thesis
-                                </a>
-                            )}
-                        </div>
-                    </motion.div>
-                </div>
-
-                {/* Research Findings Gallery */}
+                {/* Content Side */}
                 <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.4 }}
-                    className="mt-20"
+                    variants={FADE_IN_VARIANTS}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    transition={spring}
                 >
-                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-8 text-center flex items-center justify-center gap-3">
-                        <span className="w-8 h-px bg-indigo-500/50"></span>
-                        Research Findings
-                        <span className="w-8 h-px bg-indigo-500/50"></span>
+                    <h3 className="font-display text-2xl md:text-3xl font-semibold text-ink mb-6 leading-tight">
+                        {FYP_CONTENT.title}
                     </h3>
 
-                    <div className="grid md:grid-cols-3 gap-6">
-                        {FYP_CONTENT.gallery?.map((item, idx) => (
-                            <div
-                                key={idx}
-                                className="group relative bg-slate-100 dark:bg-slate-900/50 border border-slate-200 dark:border-white/10 rounded-xl overflow-hidden hover:border-indigo-500/30 transition-all cursor-pointer"
-                                onClick={() => setSelectedImage(item.src)}
-                            >
-                                <div className="aspect-[4/3] overflow-hidden relative">
+                    {FYP_CONTENT.award && (
+                        <div className="border-l-2 border-accent pl-4 mb-8">
+                            <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent mb-1">Award</p>
+                            <p className="text-ink font-medium">{FYP_CONTENT.award.title}</p>
+                            {FYP_CONTENT.award.image && (
+                                <button
+                                    type="button"
+                                    onClick={() => setSelectedImage(FYP_CONTENT.award.image)}
+                                    className="mt-3 block focus-visible:outline-accent"
+                                    aria-label="View award poster"
+                                >
                                     <img
-                                        src={item.src}
-                                        alt={item.caption}
+                                        src={FYP_CONTENT.award.image}
+                                        alt={FYP_CONTENT.award.title}
                                         loading="lazy"
-                                        className="w-full h-full object-contain bg-slate-50 dark:bg-slate-950/80 group-hover:scale-105 transition-transform duration-500 contrast-110 saturate-110"
+                                        className="h-20 w-auto rounded-lg border border-line object-cover hover:border-accent/50 transition-colors"
                                     />
-                                    {/* Hover overlay hint */}
-                                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                        <svg className="w-8 h-8 text-white/80" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" /></svg>
-                                    </div>
-                                </div>
-                                <div className="p-4">
-                                    <p className="text-slate-600 dark:text-gray-400 text-sm font-medium border-l-2 border-indigo-500 pl-3 leading-tight">
-                                        {item.caption}
-                                    </p>
-                                </div>
-                            </div>
+                                </button>
+                            )}
+                        </div>
+                    )}
+
+                    <p className="text-ink-muted leading-relaxed mb-8">{FYP_CONTENT.description}</p>
+
+                    <div className="mb-8">
+                        <h4 className="font-mono text-xs uppercase tracking-[0.2em] text-ink-muted mb-4">
+                            Key innovations
+                        </h4>
+                        <ul className="space-y-3">
+                            {FYP_CONTENT.features.map((feature, idx) => (
+                                <li key={idx} className="flex items-start gap-3 text-sm text-ink-muted">
+                                    <svg
+                                        className="w-4 h-4 text-accent mt-0.5 shrink-0"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        strokeWidth={1.5}
+                                        aria-hidden="true"
+                                    >
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                                    </svg>
+                                    {feature}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2 mb-8">
+                        {FYP_CONTENT.techStack.map((tech, idx) => (
+                            <Chip key={idx}>{tech}</Chip>
                         ))}
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-3">
+                        {FYP_CONTENT.demoLink ? (
+                            <Button variant="secondary" href={FYP_CONTENT.demoLink}>
+                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                </svg>
+                                Live demo
+                            </Button>
+                        ) : (
+                            <span className="inline-flex items-center gap-2 rounded-lg border border-line px-5 py-2.5 text-sm font-medium text-ink-muted cursor-not-allowed">
+                                Demo coming soon
+                            </span>
+                        )}
+                        {FYP_CONTENT.githubLink ? (
+                            <Button variant="secondary" href={FYP_CONTENT.githubLink}>
+                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                GitHub repo
+                            </Button>
+                        ) : (
+                            <span className="inline-flex items-center gap-2 rounded-lg border border-line px-5 py-2.5 text-sm font-medium text-ink-muted cursor-not-allowed">
+                                Repo coming soon
+                            </span>
+                        )}
+                        {FYP_CONTENT.thesisLink && (
+                            <Button variant="tertiary" href={FYP_CONTENT.thesisLink}>
+                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                </svg>
+                                Read thesis
+                            </Button>
+                        )}
                     </div>
                 </motion.div>
             </div>
+
+            {/* Research Findings — hairline list */}
+            <motion.div
+                variants={STAGGER_CONTAINER}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                className="mt-16 md:mt-20"
+            >
+                <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-ink-muted mb-6">
+                    Research findings
+                </h3>
+                <div className="divide-y divide-line border-y border-line">
+                    {FYP_CONTENT.gallery?.map((item, idx) => {
+                        const { title, body } = splitCaption(item.caption);
+                        return (
+                        <motion.button
+                            key={idx}
+                            type="button"
+                            variants={FADE_IN_VARIANTS}
+                            transition={spring}
+                            onClick={() => setSelectedImage(item.src)}
+                            className="w-full py-5 flex gap-4 items-start text-left group focus-visible:outline-accent"
+                        >
+                            <span className="font-mono text-xs text-accent pt-1 shrink-0">
+                                {String(idx + 1).padStart(2, "0")}
+                            </span>
+                            <span className="flex-1 min-w-0">
+                                <span className="block font-medium text-ink group-hover:text-accent transition-colors">
+                                    {title}
+                                </span>
+                                {body && (
+                                    <span className="block text-sm text-ink-muted mt-1 leading-relaxed">
+                                        {body}
+                                    </span>
+                                )}
+                            </span>
+                            <span className="shrink-0 hidden sm:block">
+                                <span className="block h-14 w-20 rounded-lg border border-line overflow-hidden bg-bg-subtle group-hover:border-accent/50 transition-colors">
+                                    <img
+                                        src={item.src}
+                                        alt=""
+                                        loading="lazy"
+                                        className="h-full w-full object-cover"
+                                    />
+                                </span>
+                            </span>
+                        </motion.button>
+                        );
+                    })}
+                </div>
+            </motion.div>
 
             {/* Lightbox Modal */}
             {selectedImage && (
@@ -187,28 +224,31 @@ const FYPShowcase = () => {
                     onClick={() => setSelectedImage(null)}
                 >
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
+                        initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
+                        transition={spring}
                         className="relative max-w-7xl w-auto max-h-[90vh] flex items-center justify-center p-2"
-                        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking image
+                        onClick={(e) => e.stopPropagation()}
                     >
                         <button
-                            className="absolute -top-10 right-0 text-white/70 hover:text-white transition-colors z-50"
+                            className="absolute -top-10 right-0 text-white/70 hover:text-white transition-colors z-50 focus-visible:outline-accent"
                             onClick={() => setSelectedImage(null)}
+                            aria-label="Close preview"
                         >
-                            <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                            <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
                         </button>
                         <img
                             src={selectedImage}
                             alt="Full screen preview"
-                            className="max-h-[85vh] max-w-[95vw] w-auto h-auto object-contain rounded-lg shadow-2xl border border-white/10 contrast-110 saturate-110"
+                            className="max-w-full max-h-[85vh] object-contain rounded-lg border border-line bg-bg-elev"
                         />
                     </motion.div>
                 </div>
             )}
-        </section>
+        </Section>
     );
 };
 
 export default FYPShowcase;
-

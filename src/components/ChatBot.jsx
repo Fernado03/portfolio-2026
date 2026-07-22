@@ -22,7 +22,7 @@ const SYSTEM_PROMPT = `You are Fernado's friendly AI assistant on his portfolio 
 - Location preference: Currently only open to Kuching, Sarawak (reason: family)
 - Work arrangement: Prefers on-site for better collaboration and communication
 - Salary expectation: RM1000 minimum, but flexible
-- Games played: MLBB (Mobile Legends), PUBG - might affect response time! 😄
+- Games played: MLBB (Mobile Legends), PUBG - might affect response time!
 
 ## Key Projects
 1. KinaVis (AI Medical Scribe) - Gold Medal at Festival Idea Sabah 2025. Most proud project because of the experience flying to Universiti Malaya and competing with outstanding competitors at ELLM Hackathon.
@@ -92,11 +92,11 @@ Connecting frontend + backend + code from different team members. Integration is
 
 ## Tech Opinions
 - Favorite language: Python (versatile, flexible, easy to learn). Fun fact: Java was the first language he learned!
-- Didn't like: CUDA (because of limited computer power 😅)
+- Didn't like: CUDA (because of limited computer power)
 - AI opinion: "Many misunderstand AI thinking it will overtake humans, but AI is used to make a better version of yourself 5x"
 
 ## Availability & Contact
-- Response time: Few minutes if not gaming 😄
+- Response time: Few minutes if not gaming
 - Best way to reach: WhatsApp (always checks notifications first) or direct call
 - Favorite food: Prawn Tom Yam - made by himself!
 - Night owl or morning person: Night owl
@@ -165,7 +165,7 @@ const parseMarkdown = (text) => {
 const ChatBot = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState([
-        { role: "assistant", content: "Hi! 👋 I'm Fernado's AI assistant. Ask me anything about his projects, skills, or experience!" }
+        { role: "assistant", content: "Hi — I'm Fernado's AI assistant. Ask me anything about his projects, skills, or experience." }
     ]);
     const [input, setInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -273,9 +273,9 @@ const ChatBot = () => {
             {/* Floating Chat Button */}
             <motion.button
                 onClick={() => setIsOpen(!isOpen)}
-                whileHover={{ scale: 1.1 }}
+                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="fixed bottom-24 right-6 z-40 w-14 h-14 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full shadow-lg shadow-cyan-500/30 flex items-center justify-center text-white hover:shadow-cyan-500/50 transition-shadow"
+                className="fixed bottom-24 right-6 z-40 h-14 w-14 rounded-full bg-accent text-white shadow-lg hover:bg-accent-strong active:scale-95 transition-colors flex items-center justify-center"
                 aria-label="Open AI chat"
             >
                 {isOpen ? (
@@ -297,18 +297,20 @@ const ChatBot = () => {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 20, scale: 0.95 }}
                         transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                        className="fixed bottom-44 right-6 z-40 w-80 sm:w-96 max-h-[500px] bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-2xl overflow-hidden flex flex-col"
+                        className="fixed bottom-44 right-6 z-40 w-80 sm:w-96 max-h-[500px] bg-bg-elev border border-line rounded-xl shadow-2xl overflow-hidden flex flex-col"
                     >
                         {/* Header */}
-                        <div className="bg-gradient-to-r from-cyan-500 to-blue-600 px-4 py-3 flex items-center gap-3">
-                            <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
-                                <span className="text-lg">🤖</span>
+                        <div className="bg-bg-elev border-b border-line px-4 py-3 flex items-center gap-3">
+                            <div className="h-9 w-9 rounded-md bg-accent-muted flex items-center justify-center">
+                                <svg className="w-5 h-5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                    <path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3zM19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9L19 15zM5 16l.7 1.8L7.5 18.5l-1.8.7L5 21l-.7-1.8L2.5 18.5l1.8-.7L5 16z" />
+                                </svg>
                             </div>
                             <div className="flex-1">
-                                <h3 className="text-white font-semibold text-sm">Ask About Fernado</h3>
-                                <p className="text-white/70 text-xs">Powered by Gemini AI</p>
+                                <h3 className="font-display font-semibold text-sm text-ink">Ask about Fernado</h3>
+                                <p className="font-mono text-xs text-ink-muted">Powered by Gemini AI</p>
                             </div>
-                            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" title="Online" />
+                            <div className="w-2 h-2 bg-accent rounded-full animate-pulse" title="Online" />
                         </div>
 
                         {/* Messages */}
@@ -322,8 +324,8 @@ const ChatBot = () => {
                                 >
                                     <div
                                         className={`max-w-[85%] px-4 py-2 rounded-2xl text-sm leading-relaxed ${msg.role === "user"
-                                            ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-br-md"
-                                            : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-bl-md"
+                                            ? "bg-accent text-white rounded-br-md"
+                                            : "bg-bg-subtle text-ink rounded-bl-md"
                                             }`}
                                     >
                                         {msg.role === "assistant" ? parseMarkdown(msg.content) : msg.content}
@@ -332,11 +334,11 @@ const ChatBot = () => {
                             ))}
                             {isLoading && (
                                 <div className="flex justify-start">
-                                    <div className="bg-slate-100 dark:bg-slate-800 px-4 py-3 rounded-2xl rounded-bl-md">
+                                    <div className="bg-bg-subtle px-4 py-3 rounded-2xl rounded-bl-md">
                                         <div className="flex gap-1">
-                                            <span className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                                            <span className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                                            <span className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                                            <span className="w-2 h-2 bg-ink-muted rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                                            <span className="w-2 h-2 bg-ink-muted rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                                            <span className="w-2 h-2 bg-ink-muted rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
                                         </div>
                                     </div>
                                 </div>
@@ -345,7 +347,7 @@ const ChatBot = () => {
                         </div>
 
                         {/* Input */}
-                        <div className="p-3 border-t border-slate-200 dark:border-slate-800">
+                        <div className="p-3 border-t border-line">
                             <div className="flex gap-2">
                                 <input
                                     ref={inputRef}
@@ -354,15 +356,16 @@ const ChatBot = () => {
                                     onChange={(e) => setInput(e.target.value)}
                                     onKeyDown={handleKeyDown}
                                     placeholder="Ask about projects, skills..."
-                                    className="flex-1 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 px-4 py-2 rounded-full text-sm outline-none focus:ring-2 focus:ring-cyan-500"
+                                    className="flex-1 bg-bg-subtle text-ink placeholder-ink-muted px-4 py-2 rounded-lg text-sm outline-none focus:ring-2 focus:ring-accent focus:ring-offset-0"
                                 />
                                 <button
                                     onClick={sendMessage}
                                     disabled={isLoading || !input.trim()}
-                                    className="w-10 h-10 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full flex items-center justify-center text-white disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg transition-shadow"
+                                    className="h-10 w-10 bg-accent text-white rounded-lg flex items-center justify-center hover:bg-accent-strong active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                    aria-label="Send message"
                                 >
                                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                                     </svg>
                                 </button>
                             </div>

@@ -1,29 +1,74 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { HERO_CONTENT } from "../constants";
+
+const GitHubIcon = () => (
+    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+        <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 00-1.3-3.2 4.2 4.2 0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 00-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 00-.1 3.2A4.6 4.6 0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"
+        />
+    </svg>
+);
+
+const LinkedInIcon = () => (
+    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+        <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4V8h4v1.5A5.5 5.5 0 0116 8zM6 9H2v12h4V9zM4 6a2 2 0 100-4 2 2 0 000 4z"
+        />
+    </svg>
+);
+
+const EmailIcon = () => (
+    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+        <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+        />
+    </svg>
+);
 
 const Footer = () => {
-    return (
-        <footer className="py-8 relative">
-            {/* Top Divider */}
-            <div className="container mx-auto px-6 mb-6">
-                <div className="flex items-center justify-center gap-4">
-                    <div className="h-px w-16 bg-gradient-to-r from-transparent to-slate-300 dark:to-slate-700" />
-                    <motion.div
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                        className="w-2 h-2 border border-cyan-400/50 dark:border-cyan-500/50 rotate-45"
-                    />
-                    <div className="h-px w-16 bg-gradient-to-l from-transparent to-slate-300 dark:to-slate-700" />
-                </div>
-            </div>
+    const socials = [
+        { name: "GitHub", href: HERO_CONTENT.github, Icon: GitHubIcon },
+        { name: "LinkedIn", href: HERO_CONTENT.linkedin, Icon: LinkedInIcon },
+        { name: "Email", href: `mailto:${HERO_CONTENT.email}`, Icon: EmailIcon },
+    ];
 
-            <div className="container mx-auto px-6 text-center">
-                <p className="text-slate-500 dark:text-gray-500 text-sm">
-                    Built with <span className="text-cyan-500 dark:text-cyan-400">React</span> + <span className="text-blue-500">Tailwind</span> + <span className="text-purple-500 dark:text-purple-400">Framer Motion</span>
-                </p>
-                <p className="text-slate-400 dark:text-gray-600 text-xs mt-2">
-                    © {new Date().getFullYear()} Fernado. All rights reserved.
-                </p>
+    return (
+        <footer className="border-t border-line py-10">
+            <div className="max-w-6xl mx-auto px-6 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+                {/* Left: name + note */}
+                <div>
+                    <p className="font-display font-semibold text-ink">Fernado George</p>
+                    <p className="text-sm text-ink-muted mt-1">
+                        Data science &amp; AI engineering — Kuching, Sarawak
+                    </p>
+                </div>
+
+                {/* Right: copyright + socials */}
+                <div className="flex flex-col gap-3 md:items-end">
+                    <div className="flex items-center gap-4">
+                        {socials.map(({ name, href, Icon }) => (
+                            <a
+                                key={name}
+                                href={href}
+                                target={href.startsWith("http") ? "_blank" : undefined}
+                                rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                                className="text-ink-muted hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded"
+                                aria-label={name}
+                            >
+                                <Icon />
+                            </a>
+                        ))}
+                    </div>
+                    <p className="text-sm text-ink-muted">
+                        © {new Date().getFullYear()} Fernado George. All rights reserved.
+                    </p>
+                </div>
             </div>
         </footer>
     );

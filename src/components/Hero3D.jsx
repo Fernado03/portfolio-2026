@@ -17,7 +17,7 @@ const FloatingShape = () => {
             <mesh ref={meshRef} scale={1.8}>
                 <icosahedronGeometry args={[1, 1]} />
                 <MeshDistortMaterial
-                    color="#06b6d4"
+                    color="#34d399"
                     attach="material"
                     distort={0.4}
                     speed={2}
@@ -32,14 +32,16 @@ const FloatingShape = () => {
 
 const Hero3D = () => {
     return (
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[400px] md:h-[400px] lg:w-[500px] lg:h-[500px] opacity-60 pointer-events-none">
+        <div className="w-full h-full opacity-60 pointer-events-none">
             <Canvas
                 camera={{ position: [0, 0, 5], fov: 45 }}
+                dpr={[1, 1.5]}
+                performance={{ min: 0.5 }}
                 style={{ background: "transparent" }}
             >
                 <ambientLight intensity={0.5} />
                 <directionalLight position={[10, 10, 5]} intensity={1} />
-                <pointLight position={[-10, -10, -5]} intensity={0.5} color="#8b5cf6" />
+                <pointLight position={[-10, -10, -5]} intensity={0.5} color="#ffffff" />
                 <FloatingShape />
             </Canvas>
         </div>

@@ -38,7 +38,7 @@ const EasterEgg = () => {
                 id: i,
                 x: Math.random() * window.innerWidth,
                 y: -20,
-                color: ["#06b6d4", "#8b5cf6", "#ec4899", "#f59e0b", "#10b981"][Math.floor(Math.random() * 5)],
+                color: ["#34d399", "#059669", "#fafaf9", "#a8a29e"][Math.floor(Math.random() * 4)],
                 size: Math.random() * 10 + 5,
                 delay: Math.random() * 0.5,
             });
@@ -58,7 +58,7 @@ const EasterEgg = () => {
             {isTriggered && (
                 <>
                     {/* Confetti */}
-                    <div className="fixed inset-0 z-[9999] pointer-events-none overflow-hidden">
+                    <div className="fixed inset-0 z-[60] pointer-events-none overflow-hidden">
                         {confetti.map((particle) => (
                             <motion.div
                                 key={particle.id}
@@ -89,12 +89,12 @@ const EasterEgg = () => {
                         initial={{ opacity: 0, scale: 0.5 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.5 }}
-                        className="fixed inset-0 z-[9999] flex items-center justify-center pointer-events-none"
+                        className="fixed inset-0 z-[60] flex items-center justify-center pointer-events-none"
                     >
-                        <div className="bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 text-white px-8 py-6 rounded-2xl shadow-2xl text-center">
-                            <p className="text-3xl font-bold mb-2">🎉 You found it!</p>
-                            <p className="text-lg opacity-90">Curiosity is a great trait for a developer!</p>
-                            <p className="text-sm opacity-70 mt-2">- Fernado</p>
+                        <div className="bg-bg-elev border border-line rounded-xl text-ink px-8 py-6 shadow-2xl text-center">
+                            <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent mb-3">Konami accepted</p>
+                            <p className="font-display text-2xl font-semibold tracking-tight">30 extra lives not included.</p>
+                            <p className="font-mono text-xs text-ink-muted mt-3">↑↑↓↓←→←→BA — Fernado</p>
                         </div>
                     </motion.div>
                 </>

@@ -124,7 +124,7 @@ const CustomCursor = () => {
 
             {/* Outer ring - slow follow */}
             <motion.div
-                className="fixed top-0 left-0 pointer-events-none z-[9998]"
+                className="fixed top-0 left-0 pointer-events-none z-[59] mix-blend-difference"
                 style={{
                     x: outerXSpring,
                     y: outerYSpring,
@@ -138,10 +138,7 @@ const CustomCursor = () => {
                         opacity: isHidden ? 0 : 0.6,
                     }}
                     transition={{ duration: 0.3 }}
-                    className={`w-10 h-10 rounded-full border-2 transition-colors ${isHovering
-                            ? "border-cyan-500"
-                            : "border-slate-400 dark:border-white/40"
-                        }`}
+                    className="w-10 h-10 rounded-full border border-white/40"
                 />
             </motion.div>
         </>

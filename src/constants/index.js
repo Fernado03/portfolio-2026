@@ -3,7 +3,7 @@ export const HERO_CONTENT = {
     name: "Fernado",
     title: "Data Scientist & Full-Stack Developer",
     subtitle: "Specializing in Generative AI, RAG Systems, and Scalable Web Architecture.",
-    availability: "🟢 Open for Internship (Mar - Aug 2026)",
+    availability: "AI/ML Development Intern @ Breakfast Byte",
     resumeLink: "/Fernado_George_DataScience_Intern_Resume.pdf",
     email: "milobio351@gmail.com",
     universityEmail: "fernado_george_bi22@iluv.ums.edu.my",
@@ -115,7 +115,6 @@ export const ABOUT_CONTENT = {
             details: "CGPA: 4.00 | Best Computer Science Student Award",
         }
     ],
-    narrative: "Final-year Data Science student at Universiti Malaysia Sabah (CGPA 3.75), based in Kuching, Sarawak. What started as an addiction to mobile games sparked a childhood dream of becoming a programmer. That curiosity led me to Data Science, where I discovered my passion for AI, machine learning, and the thrill of turning raw data into insights. Now a Gold Medalist, I specialize in Generative AI and RAG systems, combining data analysis with full-stack engineering (React, Node.js) to build complete, scalable solutions. Currently seeking internships in AI/ML or Data Science roles — though I'm equally comfortable building web applications. When I'm not training models or debugging code, you'll probably find me fishing. 🎣",
     profileImages: [
         "/about/profile_picture.png",
         "/about/1748327868606.jpg",
@@ -130,6 +129,12 @@ export const ABOUT_CONTENT = {
     ],
     hackathons: "Led teams in 4+ hackathons (MarineHack, JomHack), managing 48-hour sprints to secure 1 Gold & 1 Silver medal. Oversaw full-stack architecture, task delegation, and final product pitching.",
     experience: [
+        {
+            role: "AI/ML Development Intern",
+            organization: "Breakfast Byte Sdn. Bhd.",
+            period: "Mar 2026 - Present",
+            description: "Kuching, Sarawak • Built KI Konnekt, a Gradio-based AI assistant for a German client integrating local Ollama RAG + OpenAI workflows (hybrid BM25/FAISS retrieval, streaming, multi-format document pipelines). Engineered an end-to-end computer-vision pipeline for a Sarawak car-wash client converting daily CCTV footage into structured records — vehicle-session detection, multi-bay assignment, license-plate OCR, and wash-action classification with a local operator dashboard."
+        },
         {
             role: "Ketua Exco Akademik dan Kerjaya",
             organization: "Persatuan Mahasiswa Fakulti Komputeran dan Informatik (PMFKI)",
@@ -153,12 +158,12 @@ export const SKILLS = [
     },
     {
         category: "AI & ML",
-        items: ["Deep Learning", "NLP", "LLMs (Gemini Pro)", "RAG", "Computer Vision", "Generative AI"],
+        items: ["Deep Learning", "NLP", "LLMs (OpenAI, Gemini, Ollama)", "RAG (FAISS, BM25)", "Computer Vision", "Generative AI"],
         icon: "/skills/ai_ml_icon.png",
     },
     {
         category: "Frameworks & Tools",
-        items: ["TensorFlow", "PyTorch", "React (Vite)", "Node.js", "Tailwind CSS", "Docker", "GCP", "Git"],
+        items: ["TensorFlow", "PyTorch", "React (Vite)", "Node.js", "Tailwind CSS", "Docker", "GCP", "MongoDB", "Gradio", "Git"],
         icon: "/skills/frameworks_tools_icon.png",
     },
 ];
