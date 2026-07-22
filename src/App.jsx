@@ -11,7 +11,6 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import CustomCursor from "./components/CustomCursor";
 import CommandPalette from "./components/CommandPalette";
-import ChatBot from "./components/ChatBot";
 import Preloader from "./components/Preloader";
 import EasterEgg from "./components/EasterEgg";
 import ScrollToTop from "./components/ScrollToTop";
@@ -38,7 +37,6 @@ function App() {
       <div className={`noise-overlay bg-bg min-h-screen text-ink relative overflow-x-hidden cursor-none ${!isLoaded ? 'opacity-0' : 'opacity-100'} transition-opacity duration-500`}>
         <CustomCursor />
         <CommandPalette />
-        <ChatBot />
         <EasterEgg />
         <ScrollToTop />
 
