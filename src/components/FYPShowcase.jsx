@@ -6,6 +6,7 @@ import Section from "./ui/Section";
 import SectionHeader from "./ui/SectionHeader";
 import Chip from "./ui/Chip";
 import Button from "./ui/Button";
+import { resizedImage } from "../utils/image";
 
 const spring = { type: "spring", stiffness: 100, damping: 20 };
 
@@ -49,9 +50,11 @@ const FYPShowcase = () => {
                 >
                     <div className="rounded-xl border border-line overflow-hidden bg-bg-subtle aspect-video">
                         <img
-                            src={FYP_CONTENT.image}
+                            {...resizedImage(FYP_CONTENT.image)}
+                            sizes="(min-width: 1024px) 45vw, 100vw"
                             alt={FYP_CONTENT.title}
                             loading="lazy"
+                            decoding="async"
                             className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
                         />
                     </div>
@@ -87,9 +90,10 @@ const FYPShowcase = () => {
                                     aria-label="View award poster"
                                 >
                                     <img
-                                        src={FYP_CONTENT.award.image}
+                                        {...resizedImage(FYP_CONTENT.award.image)}
                                         alt={FYP_CONTENT.award.title}
                                         loading="lazy"
+                                        decoding="async"
                                         className="h-20 w-auto rounded-lg border border-line object-cover hover:border-accent/50 transition-colors"
                                     />
                                 </button>
@@ -204,9 +208,10 @@ const FYPShowcase = () => {
                             <span className="shrink-0 hidden sm:block">
                                 <span className="block h-14 w-20 rounded-lg border border-line overflow-hidden bg-bg-subtle group-hover:border-accent/50 transition-colors">
                                     <img
-                                        src={item.src}
+                                        {...resizedImage(item.src)}
                                         alt=""
                                         loading="lazy"
+                                        decoding="async"
                                         className="h-full w-full object-cover"
                                     />
                                 </span>

@@ -6,6 +6,7 @@ import Section from "./ui/Section";
 import SectionHeader from "./ui/SectionHeader";
 import Chip from "./ui/Chip";
 import Button from "./ui/Button";
+import { resizedImage } from "../utils/image";
 
 const spring = { type: "spring", stiffness: 100, damping: 20 };
 
@@ -102,9 +103,11 @@ const Projects = () => {
                                 aria-label={`Enlarge ${featured.title} preview`}
                             >
                                 <img
-                                    src={featured.image}
+                                    {...resizedImage(featured.image)}
+                                    sizes="(min-width: 768px) 45vw, 100vw"
                                     alt={featured.title}
                                     loading="lazy"
+                                    decoding="async"
                                     className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
                                 />
                                 <span className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -147,9 +150,11 @@ const Projects = () => {
                             aria-label={`Enlarge ${project.title} preview`}
                         >
                             <img
-                                src={project.image}
+                                {...resizedImage(project.image)}
+                                sizes="(min-width: 768px) 45vw, 100vw"
                                 alt={project.title}
                                 loading="lazy"
+                                decoding="async"
                                 className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
                             />
                             <span className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">

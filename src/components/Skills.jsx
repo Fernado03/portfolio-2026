@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { SKILLS } from "../constants";
+import { resizedImage } from "../utils/image";
 
 const Skills = () => {
     return (
@@ -36,9 +37,10 @@ const Skills = () => {
                             <div className="md:col-span-3 flex items-center gap-3">
                                 {skillGroup.icon && (
                                     <img
-                                        src={skillGroup.icon}
+                                        {...resizedImage(skillGroup.icon)}
                                         alt={`${skillGroup.category} icon`}
                                         loading="lazy"
+                                        decoding="async"
                                         className="w-8 h-8 rounded-md border border-line object-cover"
                                     />
                                 )}

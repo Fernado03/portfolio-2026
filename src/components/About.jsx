@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ABOUT_CONTENT } from "../constants";
+import { resizedImage } from "../utils/image";
 import Section from "./ui/Section";
 import SectionHeader from "./ui/SectionHeader";
 
@@ -19,8 +20,11 @@ const Carousel = ({ images }) => {
             <AnimatePresence mode="wait">
                 <motion.img
                     key={currentIndex}
-                    src={images[currentIndex]}
+                    {...resizedImage(images[currentIndex])}
+                    sizes="(min-width: 1024px) 35vw, 90vw"
                     alt="Fernado - Profile photo"
+                    loading="lazy"
+                    decoding="async"
                     initial={{ opacity: 0, scale: 1.1 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0 }}

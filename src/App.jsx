@@ -9,7 +9,6 @@ import Skills from "./components/Skills";
 import Awards from "./components/Awards";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
-import CustomCursor from "./components/CustomCursor";
 import CommandPalette from "./components/CommandPalette";
 import Preloader from "./components/Preloader";
 import EasterEgg from "./components/EasterEgg";
@@ -34,8 +33,7 @@ function App() {
       {/* Preloader */}
       <Preloader onComplete={() => setIsLoaded(true)} />
 
-      <div className={`noise-overlay bg-bg min-h-screen text-ink relative overflow-x-hidden cursor-none ${!isLoaded ? 'opacity-0' : 'opacity-100'} transition-opacity duration-500`}>
-        <CustomCursor />
+      <div className={`noise-overlay bg-bg min-h-screen text-ink relative overflow-x-hidden ${!isLoaded ? 'opacity-0' : 'opacity-100'} transition-opacity duration-500`}>
         <CommandPalette />
         <EasterEgg />
         <ScrollToTop />

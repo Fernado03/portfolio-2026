@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { AWARDS } from "../constants";
+import { resizedImage } from "../utils/image";
 
 const EMOJI_RE = /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu;
 
@@ -76,9 +77,10 @@ const Awards = () => {
                                 </span>
                                 {index === 0 && award.image && (
                                     <img
-                                        src={award.image}
+                                        {...resizedImage(award.image)}
                                         alt={name}
                                         loading="lazy"
+                                        decoding="async"
                                         className="w-16 h-16 rounded-lg object-cover border border-line ml-auto shrink-0"
                                     />
                                 )}
