@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Float, MeshDistortMaterial } from "@react-three/drei";
+import { useInView } from "framer-motion";
 
 const FloatingShape = () => {
     const meshRef = useRef();
@@ -31,9 +32,13 @@ const FloatingShape = () => {
 };
 
 const Hero3D = () => {
+    const wrapperRef = useRef(null);
+    const inView = useInView(wrapperRef);
+
     return (
-        <div className="w-full h-full opacity-60 pointer-events-none">
+        <div ref={wrapperRef} className="w-full h-full opacity-60 pointer-events-none">
             <Canvas
+                frameloop={inView ? "always" : "never"}
                 camera={{ position: [0, 0, 5], fov: 45 }}
                 dpr={[1, 1.5]}
                 performance={{ min: 0.5 }}

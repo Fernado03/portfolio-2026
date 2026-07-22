@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FYP_CONTENT } from "../constants";
-import { FADE_IN_VARIANTS, STAGGER_CONTAINER } from "../constants/animations";
+import { FADE_IN_VARIANTS } from "../constants/animations";
 import Section from "./ui/Section";
 import SectionHeader from "./ui/SectionHeader";
 import Chip from "./ui/Chip";
@@ -9,22 +9,6 @@ import Button from "./ui/Button";
 import { resizedImage } from "../utils/image";
 
 const spring = { type: "spring", stiffness: 100, damping: 20 };
-
-// Split "Title: detail" or "Title (detail)" captions into title/body for the findings list.
-const splitCaption = (caption) => {
-    const colon = caption.indexOf(":");
-    if (colon > 0) {
-        return { title: caption.slice(0, colon).trim(), body: caption.slice(colon + 1).trim() };
-    }
-    const paren = caption.indexOf("(");
-    if (paren > 0) {
-        return {
-            title: caption.slice(0, paren).trim(),
-            body: caption.slice(paren).replace(/^\(|\)$/g, "").trim(),
-        };
-    }
-    return { title: caption, body: null };
-};
 
 const FYPShowcase = () => {
     const [selectedImage, setSelectedImage] = React.useState(null);
@@ -37,6 +21,38 @@ const FYPShowcase = () => {
                 description={FYP_CONTENT.tagline}
             />
 
+            {FYP_CONTENT.award && (
+                <motion.div
+                    variants={FADE_IN_VARIANTS}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    transition={spring}
+                    className="border-y border-line py-4 mb-12 flex items-center gap-4"
+                >
+                    <div className="flex-1 min-w-0">
+                        <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent mb-1">Award</p>
+                        <p className="text-ink font-medium">{FYP_CONTENT.award.title}</p>
+                    </div>
+                    {FYP_CONTENT.award.image && (
+                        <button
+                            type="button"
+                            onClick={() => setSelectedImage(FYP_CONTENT.award.image)}
+                            className="shrink-0 focus-visible:outline-accent"
+                            aria-label="View award poster"
+                        >
+                            <img
+                                {...resizedImage(FYP_CONTENT.award.image)}
+                                alt={FYP_CONTENT.award.title}
+                                loading="lazy"
+                                decoding="async"
+                                className="h-14 w-auto rounded-lg border border-line object-cover hover:border-accent/50 transition-colors"
+                            />
+                        </button>
+                    )}
+                </motion.div>
+            )}
+
             <div className="grid lg:grid-cols-2 gap-12 items-start">
                 {/* Visual Side */}
                 <motion.div
@@ -45,25 +61,50 @@ const FYPShowcase = () => {
                     whileInView="visible"
                     viewport={{ once: true }}
                     transition={spring}
-                    className="group cursor-pointer"
-                    onClick={() => setSelectedImage(FYP_CONTENT.image)}
                 >
-                    <div className="rounded-xl border border-line overflow-hidden bg-bg-subtle aspect-video">
-                        <img
-                            {...resizedImage(FYP_CONTENT.image)}
-                            sizes="(min-width: 1024px) 45vw, 100vw"
-                            alt={FYP_CONTENT.title}
-                            loading="lazy"
-                            decoding="async"
-                            className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
-                        />
+                    <div
+                        className="group cursor-pointer"
+                        onClick={() => setSelectedImage(FYP_CONTENT.image)}
+                    >
+                        <div className="rounded-xl border border-line overflow-hidden bg-bg-subtle aspect-video">
+                            <img
+                                {...resizedImage(FYP_CONTENT.image)}
+                                sizes="(min-width: 1024px) 45vw, 100vw"
+                                alt={FYP_CONTENT.title}
+                                loading="lazy"
+                                decoding="async"
+                                className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                            />
+                        </div>
+                        <p className="mt-3 font-mono text-xs text-ink-muted flex items-center gap-2 group-hover:text-accent transition-colors">
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                            </svg>
+                            Click to enlarge
+                        </p>
                     </div>
-                    <p className="mt-3 font-mono text-xs text-ink-muted flex items-center gap-2 group-hover:text-accent transition-colors">
-                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
-                        </svg>
-                        Click to enlarge
-                    </p>
+
+                    {FYP_CONTENT.gallery?.length > 0 && (
+                        <div className="grid grid-cols-3 gap-3 mt-4">
+                            {FYP_CONTENT.gallery.map((item, idx) => (
+                                <button
+                                    key={idx}
+                                    type="button"
+                                    onClick={() => setSelectedImage(item.src)}
+                                    className="rounded-lg border border-line overflow-hidden aspect-video bg-bg-subtle hover:border-accent/50 transition-colors focus-visible:outline-accent"
+                                    aria-label={item.caption}
+                                >
+                                    <img
+                                        {...resizedImage(item.src)}
+                                        alt={item.caption}
+                                        loading="lazy"
+                                        decoding="async"
+                                        className="h-full w-full object-cover"
+                                    />
+                                </button>
+                            ))}
+                        </div>
+                    )}
                 </motion.div>
 
                 {/* Content Side */}
@@ -77,29 +118,6 @@ const FYPShowcase = () => {
                     <h3 className="font-display text-2xl md:text-3xl font-semibold text-ink mb-6 leading-tight">
                         {FYP_CONTENT.title}
                     </h3>
-
-                    {FYP_CONTENT.award && (
-                        <div className="border-l-2 border-accent pl-4 mb-8">
-                            <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent mb-1">Award</p>
-                            <p className="text-ink font-medium">{FYP_CONTENT.award.title}</p>
-                            {FYP_CONTENT.award.image && (
-                                <button
-                                    type="button"
-                                    onClick={() => setSelectedImage(FYP_CONTENT.award.image)}
-                                    className="mt-3 block focus-visible:outline-accent"
-                                    aria-label="View award poster"
-                                >
-                                    <img
-                                        {...resizedImage(FYP_CONTENT.award.image)}
-                                        alt={FYP_CONTENT.award.title}
-                                        loading="lazy"
-                                        decoding="async"
-                                        className="h-20 w-auto rounded-lg border border-line object-cover hover:border-accent/50 transition-colors"
-                                    />
-                                </button>
-                            )}
-                        </div>
-                    )}
 
                     <p className="text-ink-muted leading-relaxed mb-8">{FYP_CONTENT.description}</p>
 
@@ -168,59 +186,6 @@ const FYPShowcase = () => {
                     </div>
                 </motion.div>
             </div>
-
-            {/* Research Findings — hairline list */}
-            <motion.div
-                variants={STAGGER_CONTAINER}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                className="mt-16 md:mt-20"
-            >
-                <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-ink-muted mb-6">
-                    Research findings
-                </h3>
-                <div className="divide-y divide-line border-y border-line">
-                    {FYP_CONTENT.gallery?.map((item, idx) => {
-                        const { title, body } = splitCaption(item.caption);
-                        return (
-                        <motion.button
-                            key={idx}
-                            type="button"
-                            variants={FADE_IN_VARIANTS}
-                            transition={spring}
-                            onClick={() => setSelectedImage(item.src)}
-                            className="w-full py-5 flex gap-4 items-start text-left group focus-visible:outline-accent"
-                        >
-                            <span className="font-mono text-xs text-accent pt-1 shrink-0">
-                                {String(idx + 1).padStart(2, "0")}
-                            </span>
-                            <span className="flex-1 min-w-0">
-                                <span className="block font-medium text-ink group-hover:text-accent transition-colors">
-                                    {title}
-                                </span>
-                                {body && (
-                                    <span className="block text-sm text-ink-muted mt-1 leading-relaxed">
-                                        {body}
-                                    </span>
-                                )}
-                            </span>
-                            <span className="shrink-0 hidden sm:block">
-                                <span className="block h-14 w-20 rounded-lg border border-line overflow-hidden bg-bg-subtle group-hover:border-accent/50 transition-colors">
-                                    <img
-                                        {...resizedImage(item.src)}
-                                        alt=""
-                                        loading="lazy"
-                                        decoding="async"
-                                        className="h-full w-full object-cover"
-                                    />
-                                </span>
-                            </span>
-                        </motion.button>
-                        );
-                    })}
-                </div>
-            </motion.div>
 
             {/* Lightbox Modal */}
             {selectedImage && (
