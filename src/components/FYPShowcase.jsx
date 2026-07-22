@@ -46,7 +46,7 @@ const FYPShowcase = () => {
                                 alt={FYP_CONTENT.award.title}
                                 loading="lazy"
                                 decoding="async"
-                                className="h-14 w-auto rounded-lg border border-line object-cover hover:border-accent/50 transition-colors"
+                                className="h-28 md:h-32 w-auto rounded-lg border border-line object-cover hover:border-accent/50 transition-colors"
                             />
                         </button>
                     )}

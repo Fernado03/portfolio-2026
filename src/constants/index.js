@@ -107,14 +107,14 @@ export const ABOUT_CONTENT = {
             university: "Universiti Malaysia Sabah",
             year: "2022 – Present",
             details: "CGPA: 3.75 | Dean's List",
-            monogram: "UMS",
+            logo: "/logos/ums.png",
         },
         {
             degree: "Science Module II",
             university: "Sarawak College Matriculation",
             year: "2021 – 2022",
             details: "CGPA: 4.00 | Best Computer Science Student Award",
-            monogram: "KMS",
+            logo: "/logos/kmsw-crest.png",
         }
     ],
     profileImages: [
