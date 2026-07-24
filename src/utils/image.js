@@ -5,7 +5,7 @@
 const WIDTHS = {
     projects: [800, 400],
     about: [700, 350],
-    awards: [400],
+    awards: [800, 400],
     skills: [96],
 };
 

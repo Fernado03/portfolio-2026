@@ -114,12 +114,6 @@ const CommandPalette = () => {
 
     return (
         <>
-            {/* Keyboard hint - fixed bottom */}
-            <div className="fixed bottom-6 right-6 z-40 hidden md:flex items-center gap-2 border border-line rounded-md font-mono text-xs text-ink-muted bg-bg-elev px-3 py-2">
-                <kbd className="px-1.5 py-0.5 border border-line rounded text-[10px]">⌘K</kbd>
-                <span>Quick actions</span>
-            </div>
-
             <AnimatePresence>
                 {isOpen && (
                     <>

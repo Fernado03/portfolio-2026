@@ -13,8 +13,8 @@ const jobs = [
   { dir: "projects", widths: [800, 400], quality: 78 },
   // about photos: displayed ~344-450px → 700w + 350w
   { dir: "about", widths: [700, 350], quality: 78 },
-  // awards photo: displayed as 57px thumb + FYP award block ~200px → 400w
-  { dir: "awards", widths: [400], quality: 78 },
+  // award poster: primary FYP visual plus smaller card thumbnails
+  { dir: "awards", widths: [800, 400], quality: 78 },
   // skill icons: displayed 32px → 96w (3x for retina)
   { dir: "skills", widths: [96], quality: 85 },
 ];

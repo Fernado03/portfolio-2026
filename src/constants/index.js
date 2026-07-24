@@ -22,7 +22,6 @@ export const FYP_CONTENT = {
         "Ensemble Strategy: Achieved 71.6% F1-score, maintaining stability even under noise."
     ],
     techStack: ["Python", "PyTorch", "WavLM", "DINOv2", "ModernBERT"],
-    image: "/projects/fyp_cover_ai.png",
     gallery: [
         { src: "/projects/noise_robustness.png", caption: "Impact of Noise on Model Performance (The Gauntlet)" },
         { src: "/projects/modal_reliance.png", caption: "Modal Reliance Analysis: Impact of Missing Modalities" },
