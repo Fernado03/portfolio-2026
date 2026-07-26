@@ -58,7 +58,7 @@ const Footer = () => {
                                 href={href}
                                 target={href.startsWith("http") ? "_blank" : undefined}
                                 rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-                                className="text-ink-muted hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded"
+                                className="text-ink-muted hover:text-accent transition-colors rounded"
                                 aria-label={name}
                             >
                                 <Icon />

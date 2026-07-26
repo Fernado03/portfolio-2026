@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useTheme } from "../context/ThemeContext";
+import { useTheme } from "../context/theme";
+import { openCommandPalette } from "../utils/commandPalette";
 
 const SunIcon = () => (
     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
@@ -49,8 +50,8 @@ const Navbar = () => {
         <>
             {/* Skip to content */}
             <a
-                href="#fyp"
-                className="sr-only focus:not-sr-only absolute top-2 left-2 z-50 bg-accent text-white px-3 py-1 rounded"
+                href="#main"
+                className="sr-only focus:not-sr-only absolute top-2 left-2 z-50 bg-accent text-bg px-3 py-1 rounded"
             >
                 Skip to content
             </a>
@@ -82,18 +83,20 @@ const Navbar = () => {
                             </a>
                         ))}
 
-                        {/* ⌘K hint chip (decorative; palette has its own hint) */}
-                        <span
-                            aria-hidden="true"
-                            className="border border-line rounded-md px-1.5 py-0.5 font-mono text-xs text-ink-muted"
+                        {/* Command palette trigger — the chip used to be decorative only. */}
+                        <button
+                            type="button"
+                            onClick={openCommandPalette}
+                            className="border border-line rounded-md px-1.5 py-0.5 font-mono text-xs text-ink-muted hover:text-accent hover:border-accent/50 transition-colors"
+                            aria-label="Open command palette"
                         >
                             ⌘K
-                        </span>
+                        </button>
 
                         {/* Theme Toggle Button */}
                         <button
                             onClick={toggleTheme}
-                            className="p-2 text-ink-muted hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-lg"
+                            className="p-2 text-ink-muted hover:text-accent transition-colors rounded-lg"
                             aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
                         >
                             {isDark ? <SunIcon /> : <MoonIcon />}
@@ -104,13 +107,13 @@ const Navbar = () => {
                     <div className="md:hidden flex items-center gap-2">
                         <button
                             onClick={toggleTheme}
-                            className="p-2 text-ink-muted hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-lg"
+                            className="p-2 text-ink-muted hover:text-accent transition-colors rounded-lg"
                             aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
                         >
                             {isDark ? <SunIcon /> : <MoonIcon />}
                         </button>
                         <button
-                            className="p-2 text-ink-muted hover:text-ink transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-lg"
+                            className="p-2 text-ink-muted hover:text-ink transition-colors rounded-lg"
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                             aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
                             aria-expanded={isMobileMenuOpen}

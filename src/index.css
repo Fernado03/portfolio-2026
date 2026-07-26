@@ -10,9 +10,11 @@
   --ink: #1c1917;
   --ink-muted: #57534e;
   --line: #e7e5e4;
-  --accent: #059669;
-  --accent-strong: #047857;
-  --accent-muted: rgba(5, 150, 105, 0.12);
+  /* Accent carries 12px eyebrow text and also fills buttons behind --bg-coloured labels,
+     so it must clear 4.5:1 both ways against #fafaf9. #047857 measures 5.25:1. */
+  --accent: #047857;
+  --accent-strong: #065f46;
+  --accent-muted: rgba(4, 120, 87, 0.12);
 }
 
 /* Design tokens — dark */

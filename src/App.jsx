@@ -11,9 +11,9 @@ import Footer from "./components/Footer";
 import CommandPalette from "./components/CommandPalette";
 import EasterEgg from "./components/EasterEgg";
 import ScrollToTop from "./components/ScrollToTop";
-import SpeedInsightsComponent from "./components/SpeedInsights";
 import { ThemeProvider } from "./context/ThemeContext";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 import { motion, useScroll, useSpring } from "framer-motion";
 
@@ -22,39 +22,39 @@ function App() {
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
-    restDelta: 0.001
+    restDelta: 0.001,
   });
 
   return (
     <ThemeProvider>
-
-      <div className="noise-overlay bg-bg min-h-screen text-ink relative overflow-x-hidden">
+      <div className="noise-overlay bg-bg min-h-[100dvh] text-ink relative overflow-x-hidden">
         <CommandPalette />
         <EasterEgg />
         <ScrollToTop />
 
-        {/* Scroll Progress Bar */}
+        {/* Scroll progress bar */}
         <motion.div
           className="fixed top-0 left-0 right-0 h-0.5 bg-accent origin-left z-40"
           style={{ scaleX }}
         />
 
         <Navbar />
-        <Hero />
-        <FYPShowcase />
-        <Projects />
-        <About />
-        <Experience />
-        <Skills />
-        <Awards />
-        <Contact />
+        <main id="main">
+          <Hero />
+          <FYPShowcase />
+          <Projects />
+          <About />
+          <Experience />
+          <Skills />
+          <Awards />
+          <Contact />
+        </main>
         <Footer />
         <Analytics />
-        <SpeedInsightsComponent />
+        <SpeedInsights />
       </div>
     </ThemeProvider>
   );
 }
 
 export default App;
-

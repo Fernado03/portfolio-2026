@@ -1,8 +1,12 @@
-import React from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { SPRING } from "../constants/animations";
 import { HERO_CONTENT } from "../constants";
-import Hero3D from "./Hero3D";
 import Button from "./ui/Button";
+
+// three.js is the heaviest dependency in the tree and drives one decorative object,
+// so it is split out and only requested once the desktop hero is actually mounted.
+const Hero3D = lazy(() => import("./Hero3D"));
 
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -20,11 +24,25 @@ const itemVariants = {
     visible: {
         opacity: 1,
         y: 0,
-        transition: { type: "spring", stiffness: 100, damping: 20 },
+        transition: SPRING,
     },
 };
 
+const DESKTOP_QUERY = "(min-width: 768px)";
+
 const Hero = () => {
+    // Lazily initialised so the first paint already knows, avoiding a mount-then-unmount canvas.
+    const [isDesktop, setIsDesktop] = useState(
+        () => typeof window !== "undefined" && window.matchMedia(DESKTOP_QUERY).matches
+    );
+
+    useEffect(() => {
+        const mq = window.matchMedia(DESKTOP_QUERY);
+        const sync = (e) => setIsDesktop(e.matches);
+        mq.addEventListener("change", sync);
+        return () => mq.removeEventListener("change", sync);
+    }, []);
+
     return (
         <section className="min-h-[100dvh] flex items-center relative">
             <div className="max-w-6xl mx-auto px-6 w-full grid md:grid-cols-12 gap-8 items-center">
@@ -40,7 +58,7 @@ const Hero = () => {
                         variants={itemVariants}
                         className="font-mono text-xs uppercase tracking-[0.2em] text-accent"
                     >
-                        Fernado George — Data scientist &amp; developer
+                        {HERO_CONTENT.title}
                     </motion.p>
 
                     {/* H1 */}
@@ -48,7 +66,7 @@ const Hero = () => {
                         variants={itemVariants}
                         className="font-display text-5xl md:text-6xl font-semibold tracking-tighter leading-[1.05] text-ink mt-5"
                     >
-                        {HERO_CONTENT.title}
+                        {HERO_CONTENT.name}
                     </motion.h1>
 
                     {/* Subtitle */}
@@ -84,12 +102,7 @@ const Hero = () => {
                         >
                             Get in touch
                         </Button>
-                        <Button
-                            variant="tertiary"
-                            href={HERO_CONTENT.github}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
+                        <Button variant="tertiary" href={HERO_CONTENT.github}>
                             GitHub
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -108,10 +121,15 @@ const Hero = () => {
                     </motion.div>
                 </motion.div>
 
-                {/* 3D canvas — right column */}
-                <div className="hidden md:flex md:col-span-5 items-center justify-center relative h-[400px] lg:h-[500px]">
-                    <Hero3D />
-                </div>
+                {/* 3D canvas — desktop only. Gated on matchMedia rather than `hidden md:flex`,
+                   because CSS visibility still lets the canvas build a WebGL context on phones. */}
+                {isDesktop && (
+                    <div className="hidden md:flex md:col-span-5 items-center justify-center relative h-[400px] lg:h-[500px]">
+                        <Suspense fallback={null}>
+                            <Hero3D />
+                        </Suspense>
+                    </div>
+                )}
             </div>
 
             {/* Scroll cue — bottom left */}
@@ -126,13 +144,9 @@ const Hero = () => {
                 </span>
                 <span className="relative h-8 w-px bg-line overflow-hidden">
                     <motion.span
-                        animate={{ y: [-8, 32] }}
-                        transition={{
-                            duration: 1.6,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                        }}
-                        className="absolute left-0 top-0 h-2 w-px bg-accent"
+                        className="absolute inset-x-0 top-0 h-3 bg-accent"
+                        animate={{ y: [-12, 32] }}
+                        transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
                     />
                 </span>
             </motion.div>

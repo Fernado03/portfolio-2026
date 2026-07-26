@@ -3,44 +3,56 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="manifest" href="/manifest.json" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Primary Meta Tags -->
-  <title>Fernado | Data Scientist & Full-Stack Developer</title>
-  <meta name="title" content="Fernado | Data Scientist & Full-Stack Developer" />
+  <title>Fernado George — Data Scientist &amp; AI Engineer</title>
+  <meta name="title" content="Fernado George — Data Scientist &amp; AI Engineer" />
   <meta name="description"
-    content="Final-year Data Science student specializing in Generative AI, RAG Systems, and Scalable Web Architecture. Gold Medalist with experience in hackathon leadership and full-stack development." />
+    content="Final-year Data Science student at Universiti Malaysia Sabah building retrieval and computer-vision systems: a 71.6% F1 multimodal emotion thesis, a client RAG assistant, and a CCTV-to-records pipeline." />
   <meta name="keywords"
-    content="Fernado, Data Scientist, Full-Stack Developer, AI, Machine Learning, React, Portfolio" />
+    content="Fernado George, data scientist, AI engineer, RAG, retrieval, computer vision, machine learning, React, portfolio" />
   <meta name="author" content="Fernado George" />
+  <link rel="canonical" href="https://portfolio-2026-rho-lime.vercel.app/" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Fernado George" />
   <meta property="og:url" content="https://portfolio-2026-rho-lime.vercel.app/" />
-  <meta property="og:title" content="Fernado | Data Scientist & Full-Stack Developer" />
+  <meta property="og:title" content="Fernado George — Data Scientist &amp; AI Engineer" />
   <meta property="og:description"
-    content="Final-year Data Science student specializing in Generative AI, RAG Systems, and Scalable Web Architecture. View my projects and experience." />
+    content="Retrieval and computer-vision systems that ship: a 71.6% F1 multimodal emotion thesis, a client RAG assistant, and a CCTV-to-records pipeline." />
   <meta property="og:image" content="https://portfolio-2026-rho-lime.vercel.app/og-image.png" />
+  <meta property="og:image:alt" content="Fernado George — data science and AI engineering portfolio" />
 
   <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="https://portfolio-2026-rho-lime.vercel.app/" />
-  <meta property="twitter:title" content="Fernado | Data Scientist & Full-Stack Developer" />
-  <meta property="twitter:description"
-    content="Final-year Data Science student specializing in Generative AI, RAG Systems, and Scalable Web Architecture. View my projects and experience." />
-  <meta property="twitter:image" content="https://portfolio-2026-rho-lime.vercel.app/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://portfolio-2026-rho-lime.vercel.app/" />
+  <meta name="twitter:title" content="Fernado George — Data Scientist &amp; AI Engineer" />
+  <meta name="twitter:description"
+    content="Retrieval and computer-vision systems that ship: a 71.6% F1 multimodal emotion thesis, a client RAG assistant, and a CCTV-to-records pipeline." />
+  <meta name="twitter:image" content="https://portfolio-2026-rho-lime.vercel.app/og-image.png" />
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet" />
+  <!-- Theme colour follows the active surface so mobile chrome matches -->
+  <meta name="theme-color" content="#fafaf9" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0c0a09" media="(prefers-color-scheme: dark)" />
 
-  <!-- Theme Color -->
-  <meta name="theme-color" content="#fafaf9" />
+  <!--
+    Apply the stored theme before first paint. Without this the app mounts light
+    and repaints dark, which reads as a flash on reload.
+  -->
+  <script>
+    (function () {
+      try {
+        if (localStorage.getItem("theme") === "dark") {
+          document.documentElement.classList.add("dark");
+        }
+      } catch (_) { /* storage blocked — fall back to the light default */ }
+    })();
+  </script>
 
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
@@ -51,16 +63,18 @@
       "alternateName": "Fernado",
       "url": "https://portfolio-2026-rho-lime.vercel.app/",
       "image": "https://portfolio-2026-rho-lime.vercel.app/about/profile_picture.png",
-      "jobTitle": "Data Scientist & Full-Stack Developer",
-      "worksFor": {
-        "@type": "EducationalOrganization",
-        "name": "Universiti Malaysia Sabah"
-      },
-      "alumniOf": {
-        "@type": "EducationalOrganization",
-        "name": "Sarawak College Matriculation"
-      },
-      "knowsAbout": ["Data Science", "Machine Learning", "Generative AI", "RAG Systems", "Full-Stack Development", "React", "Python"],
+      "jobTitle": "Data Scientist & AI Engineer",
+      "alumniOf": [
+        {
+          "@type": "EducationalOrganization",
+          "name": "Universiti Malaysia Sabah"
+        },
+        {
+          "@type": "EducationalOrganization",
+          "name": "Sarawak Matriculation College"
+        }
+      ],
+      "knowsAbout": ["Data Science", "Machine Learning", "Retrieval-Augmented Generation", "Computer Vision", "React", "Python"],
       "sameAs": [
         "https://linkedin.com/in/fernado-george",
         "https://github.com/Fernado03"

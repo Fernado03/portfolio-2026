@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useTheme } from "../context/ThemeContext";
+import { useTheme } from "../context/theme";
+import { OPEN_PALETTE_EVENT } from "../utils/commandPalette";
 
 const iconPaths = {
     home: "M3 10.5L12 3l9 7.5M5 9.5V21h5v-6h4v6h5V9.5",
@@ -69,28 +70,36 @@ const CommandPalette = () => {
             cmd.category.toLowerCase().includes(search.toLowerCase())
     );
 
-    // Keyboard shortcut to open
+    // Resetting here (not in an effect reacting to isOpen) keeps the state change in the
+    // event that caused it, so there is no render-then-correct pass.
+    const openPalette = () => {
+        setSearch("");
+        setSelectedIndex(0);
+        setIsOpen(true);
+    };
+
+    // ⌘K / Ctrl+K shortcut, plus an explicit open request from the navbar trigger.
     useEffect(() => {
         const handleKeyDown = (e) => {
             if ((e.metaKey || e.ctrlKey) && e.key === "k") {
                 e.preventDefault();
-                setIsOpen(true);
+                openPalette();
             }
             if (e.key === "Escape") {
                 setIsOpen(false);
             }
         };
         window.addEventListener("keydown", handleKeyDown);
-        return () => window.removeEventListener("keydown", handleKeyDown);
+        window.addEventListener(OPEN_PALETTE_EVENT, openPalette);
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+            window.removeEventListener(OPEN_PALETTE_EVENT, openPalette);
+        };
     }, []);
 
-    // Focus input when opened
+    // Focus the input once the palette is actually mounted.
     useEffect(() => {
-        if (isOpen) {
-            inputRef.current?.focus();
-            setSearch("");
-            setSelectedIndex(0);
-        }
+        if (isOpen) inputRef.current?.focus();
     }, [isOpen]);
 
     // Arrow key navigation
@@ -123,7 +132,7 @@ const CommandPalette = () => {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             onClick={() => setIsOpen(false)}
-                            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50"
+                            className="fixed inset-0 bg-[#0c0a09]/60 backdrop-blur-sm z-50"
                         />
 
                         {/* Command Palette Modal */}

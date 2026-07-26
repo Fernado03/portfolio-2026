@@ -21,9 +21,9 @@ export default {
         line: 'var(--line)',
       },
       fontFamily: {
-        display: ['Outfit', 'Inter', 'sans-serif'],
-        sans: ['Inter', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
+        display: ['Geist Variable', 'system-ui', 'sans-serif'],
+        sans: ['Geist Variable', 'system-ui', 'sans-serif'],
+        mono: ['Geist Mono Variable', 'ui-monospace', 'monospace'],
       },
     },
   },

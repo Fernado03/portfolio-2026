@@ -1,14 +1,13 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FYP_CONTENT } from "../constants";
-import { FADE_IN_VARIANTS } from "../constants/animations";
+import { FADE_IN_VARIANTS, SPRING } from "../constants/animations";
 import Section from "./ui/Section";
 import SectionHeader from "./ui/SectionHeader";
 import Chip from "./ui/Chip";
 import Button from "./ui/Button";
+import Lightbox from "./ui/Lightbox";
 import { resizedImage } from "../utils/image";
-
-const spring = { type: "spring", stiffness: 100, damping: 20 };
 
 const FYP_SLIDES = [
     ...FYP_CONTENT.gallery,
@@ -31,7 +30,7 @@ const FYPShowcase = () => {
     }, []);
 
     return (
-        <Section id="fyp" className="min-h-[100dvh] flex flex-col justify-center py-20">
+        <Section id="fyp" className="flex flex-col justify-center">
             <SectionHeader
                 eyebrow="Final year project"
                 title="Multimodal emotion recognition"
@@ -46,14 +45,14 @@ const FYPShowcase = () => {
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true }}
-                    transition={spring}
+                    transition={SPRING}
                     className="lg:col-span-6 order-2 lg:order-1"
                 >
                     {FYP_CONTENT.award && (
                         <button
                             type="button"
                             onClick={() => setSelectedImage(FYP_CONTENT.award.image)}
-                            className="group mb-6 flex items-center gap-4 text-left focus-visible:outline-accent"
+                            className="group mb-6 flex items-center gap-4 text-left"
                             aria-label={`View ${FYP_CONTENT.award.title} poster`}
                         >
                             <img
@@ -146,7 +145,7 @@ const FYPShowcase = () => {
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true }}
-                    transition={spring}
+                    transition={SPRING}
                     className="lg:col-span-6 order-1 lg:order-2 flex items-center lg:justify-end"
                 >
                     <div className="relative w-full h-80 md:h-[420px] lg:h-[500px] group">
@@ -154,7 +153,7 @@ const FYPShowcase = () => {
                         <button
                             type="button"
                             onClick={() => setSelectedImage(FYP_SLIDES[currentSlide].src)}
-                            className="relative block h-full w-full overflow-hidden rounded-xl border border-line bg-white focus-visible:outline-accent"
+                            className="relative block h-full w-full overflow-hidden rounded-xl border border-line bg-bg-elev"
                             aria-label={`Enlarge ${FYP_SLIDES[currentSlide].caption}`}
                         >
                             <AnimatePresence mode="wait">
@@ -186,36 +185,14 @@ const FYPShowcase = () => {
                 </motion.div>
             </div>
 
-            {/* Lightbox Modal */}
-            {selectedImage && (
-                <div
-                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
-                    onClick={() => setSelectedImage(null)}
-                >
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={spring}
-                        className="relative max-w-7xl w-auto max-h-[90vh] flex items-center justify-center p-2"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <button
-                            className="absolute -top-10 right-0 text-white/70 hover:text-white transition-colors z-50 focus-visible:outline-accent"
-                            onClick={() => setSelectedImage(null)}
-                            aria-label="Close preview"
-                        >
-                            <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
-                        <img
-                            src={selectedImage}
-                            alt="Full screen preview"
-                            className="max-w-full max-h-[85vh] object-contain rounded-lg border border-line bg-bg-elev"
-                        />
-                    </motion.div>
-                </div>
-            )}
+            <Lightbox
+                src={selectedImage}
+                alt={
+                    FYP_SLIDES.find((slide) => slide.src === selectedImage)?.caption ||
+                    "Full screen preview"
+                }
+                onClose={() => setSelectedImage(null)}
+            />
         </Section>
     );
 };

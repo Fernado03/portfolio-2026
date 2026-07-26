@@ -1,73 +1,68 @@
-import React from "react";
 import { motion } from "framer-motion";
 import { ABOUT_CONTENT } from "../constants";
+import { SPRING } from "../constants/animations";
 import Section from "./ui/Section";
 import SectionHeader from "./ui/SectionHeader";
 
-const Experience = () => {
-    // Combine education and experience into unified timeline
-    const timelineItems = [
-        // Education entries (marked as education type)
-        ...ABOUT_CONTENT.education.map(edu => ({
-            type: "education",
-            title: edu.degree,
-            subtitle: edu.university,
-            period: edu.year,
-            details: edu.details,
-            logo: edu.logo,
-            monogram: edu.monogram,
-        })),
-        // Experience entries
-        ...ABOUT_CONTENT.experience.map(exp => ({
-            type: "experience",
-            title: exp.role,
-            subtitle: exp.organization,
-            period: exp.period,
-            details: exp.description,
-            logo: exp.logo,
-            monogram: exp.monogram,
-        })),
-    ].sort((a, b) => {
-        // Sort by start year descending (most recent first)
-        const getYear = (period) => parseInt(period.match(/\d{4}/)?.[0] || "0");
-        return getYear(b.period) - getYear(a.period);
-    });
+const startYearOf = (period) => period.match(/(\d{4})/)?.[0] || "";
 
+const timelineItems = [
+    ...ABOUT_CONTENT.education.map((edu) => ({
+        id: `edu-${edu.degree}`,
+        type: "education",
+        title: edu.degree,
+        subtitle: edu.university,
+        location: null,
+        period: edu.year,
+        details: edu.details,
+        logo: edu.logo,
+    })),
+    ...ABOUT_CONTENT.experience.map((exp) => ({
+        id: `exp-${exp.role}-${exp.period}`,
+        type: "experience",
+        title: exp.role,
+        subtitle: exp.organization,
+        location: exp.location,
+        period: exp.period,
+        details: exp.description,
+        logo: exp.logo,
+    })),
+].sort((a, b) => Number(startYearOf(b.period)) - Number(startYearOf(a.period)));
+
+const Experience = () => {
     return (
-        <Section id="experience" className="min-h-[100dvh] py-20">
+        <Section id="experience">
             <SectionHeader
                 eyebrow="Journey"
                 title="Education & experience"
-                description="Education, leadership roles, and hands-on experience shaping my path."
+                description="Where the work happened — degree, faculty association terms, and the internship shipping client systems."
             />
 
             {/* Left-rail editorial list */}
             <div className="border-y border-line divide-y divide-line">
                 {timelineItems.map((item, index) => {
                     const isExperience = item.type === "experience";
-                    const startYear = item.period.match(/(\d{4})/)?.[0] || "";
 
                     return (
                         <motion.div
-                            key={index}
+                            key={item.id}
                             initial={{ opacity: 0, y: 16 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: "-60px" }}
-                            transition={{ type: "spring", stiffness: 100, damping: 20, delay: index * 0.05 }}
+                            transition={{ ...SPRING, delay: index * 0.05 }}
                             className="grid md:grid-cols-12 gap-6 py-8"
                         >
                             {/* Left rail — sticky year block */}
                             <div className="md:col-span-3">
                                 <div className="md:sticky md:top-24">
                                     <div className="font-display text-3xl font-semibold text-ink">
-                                        {startYear}
+                                        {startYearOf(item.period)}
                                     </div>
                                     <div className="font-mono text-xs text-ink-muted mt-1">
                                         {item.period}
                                     </div>
                                     <div
-                                        className={`font-mono text-xs uppercase tracking-wider mt-2 ${isExperience ? "text-accent" : "text-ink-muted"
-                                            }`}
+                                        className={`font-mono text-xs uppercase tracking-wider mt-2 ${isExperience ? "text-accent" : "text-ink-muted"}`}
                                     >
                                         {isExperience ? "Experience" : "Education"}
                                     </div>
@@ -77,22 +72,17 @@ const Experience = () => {
                             {/* Right content */}
                             <div className="md:col-span-9">
                                 <div className="flex items-start gap-4">
-                                    {/* Logo / monogram tile */}
-                                    {(item.logo || item.monogram) && (
+                                    {item.logo && (
                                         <div className="shrink-0 w-12 h-12 rounded-lg border border-line bg-bg-subtle flex items-center justify-center overflow-hidden">
-                                            {item.logo ? (
-                                                <img
-                                                    src={item.logo}
-                                                    alt={`${item.subtitle} logo`}
-                                                    loading="lazy"
-                                                    decoding="async"
-                                                    className="w-8 h-8 object-contain"
-                                                />
-                                            ) : (
-                                                <span className="font-mono text-xs font-medium text-ink-muted tracking-tight">
-                                                    {item.monogram}
-                                                </span>
-                                            )}
+                                            <img
+                                                src={item.logo}
+                                                alt={`${item.subtitle} logo`}
+                                                width={32}
+                                                height={32}
+                                                loading="lazy"
+                                                decoding="async"
+                                                className="w-8 h-8 object-contain"
+                                            />
                                         </div>
                                     )}
                                     <div className="min-w-0">
@@ -102,6 +92,11 @@ const Experience = () => {
                                         <p className={`text-sm mt-1 ${isExperience ? "text-accent" : "text-ink-muted"}`}>
                                             {item.subtitle}
                                         </p>
+                                        {item.location && (
+                                            <p className="font-mono text-xs text-ink-muted mt-1">
+                                                {item.location}
+                                            </p>
+                                        )}
                                     </div>
                                 </div>
                                 {item.details && (

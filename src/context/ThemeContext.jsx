@@ -1,29 +1,18 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { ThemeContext } from "./theme";
 
-const ThemeContext = createContext();
-
-export const useTheme = () => {
-    const context = useContext(ThemeContext);
-    if (!context) {
-        throw new Error("useTheme must be used within a ThemeProvider");
-    }
-    return context;
-};
+const STORAGE_KEY = "theme";
 
 export const ThemeProvider = ({ children }) => {
-    const [isDark, setIsDark] = useState(() => {
-        // Light mode is the primary visual surface.
-        return false;
-    });
+    // Light mode is the primary surface; a stored preference wins.
+    // index.html applies the class pre-paint from the same key, so there is no flash.
+    const [isDark, setIsDark] = useState(
+        () => localStorage.getItem(STORAGE_KEY) === "dark"
+    );
 
     useEffect(() => {
-        // Apply theme class to html element
-        const html = document.documentElement;
-        if (isDark) {
-            html.classList.add("dark");
-        } else {
-            html.classList.remove("dark");
-        }
+        document.documentElement.classList.toggle("dark", isDark);
+        localStorage.setItem(STORAGE_KEY, isDark ? "dark" : "light");
     }, [isDark]);
 
     const toggleTheme = () => setIsDark((prev) => !prev);
@@ -34,5 +23,3 @@ export const ThemeProvider = ({ children }) => {
         </ThemeContext.Provider>
     );
 };
-
-export default ThemeContext;
