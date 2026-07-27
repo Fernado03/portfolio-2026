@@ -11,9 +11,8 @@ const PORTRAIT_IMAGE = resizedImage(PORTRAIT.src);
 
 const Hero = () => {
     return (
-        // pt-28 clears the transparent-until-scrolled navbar on mobile, where the section
-        // has no other top offset — without it the eyebrow renders behind the logo.
-        <section className="min-h-[100dvh] flex items-center relative pt-28 md:pt-0">
+        // Fixed navbar does not participate in layout; keep its clearance at every breakpoint.
+        <section className="min-h-[100dvh] flex items-center relative pt-28">
             <div className="max-w-6xl mx-auto px-6 w-full">
                 {/* Mobile portrait — the hero opens on a face; hidden on md+ where the desktop plate lives. */}
                 <motion.div
