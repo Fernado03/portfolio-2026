@@ -6,12 +6,11 @@ const WIDTHS = {
     projects: [800, 400],
     about: [700, 350],
     awards: [800, 400],
-    skills: [96],
 };
 
 export function resizedImage(path) {
     if (!path) return { src: "", srcSet: undefined };
-    const match = path.match(/^\/(projects|about|awards|skills)\/(.+)\.(jpe?g|png)$/i);
+    const match = path.match(/^\/(projects|about|awards)\/(.+)\.(jpe?g|png)$/i);
     if (!match) return { src: path, srcSet: undefined };
     const [, dir, base] = match;
     const widths = WIDTHS[dir];

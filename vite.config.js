@@ -7,10 +7,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        // three/@react-three only back the decorative hero object, which is lazily
-        // mounted — keeping them out of the entry chunk stops them blocking first paint.
         manualChunks: {
-          three: ['three', '@react-three/fiber', '@react-three/drei'],
           motion: ['framer-motion'],
         },
       },

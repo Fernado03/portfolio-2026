@@ -50,7 +50,7 @@ const CommandPalette = () => {
         { id: "skills", label: "Go to Skills", icon: "bolt", action: () => scrollTo("#skills"), category: "Navigation" },
         { id: "awards", label: "Go to Awards", icon: "award", action: () => scrollTo("#awards"), category: "Navigation" },
         { id: "contact", label: "Go to Contact", icon: "mail", action: () => scrollTo("#contact"), category: "Navigation" },
-        { id: "resume", label: "Download Resume", icon: "file", action: () => window.open("/Fernado_George_DataScience_Intern_Resume.pdf", "_blank"), category: "Actions" },
+        { id: "resume", label: "Download Resume", icon: "file", action: () => window.open("/Fernado_George_DataScience_Resume.pdf", "_blank"), category: "Actions" },
         { id: "theme", label: `Switch to ${isDark ? "Light" : "Dark"} Mode`, icon: isDark ? "sun" : "moon", action: toggleTheme, category: "Actions" },
         { id: "github", label: "Open GitHub", icon: "github", action: () => window.open("https://github.com/Fernado03", "_blank"), category: "Links" },
         { id: "linkedin", label: "Open LinkedIn", icon: "linkedin", action: () => window.open("https://linkedin.com/in/fernado-george", "_blank"), category: "Links" },
@@ -122,93 +122,91 @@ const CommandPalette = () => {
     };
 
     return (
-        <>
-            <AnimatePresence>
-                {isOpen && (
-                    <>
-                        {/* Backdrop */}
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            onClick={() => setIsOpen(false)}
-                            className="fixed inset-0 bg-[#0c0a09]/60 backdrop-blur-sm z-50"
-                        />
+        <AnimatePresence>
+            {isOpen && (
+                <motion.div
+                    key="palette-backdrop"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    onClick={() => setIsOpen(false)}
+                    className="fixed inset-0 bg-[#0B0A09]/60 backdrop-blur-sm z-50"
+                />
+            )}
 
-                        {/* Command Palette Modal */}
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.95, y: -20 }}
-                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.95, y: -20 }}
-                            transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                            className="fixed top-[20%] left-1/2 -translate-x-1/2 w-full max-w-lg z-50 px-4"
-                        >
-                            <div className="bg-bg-elev rounded-xl border border-line shadow-2xl overflow-hidden">
-                                {/* Search Input */}
-                                <div className="flex items-center gap-3 px-4 py-4 bg-bg-subtle border-b border-line">
-                                    <svg className="w-5 h-5 text-ink-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                    </svg>
-                                    <input
-                                        ref={inputRef}
-                                        type="text"
-                                        placeholder="Search commands..."
-                                        value={search}
-                                        onChange={(e) => {
-                                            setSearch(e.target.value);
-                                            setSelectedIndex(0);
-                                        }}
-                                        onKeyDown={handleKeyDown}
-                                        className="flex-1 bg-transparent text-ink placeholder-ink-muted outline-none text-base"
-                                    />
-                                    <kbd className="px-2 py-1 border border-line rounded font-mono text-xs text-ink-muted">ESC</kbd>
-                                </div>
+            {isOpen && (
+                <motion.div
+                    key="palette-panel"
+                    initial={{ opacity: 0, scale: 0.95, y: -20 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.95, y: -20 }}
+                    transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                    className="fixed top-[20%] left-1/2 -translate-x-1/2 w-full max-w-lg z-50 px-4"
+                >
+                    <div className="bg-bg-elev rounded-xl border border-line shadow-2xl overflow-hidden">
+                        {/* Search Input */}
+                        <div className="flex items-center gap-3 px-4 py-4 bg-bg-subtle border-b border-line">
+                            <svg className="w-5 h-5 text-ink-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                            <input
+                                ref={inputRef}
+                                type="text"
+                                placeholder="Search commands..."
+                                value={search}
+                                onChange={(e) => {
+                                    setSearch(e.target.value);
+                                    setSelectedIndex(0);
+                                }}
+                                onKeyDown={handleKeyDown}
+                                className="flex-1 bg-transparent text-ink placeholder-ink-muted outline-none text-base"
+                            />
+                            <kbd className="px-2 py-1 border border-line rounded font-mono text-xs text-ink-muted">ESC</kbd>
+                        </div>
 
-                                {/* Commands List */}
-                                <div className="max-h-80 overflow-y-auto py-2">
-                                    {filteredCommands.length === 0 ? (
-                                        <div className="px-4 py-8 text-center text-ink-muted">
-                                            No commands found
-                                        </div>
-                                    ) : (
-                                        filteredCommands.map((cmd, index) => (
-                                            <button
-                                                key={cmd.id}
-                                                onClick={() => executeCommand(cmd)}
-                                                onMouseEnter={() => setSelectedIndex(index)}
-                                                className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors ${index === selectedIndex
-                                                    ? "bg-accent-muted text-ink"
-                                                    : "text-ink-muted hover:bg-bg-subtle"
-                                                    }`}
-                                            >
-                                                <CommandIcon name={cmd.icon} />
-                                                <span className="flex-1 font-medium">{cmd.label}</span>
-                                                <span className="font-mono text-xs uppercase text-ink-muted">{cmd.category}</span>
-                                            </button>
-                                        ))
-                                    )}
+                        {/* Commands List */}
+                        <div className="max-h-80 overflow-y-auto py-2">
+                            {filteredCommands.length === 0 ? (
+                                <div className="px-4 py-8 text-center text-ink-muted">
+                                    No commands found
                                 </div>
+                            ) : (
+                                filteredCommands.map((cmd, index) => (
+                                    <button
+                                        key={cmd.id}
+                                        onClick={() => executeCommand(cmd)}
+                                        onMouseEnter={() => setSelectedIndex(index)}
+                                        className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors ${index === selectedIndex
+                                            ? "bg-accent-muted text-ink"
+                                            : "text-ink-muted hover:bg-bg-subtle"
+                                            }`}
+                                    >
+                                        <CommandIcon name={cmd.icon} />
+                                        <span className="flex-1 font-medium">{cmd.label}</span>
+                                        <span className="font-mono text-xs uppercase text-ink-muted">{cmd.category}</span>
+                                    </button>
+                                ))
+                            )}
+                        </div>
 
-                                {/* Footer */}
-                                <div className="flex items-center justify-between px-4 py-3 border-t border-line text-xs text-ink-muted">
-                                    <div className="flex items-center gap-4">
-                                        <span className="flex items-center gap-1">
-                                            <kbd className="px-1.5 py-0.5 border border-line rounded font-mono text-[10px]">↑↓</kbd>
-                                            Navigate
-                                        </span>
-                                        <span className="flex items-center gap-1">
-                                            <kbd className="px-1.5 py-0.5 border border-line rounded font-mono text-[10px]">↵</kbd>
-                                            Select
-                                        </span>
-                                    </div>
-                                    <span className="font-mono">Fernado's Portfolio</span>
-                                </div>
+                        {/* Footer */}
+                        <div className="flex items-center justify-between px-4 py-3 border-t border-line text-xs text-ink-muted">
+                            <div className="flex items-center gap-4">
+                                <span className="flex items-center gap-1">
+                                    <kbd className="px-1.5 py-0.5 border border-line rounded font-mono text-[0.625rem]">↑↓</kbd>
+                                    Navigate
+                                </span>
+                                <span className="flex items-center gap-1">
+                                    <kbd className="px-1.5 py-0.5 border border-line rounded font-mono text-[0.625rem]">↵</kbd>
+                                    Select
+                                </span>
                             </div>
-                        </motion.div>
-                    </>
-                )}
-            </AnimatePresence>
-        </>
+                            <span className="font-mono">Fernado's Portfolio</span>
+                        </div>
+                    </div>
+                </motion.div>
+            )}
+        </AnimatePresence>
     );
 };
 

@@ -2,37 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Design tokens — light (primary surface) */
+/* Design tokens — light (primary surface).
+   Values are space-separated RGB channel triplets so Tailwind can compose
+   alpha: `rgb(var(--x) / <alpha-value>)`. Bare hex has no alpha slot and
+   silently kills every opacity modifier. */
 :root {
-  --bg: #fafaf9;
-  --bg-subtle: #f5f5f4;
-  --bg-elev: #ffffff;
-  --ink: #1c1917;
-  --ink-muted: #57534e;
-  --line: #e7e5e4;
-  /* Accent carries 12px eyebrow text and also fills buttons behind --bg-coloured labels,
-     so it must clear 4.5:1 both ways against #fafaf9. #047857 measures 5.25:1. */
-  --accent: #047857;
-  --accent-strong: #065f46;
-  --accent-muted: rgba(4, 120, 87, 0.12);
+  --bg-rgb: 251 250 248;
+  --bg-subtle-rgb: 243 241 237;
+  --bg-elev-rgb: 255 255 255;
+  --ink-rgb: 20 16 12;
+  --ink-muted-rgb: 107 98 90;
+  --line-rgb: 226 221 213;
+  /* Burnt sienna: 7.0:1 on paper, and 7.0:1 for bg-coloured text on an accent fill. */
+  --accent-rgb: 154 52 18;
+  --accent-strong-rgb: 124 45 18;
 }
 
 /* Design tokens — dark */
 .dark {
-  --bg: #0c0a09;
-  --bg-subtle: #1c1917;
-  --bg-elev: #292524;
-  --ink: #fafaf9;
-  --ink-muted: #a8a29e;
-  --line: #292524;
-  --accent: #34d399;
-  --accent-strong: #6ee7b7;
-  --accent-muted: rgba(52, 211, 153, 0.12);
+  --bg-rgb: 11 10 9;
+  --bg-subtle-rgb: 22 19 15;
+  --bg-elev-rgb: 28 24 21;
+  --ink-rgb: 245 243 239;
+  --ink-muted-rgb: 168 160 150;
+  --line-rgb: 48 42 36;
+  --accent-rgb: 251 146 60;
+  --accent-strong-rgb: 253 186 116;
 }
 
 @layer base {
   html {
+    font-size: 118.75%; /* 19px base — scales every rem-based type/space token */
     scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -46,12 +48,12 @@
   }
 
   ::selection {
-    background: var(--accent-muted);
+    background: rgb(var(--accent-rgb) / 0.1);
   }
 
   /* Keyboard focus styles for accessibility */
   *:focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid rgb(var(--accent-rgb));
     outline-offset: 2px;
   }
 
@@ -68,16 +70,16 @@
   }
 }
 
-/* Subtle noise texture overlay for depth */
-.noise-overlay::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 30;
-  will-change: auto;
-  opacity: 0.015;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+/* Global reduced-motion guard — covers JS-driven motion, which the
+   scroll-behavior override above does not reach. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* Custom Scrollbar - Light Theme */
@@ -86,39 +88,39 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #f5f5f4;
+  background: #f3f1ed;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d6d3d1;
+  background: #d9d2c8;
   border-radius: 10px;
-  border: 2px solid #f5f5f4;
+  border: 2px solid #f3f1ed;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent);
+  background: rgb(var(--accent-rgb));
 }
 
 /* Dark theme scrollbar */
 .dark ::-webkit-scrollbar-track {
-  background: #0c0a09;
+  background: #0b0a09;
 }
 
 .dark ::-webkit-scrollbar-thumb {
-  background: #44403c;
-  border: 2px solid #0c0a09;
+  background: #3a332c;
+  border: 2px solid #0b0a09;
 }
 
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent);
+  background: rgb(var(--accent-rgb));
 }
 
 /* Firefox scrollbar */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #d6d3d1 #f5f5f4;
+  scrollbar-color: #d9d2c8 #f3f1ed;
 }
 
 .dark * {
-  scrollbar-color: #44403c #0c0a09;
+  scrollbar-color: #3a332c #0b0a09;
 }

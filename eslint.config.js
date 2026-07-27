@@ -25,9 +25,8 @@ export default defineConfig([
       },
     },
     rules: {
-      // Without these two, every JSX-only reference (motion.div, <Section />) reads as an
-      // unused import, which is what the old varsIgnorePattern: '^[A-Z_]' was hiding.
-      'react/jsx-uses-react': 'error',
+      // jsx-uses-vars keeps JSX-only references (motion.div, <Section />) marked as used.
+      // jsx-uses-react is intentionally absent: automatic JSX runtime, dead React imports must surface.
       'react/jsx-uses-vars': 'error',
       'no-unused-vars': ['error', { varsIgnorePattern: '^_', argsIgnorePattern: '^_' }],
     },

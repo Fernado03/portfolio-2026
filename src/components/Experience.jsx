@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { ABOUT_CONTENT } from "../constants";
-import { SPRING } from "../constants/animations";
+import { FADE_IN_VARIANTS, SPRING } from "../constants/animations";
 import Section from "./ui/Section";
 import SectionHeader from "./ui/SectionHeader";
 
@@ -33,9 +33,11 @@ const Experience = () => {
     return (
         <Section id="experience">
             <SectionHeader
+                index="04"
                 eyebrow="Journey"
                 title="Education & experience"
                 description="Where the work happened — degree, faculty association terms, and the internship shipping client systems."
+                scale="minor"
             />
 
             {/* Left-rail editorial list */}
@@ -46,16 +48,17 @@ const Experience = () => {
                     return (
                         <motion.div
                             key={item.id}
-                            initial={{ opacity: 0, y: 16 }}
-                            whileInView={{ opacity: 1, y: 0 }}
+                            variants={FADE_IN_VARIANTS}
+                            initial="hidden"
+                            whileInView="visible"
                             viewport={{ once: true, margin: "-60px" }}
                             transition={{ ...SPRING, delay: index * 0.05 }}
-                            className="grid md:grid-cols-12 gap-6 py-8"
+                            className="grid md:grid-cols-12 gap-2 py-2.5 md:gap-4 md:py-3"
                         >
                             {/* Left rail — sticky year block */}
-                            <div className="md:col-span-3">
+                            <div className="md:col-span-3 md:border-r md:border-line md:pr-6">
                                 <div className="md:sticky md:top-24">
-                                    <div className="font-display text-3xl font-semibold text-ink">
+                                    <div className="font-display text-2xl font-semibold text-ink">
                                         {startYearOf(item.period)}
                                     </div>
                                     <div className="font-mono text-xs text-ink-muted mt-1">

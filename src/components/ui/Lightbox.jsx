@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { createPortal } from "react-dom";
 import { SPRING } from "../../constants/animations";
 import { resizedImage } from "../../utils/image";
 
@@ -15,6 +16,7 @@ const Lightbox = ({ src, alt, onClose }) => {
         if (!src) return;
 
         restoreRef.current = document.activeElement;
+        panelRef.current?.querySelector('[aria-label="Close preview"]')?.focus();
         const { overflow } = document.body.style;
         document.body.style.overflow = "hidden";
 
@@ -49,10 +51,11 @@ const Lightbox = ({ src, alt, onClose }) => {
         };
     }, [src, onClose]);
 
-    return (
+    return createPortal(
         <AnimatePresence>
             {src && (
                 <motion.div
+                    ref={panelRef}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -60,38 +63,37 @@ const Lightbox = ({ src, alt, onClose }) => {
                     role="dialog"
                     aria-modal="true"
                     aria-label={alt}
-                    className="fixed inset-0 z-50 flex items-center justify-center bg-[#0c0a09]/90 p-4 md:p-10"
+                    className="fixed inset-0 z-[70] flex items-center justify-center bg-[#0B0A09]/90 p-4 md:p-10"
                 >
                     <motion.div
-                        ref={panelRef}
                         initial={{ opacity: 0, scale: 0.96 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.98 }}
                         transition={SPRING}
                         onClick={(event) => event.stopPropagation()}
-                        className="relative max-h-full w-full max-w-5xl"
+                        className="relative flex max-h-full w-full max-w-5xl items-center justify-center"
                     >
                         <img
                             {...resizedImage(src)}
                             sizes="90vw"
                             alt={alt}
-                            className="max-h-[85vh] w-full object-contain"
+                            className="max-h-[85dvh] max-w-full object-contain"
                         />
-                        <button
-                            type="button"
-                            autoFocus
-                            onClick={onClose}
-                            aria-label="Close preview"
-                            className="absolute -top-3 -right-3 flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-[#0c0a09] text-[#fafaf9] transition-transform hover:scale-105 active:scale-95"
-                        >
-                            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
                     </motion.div>
+                    <button
+                        type="button"
+                        onClick={onClose}
+                        aria-label="Close preview"
+                        className="fixed right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-[#0B0A09] text-[#F5F3EF] transition-transform hover:scale-105 active:scale-95 md:right-8 md:top-8"
+                    >
+                        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
                 </motion.div>
             )}
-        </AnimatePresence>
+        </AnimatePresence>,
+        document.body
     );
 };
 

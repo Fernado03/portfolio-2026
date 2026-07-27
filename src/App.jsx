@@ -9,6 +9,7 @@ import Awards from "./components/Awards";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import CommandPalette from "./components/CommandPalette";
+import ProjectDrawer from "./components/ProjectDrawer";
 import EasterEgg from "./components/EasterEgg";
 import ScrollToTop from "./components/ScrollToTop";
 import { ThemeProvider } from "./context/ThemeContext";
@@ -27,8 +28,15 @@ function App() {
 
   return (
     <ThemeProvider>
-      <div className="noise-overlay bg-bg min-h-[100dvh] text-ink relative overflow-x-hidden">
+      <div className="bg-bg min-h-[100dvh] text-ink relative overflow-x-hidden">
+        {/* Lab rules: one fixed hairline column pair aligned to the max-w-6xl
+            container. Replaces the ambient wash + alternating section bands. */}
+        <div aria-hidden className="pointer-events-none fixed inset-0 z-0 hidden lg:block">
+          <div className="mx-auto h-full max-w-6xl border-x border-line/60" />
+        </div>
+
         <CommandPalette />
+        <ProjectDrawer />
         <EasterEgg />
         <ScrollToTop />
 

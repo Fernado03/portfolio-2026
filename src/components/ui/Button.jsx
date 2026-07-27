@@ -9,7 +9,7 @@ const VARIANT_CLASSES = {
 };
 
 const BASE_CLASSES =
-    "rounded-lg text-sm font-medium inline-flex items-center gap-2";
+    "rounded-lg text-sm font-medium inline-flex items-center justify-center gap-2 min-h-11";
 
 // Anything leaving the site (or opening a document) gets its own tab.
 const isExternal = (href) => /^https?:/i.test(href) || /\.pdf($|\?)/i.test(href);

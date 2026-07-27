@@ -1,16 +1,23 @@
 
 export const HERO_CONTENT = {
-    name: "Fernado George",
+    name: "Fernado George Anak Mani",
     title: "Data Scientist & Full-Stack Developer",
     subtitle:
         "I build retrieval and computer-vision systems that ship: a 71.6% F1 multimodal emotion thesis, a RAG assistant for a German client, and a CCTV-to-records pipeline running on real footage.",
     availability: "Seeking a data science / AI engineering graduate role — Malaysia or remote, from Sep 2026",
-    resumeLink: "/Fernado_George_DataScience_Intern_Resume.pdf",
+    resumeLink: "/Fernado_George_DataScience_Resume.pdf",
     email: "fernado_george_bi22@iluv.ums.edu.my",
     altEmail: "milobio351@gmail.com",
     phone: "+60143207322",
     linkedin: "https://linkedin.com/in/fernado-george",
     github: "https://github.com/Fernado03",
+    // Hero proof strip — every figure traceable to a section further down the page.
+    proof: [
+        { value: "71.6%", label: "Thesis F1 (multimodal)" },
+        { value: "3.75", label: "CGPA · Dean's List" },
+        { value: "2", label: "Client systems in production" },
+        { value: "4", label: "Hackathons · 1 Gold, 1 runner-up" },
+    ],
 };
 
 export const FYP_CONTENT = {
@@ -34,19 +41,20 @@ export const FYP_CONTENT = {
     thesisLink: "/documents/Thesis_BI22110436.pdf",
     award: {
         title: "Best Research Award — Final Year Project 2026",
-        image: "/awards/best_research_award.jpg",
+        image: "/awards/best_research_certificate.jpg",
     },
 };
 
 export const PROJECTS = [
     {
         id: 1,
+        slug: "kinavis",
         title: "KinaVis (AI Medical Scribe)",
         category: "AI & Healthcare",
         role: "Team Leader of Development",
         badge: "Gold Medal — Festival Idea Sabah 2025",
         description:
-            "Architected an AI scribe using Google Speech-to-Text & Gemini Pro 2.5. Implemented RAG with 'all-MiniLM-L6-v2' to minimize hallucinations. Proven to reduce documentation time by 3-4 hours daily and administrative costs by 30%.",
+            "Built an AI scribe using Google Speech-to-Text & Gemini Pro 2.5. Implemented RAG with 'all-MiniLM-L6-v2' to minimize hallucinations. Proven to reduce documentation time by 3-4 hours daily and administrative costs by 30%.",
         techStack: ["Google Speech-to-Text", "Gemini Pro 2.5", "RAG", "GCP"],
         image: "/projects/ai_medical_slide_cover.jpg",
         link: "https://github.com/Fernado03/AIMS-final-mvp",
@@ -54,6 +62,7 @@ export const PROJECTS = [
     },
     {
         id: 2,
+        slug: "ki-konnekt",
         title: "KI Konnekt (client RAG assistant)",
         category: "Retrieval & LLM Systems",
         role: "AI/ML Development Intern — Breakfast Byte",
@@ -66,6 +75,7 @@ export const PROJECTS = [
     },
     {
         id: 3,
+        slug: "cctv-records",
         title: "CCTV-to-records pipeline (car wash)",
         category: "Computer Vision",
         role: "AI/ML Development Intern — Breakfast Byte",
@@ -78,6 +88,7 @@ export const PROJECTS = [
     },
     {
         id: 4,
+        slug: "matchkami",
         title: "MatchKami (TITANS)",
         category: "NLP & Social Impact",
         role: "Lead Developer",
@@ -91,6 +102,7 @@ export const PROJECTS = [
     },
     {
         id: 5,
+        slug: "borneo-hackathon-2024",
         title: "Borneo Hackathon 2024 Portal",
         category: "Full-Stack Web App",
         role: "Full-Stack Developer",
@@ -104,12 +116,13 @@ export const PROJECTS = [
     },
     {
         id: 6,
+        slug: "barnaclean",
         title: "BarnaClean (SeaWise)",
         category: "AI & Marine Tech",
         role: "AI/ML Engineer",
         badge: "Top 8 Finalist — MarineHack 2025",
         description:
-            "Predictive maintenance system moving shipping from reactive to proactive, pairing a biofouling growth model with A* route optimization. On simulated voyage data the combined model projected up to 30% fuel savings — a simulation result, not a sea trial.",
+            "Predictive maintenance system that flags a hull's biofouling growth before drag builds, so cleaning gets scheduled ahead of the fuel-cost spike instead of after it — pairing the growth model with A* route optimization. On simulated voyage data the combined model projected up to 30% fuel savings — a simulation result, not a sea trial.",
         techStack: ["FastAPI (Python)", "React", "A* Algorithm", "Biofouling ML"],
         image: "/projects/barnaclean_cover.jpg",
         link: "https://github.com/Fernado03/barnacleAI",
@@ -117,12 +130,13 @@ export const PROJECTS = [
     },
     {
         id: 7,
+        slug: "aramniaga",
         title: "AramNiaga (SixSeven)",
         category: "Social Impact & AI",
         role: "Team Leader & Backend Developer",
         badge: "Borneo Hackathon 2025",
         description:
-            "'Zero-tech' AI coaching app for rural micro-entrepreneurs: a localized 'Cikgu' chatbot speaking Bahasa Pasar, photo-to-copywriting generation, and gamified daily missions — built for owners whose only device is a shared phone.",
+            "'Zero-tech' AI coaching app for rural micro-entrepreneurs: a localized 'Cikgu' chatbot speaking Bahasa Pasar, photo-to-copywriting generation, and daily missions like 'log today's sales in one voice note' — built for owners whose only device is a shared phone.",
         techStack: ["React Native", "Python (NLP)", "Gemini AI", "Gamification"],
         image: "/projects/aramniaga_cover.jpg",
         link: "https://github.com/Fernado03/bh2025-aramniaga",
@@ -153,14 +167,12 @@ export const ABOUT_CONTENT = {
         { src: "/about/FIS.jpg", alt: "Fernado at Festival Idea Sabah 2025" },
         { src: "/about/photo_2025-05-25_00-26-26.jpg", alt: "Fernado with his hackathon team" },
         { src: "/about/photo_2025-10-16_16-39-26.jpg", alt: "Fernado at a faculty programme" },
-        { src: "/about/IMG_2382 (1).jpg", alt: "Fernado at a campus event" },
-        { src: "/about/WhatsApp Image 2025-12-11 at 20.37.04.jpeg", alt: "Fernado with course mates" },
         { src: "/about/IMG_5574.jpg", alt: "Fernado on convocation day" },
         { src: "/about/IMG_5529.jpg", alt: "Fernado in academic robes" },
         { src: "/about/IMG_5514.jpg", alt: "Fernado outdoors in Sabah" },
     ],
     hackathons:
-        "Led teams across four hackathons — MarineHack, JomHack, Festival Idea Sabah and Borneo Hackathon — taking one Gold, one second place and two top-8 finishes. Owned architecture, task delegation and the final pitch each time.",
+        "Led teams across four hackathons — MarineHack, JomHack, Festival Idea Sabah and Borneo Hackathon — taking one Gold, one second place and one top-8 finish (MarineHack); a second top-8 finish came separately at the ELLM Startup Initiative. Owned architecture, task delegation and the final pitch each time.",
     experience: [
         {
             role: "AI/ML Development Intern",
@@ -194,7 +206,6 @@ export const SKILLS = [
     {
         category: "Languages",
         items: ["Python", "Java", "C++", "R", "SQL", "JavaScript", "HTML/CSS"],
-        icon: "/skills/tech_languages_icon.png",
     },
     {
         category: "AI & ML",
@@ -206,7 +217,6 @@ export const SKILLS = [
             "Computer Vision",
             "Generative AI",
         ],
-        icon: "/skills/ai_ml_icon.png",
     },
     {
         category: "Frameworks & Tools",
@@ -222,18 +232,17 @@ export const SKILLS = [
             "Gradio",
             "Git",
         ],
-        icon: "/skills/frameworks_tools_icon.png",
     },
 ];
 
 export const AWARDS = [
     {
         title: "Best Research Award — Final Year Project 2026",
-        image: "/awards/best_research_award.jpg",
+        image: "/awards/best_research_certificate.jpg",
     },
-    { title: "Gold Medal — Festival Idea Sabah 2025" },
-    { title: "2nd Prize — JomHack Varsity Challenge 2025" },
+    { title: "Gold Medal — Festival Idea Sabah 2025", image: "/awards/festival_idea_sabah.jpg" },
+    { title: "2nd Prize — JomHack Varsity Challenge 2025", image: "/awards/jomhack.jpg" },
     { title: "Top 8 Finalist — MarineHack 2025" },
     { title: "Best Computer Science Student Award (Matriculation)" },
-    { title: "Top 8 Finalist — ELLM Startup Initiative" },
+    { title: "Top 8 Finalist — ELLM Startup Initiative", image: "/awards/ellm.png" },
 ];

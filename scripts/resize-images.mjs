@@ -1,11 +1,12 @@
 // One-off: generate responsive image variants into public/resized/
+// Sources live in assets-src/ (kept out of the deploy — only the webp variants ship).
 // Usage: node scripts/resize-images.mjs
 import sharp from "sharp";
 import { mkdir, readdir, stat } from "node:fs/promises";
 import path from "node:path";
 
-const PUB = path.resolve("public");
-const OUT = path.join(PUB, "resized");
+const SRC = path.resolve("assets-src");
+const OUT = path.join(path.resolve("public"), "resized");
 
 // target widths per asset class
 const jobs = [
@@ -15,13 +16,11 @@ const jobs = [
   { dir: "about", widths: [700, 350], quality: 78 },
   // award poster: primary FYP visual plus smaller card thumbnails
   { dir: "awards", widths: [800, 400], quality: 78 },
-  // skill icons: displayed 32px → 96w (3x for retina)
-  { dir: "skills", widths: [96], quality: 85 },
 ];
 
 const results = [];
 for (const job of jobs) {
-  const srcDir = path.join(PUB, job.dir);
+  const srcDir = path.join(SRC, job.dir);
   const outDir = path.join(OUT, job.dir);
   await mkdir(outDir, { recursive: true });
   const files = (await readdir(srcDir)).filter(f => /\.(jpe?g|png)$/i.test(f));

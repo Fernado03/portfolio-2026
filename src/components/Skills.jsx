@@ -1,52 +1,39 @@
 import { motion } from "framer-motion";
 import { SKILLS } from "../constants";
-import { SPRING } from "../constants/animations";
-import { resizedImage } from "../utils/image";
+import { FADE_IN_VARIANTS, SPRING } from "../constants/animations";
 import Section from "./ui/Section";
 import SectionHeader from "./ui/SectionHeader";
-import Chip from "./ui/Chip";
 
 const Skills = () => {
     return (
         <Section id="skills" className="flex items-center">
-            <SectionHeader eyebrow="Capabilities" title="Technical toolkit" />
+            <SectionHeader
+                index="05"
+                eyebrow="Capabilities"
+                title="Technical toolkit"
+                scale="minor"
+            />
 
             <motion.div
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                variants={FADE_IN_VARIANTS}
+                initial="hidden"
+                whileInView="visible"
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ ...SPRING, delay: 0.1 }}
-                className="border-y border-line divide-y divide-line"
+                className="grid gap-x-10 gap-y-5 md:grid-cols-3"
             >
                 {SKILLS.map((skillGroup) => (
-                    <div
-                        key={skillGroup.category}
-                        className="grid md:grid-cols-12 py-6 items-baseline gap-y-4"
-                    >
-                        <div className="md:col-span-3 flex items-center gap-3">
-                            {skillGroup.icon && (
-                                <img
-                                    {...resizedImage(skillGroup.icon)}
-                                    alt=""
-                                    loading="lazy"
-                                    decoding="async"
-                                    className="w-8 h-8 rounded-md border border-line object-cover"
-                                />
-                            )}
-                            <h3 className="font-display font-semibold text-ink">
-                                {skillGroup.category}
-                            </h3>
-                        </div>
-                        <div className="md:col-span-9 flex flex-wrap gap-2">
+                    <div key={skillGroup.category}>
+                        <h3 className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-ink-muted pb-3 border-b border-line">
+                            {skillGroup.category}
+                        </h3>
+                        <ul className="divide-y divide-line">
                             {skillGroup.items.map((skill) => (
-                                <Chip
-                                    key={skill}
-                                    className="hover:text-accent hover:border-accent/50 transition-colors"
-                                >
+                                <li key={skill} className="font-mono text-sm text-ink py-1">
                                     {skill}
-                                </Chip>
+                                </li>
                             ))}
-                        </div>
+                        </ul>
                     </div>
                 ))}
             </motion.div>

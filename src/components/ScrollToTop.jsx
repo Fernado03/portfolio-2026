@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const ScrollToTop = () => {
@@ -32,7 +32,7 @@ const ScrollToTop = () => {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.5 }}
                     onClick={scrollToTop}
-                    className="fixed bottom-6 left-6 z-40 h-10 w-10 rounded-lg bg-bg-elev border border-line text-ink-muted hover:text-accent hover:border-accent/50 active:scale-95 transition-colors flex items-center justify-center"
+                    className="fixed bottom-6 right-6 z-40 h-10 w-10 rounded-lg bg-bg-elev border border-line text-ink-muted hover:text-accent hover:border-accent/50 active:scale-95 transition-colors flex items-center justify-center"
                     aria-label="Scroll to top"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}

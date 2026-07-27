@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HERO_CONTENT } from "../constants";
-import { SPRING } from "../constants/animations";
+import { SPRING, FADE_IN_VARIANTS } from "../constants/animations";
 import Section from "./ui/Section";
 import SectionHeader from "./ui/SectionHeader";
 import Button from "./ui/Button";
+import { GitHubIcon, LinkedInIcon } from "./ui/Icons";
 
 const CopyIcon = () => (
     <svg
@@ -38,39 +39,6 @@ const ArrowUpRightIcon = () => (
     </svg>
 );
 
-const LinkedInIcon = () => (
-    <svg
-        className="w-5 h-5 shrink-0"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        strokeWidth={1.5}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-    >
-        <rect x="3" y="3" width="18" height="18" rx="2" />
-        <path d="M8 11v5" />
-        <path d="M8 8v.01" />
-        <path d="M12 16v-5" />
-        <path d="M12 12a2 2 0 0 1 4 0v4" />
-    </svg>
-);
-
-const GitHubIcon = () => (
-    <svg
-        className="w-5 h-5 shrink-0"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        strokeWidth={1.5}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-    >
-        <path d="M9 19c-4 1.5-4-2.5-6-3m12 5v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 19 3.77 5.07 5.07 0 0 0 18.91 1S17.73.65 15 2.48a13.38 13.38 0 0 0-7 0C5.27.65 4.09 1 4.09 1A5.07 5.07 0 0 0 4 3.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 8 17.13V21" />
-    </svg>
-);
 
 const WhatsAppIcon = () => (
     <svg
@@ -90,6 +58,11 @@ const WhatsAppIcon = () => (
 
 const Contact = () => {
     const [copied, setCopied] = useState("");
+    const copyTimeoutRef = useRef(null);
+
+    useEffect(() => {
+        return () => clearTimeout(copyTimeoutRef.current);
+    }, []);
 
     const handleCopy = async (e, text) => {
         e.preventDefault();
@@ -105,7 +78,8 @@ const Contact = () => {
             document.body.removeChild(textarea);
         }
         setCopied(text);
-        setTimeout(() => setCopied(""), 2000);
+        clearTimeout(copyTimeoutRef.current);
+        copyTimeoutRef.current = setTimeout(() => setCopied(""), 2000);
     };
 
     const links = [
@@ -122,12 +96,12 @@ const Contact = () => {
         {
             address: HERO_CONTENT.email,
             label: "university email",
-            className: "font-mono text-xl md:text-2xl text-ink hover:text-accent",
+            className: "font-mono text-lg md:text-xl text-ink hover:text-accent",
         },
         {
             address: HERO_CONTENT.altEmail,
             label: "personal email",
-            className: "font-mono text-sm md:text-base text-ink-muted hover:text-accent",
+            className: "inline-flex items-center min-h-11 font-mono text-sm md:text-base text-ink-muted hover:text-accent",
         },
     ];
 
@@ -162,16 +136,18 @@ const Contact = () => {
             </AnimatePresence>
 
             <SectionHeader
+                index="07"
                 eyebrow="Contact"
-                title="Let's work together"
+                title="Hiring for data science in 2026?"
                 description="I am looking for a data science or AI engineering graduate role from September 2026, in Malaysia or remote. Email is the fastest way to reach me."
             />
 
-            <div className="grid md:grid-cols-12 gap-10 md:gap-12">
+            <div className="grid md:grid-cols-12 gap-7 md:gap-12">
                 {/* Left: email hero treatment */}
                 <motion.div
-                    initial={{ opacity: 0, y: 24 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    variants={FADE_IN_VARIANTS}
+                    initial="hidden"
+                    whileInView="visible"
                     viewport={{ once: true, margin: "-80px" }}
                     transition={{ ...SPRING, delay: 0.1 }}
                     className="md:col-span-7"
@@ -179,7 +155,7 @@ const Contact = () => {
                     {emails.map(({ address, label, className }, index) => (
                         <div
                             key={address}
-                            className={`flex flex-wrap items-center gap-3 ${index > 0 ? "mt-6" : ""}`}
+                            className={`flex flex-wrap items-center gap-3 min-h-11 ${index > 0 ? "mt-5" : ""}`}
                         >
                             <a
                                 href={`mailto:${address}`}
@@ -190,7 +166,7 @@ const Contact = () => {
                             <button
                                 type="button"
                                 onClick={(e) => handleCopy(e, address)}
-                                className="inline-flex items-center border border-line rounded-md px-2 py-1 text-ink-muted hover:text-accent hover:border-accent/50 transition-colors active:scale-[0.98]"
+                                className="inline-flex items-center justify-center min-h-11 min-w-11 border border-line rounded-md px-2 text-ink-muted hover:text-accent hover:border-accent/50 transition-colors active:scale-[0.98]"
                                 aria-label={`Copy ${label} to clipboard`}
                             >
                                 <CopyIcon />
@@ -198,7 +174,7 @@ const Contact = () => {
                         </div>
                     ))}
 
-                    <div className="mt-10">
+                    <div className="mt-9">
                         <Button variant="primary" href={HERO_CONTENT.resumeLink}>
                             <svg
                                 className="w-4 h-4"
@@ -220,8 +196,9 @@ const Contact = () => {
 
                 {/* Right: elsewhere links */}
                 <motion.div
-                    initial={{ opacity: 0, y: 24 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    variants={FADE_IN_VARIANTS}
+                    initial="hidden"
+                    whileInView="visible"
                     viewport={{ once: true, margin: "-80px" }}
                     transition={{ ...SPRING, delay: 0.2 }}
                     className="md:col-span-5"
@@ -236,7 +213,7 @@ const Contact = () => {
                                 href={link.href}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="group flex items-center gap-3 py-4 text-ink hover:text-accent transition-colors"
+                                className="group flex items-center gap-3 py-3.5 min-h-11 text-ink hover:text-accent active:scale-[0.99] transition-colors"
                             >
                                 {link.icon}
                                 <span className="font-medium">{link.label}</span>

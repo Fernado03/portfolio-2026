@@ -1,3 +1,5 @@
+const c = (v) => `rgb(var(${v}) / <alpha-value>)`
+
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: 'class',
@@ -9,19 +11,19 @@ export default {
     extend: {
       colors: {
         accent: {
-          DEFAULT: 'var(--accent)',
-          strong: 'var(--accent-strong)',
-          muted: 'var(--accent-muted)',
+          DEFAULT: c('--accent-rgb'),
+          strong: c('--accent-strong-rgb'),
+          muted: 'rgb(var(--accent-rgb) / 0.10)',
         },
-        bg: 'var(--bg)',
-        'bg-subtle': 'var(--bg-subtle)',
-        'bg-elev': 'var(--bg-elev)',
-        ink: 'var(--ink)',
-        'ink-muted': 'var(--ink-muted)',
-        line: 'var(--line)',
+        bg: c('--bg-rgb'),
+        'bg-subtle': c('--bg-subtle-rgb'),
+        'bg-elev': c('--bg-elev-rgb'),
+        ink: c('--ink-rgb'),
+        'ink-muted': c('--ink-muted-rgb'),
+        line: c('--line-rgb'),
       },
       fontFamily: {
-        display: ['Geist Variable', 'system-ui', 'sans-serif'],
+        display: ['Newsreader Variable', 'Georgia', 'serif'],
         sans: ['Geist Variable', 'system-ui', 'sans-serif'],
         mono: ['Geist Mono Variable', 'ui-monospace', 'monospace'],
       },

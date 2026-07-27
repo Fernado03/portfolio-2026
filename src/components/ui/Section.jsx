@@ -1,9 +1,7 @@
-import React from "react";
-
 const Section = ({ id, className = "", children, ...props }) => {
     return (
-        <section id={id} className={`py-24 md:py-32 ${className}`} {...props}>
-            <div className="max-w-6xl mx-auto px-6">{children}</div>
+        <section id={id} className={`py-7 md:py-10 ${className}`} {...props}>
+            <div className="relative z-10 w-full max-w-6xl mx-auto px-6">{children}</div>
         </section>
     );
 };
