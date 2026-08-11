@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://portfolio-2026-rho-lime.vercel.app/sitemap.xml
+Sitemap: https://www.fernado03.my/sitemap.xml
