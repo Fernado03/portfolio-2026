@@ -1,27 +1,18 @@
-const SCALES = {
-    major: "text-[clamp(2rem,4.5vw,3.25rem)]",
-    minor: "text-[clamp(1.6rem,3vw,2.25rem)]",
-};
+const SectionHeader = ({ index, eyebrow, title, description, className = "", ...props }) => {
+    const kicker = [index, eyebrow].filter(Boolean).join(" — ");
 
-const SectionHeader = ({ index, eyebrow, title, description, scale = "minor", className = "", ...props }) => {
     return (
-        <div className={`mb-4 md:mb-8 ${className}`} {...props}>
-            {(index || eyebrow) && (
-                <p className="font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-accent">
-                    {index && (
-                        <>
-                            <span className="text-ink-muted">{index}</span>
-                            <span className="text-line px-1.5">/</span>
-                        </>
-                    )}
-                    {eyebrow}
+        <div className={`mb-8 border-t border-line pt-6 md:mb-10 ${className}`} {...props}>
+            {kicker && (
+                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
+                    {kicker}
                 </p>
             )}
-            <h2 className={`mt-3 font-display ${SCALES[scale] ?? SCALES.minor} font-semibold tracking-[-0.01em] text-ink`}>
+            <h2 className="mt-4 font-sans text-[clamp(2rem,4vw,3rem)] font-bold leading-[1.05] tracking-tight text-ink">
                 {title}
             </h2>
             {description && (
-                <p className="text-ink-muted max-w-[62ch] mt-4 leading-relaxed">
+                <p className="mt-5 max-w-2xl text-base leading-7 text-ink-muted">
                     {description}
                 </p>
             )}

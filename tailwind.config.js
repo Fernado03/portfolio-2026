@@ -15,6 +15,11 @@ export default {
           strong: c('--accent-strong-rgb'),
           muted: 'rgb(var(--accent-rgb) / 0.10)',
         },
+        accent2: {
+          DEFAULT: c('--accent2-rgb'),
+          strong: c('--accent2-strong-rgb'),
+          muted: 'rgb(var(--accent2-rgb) / 0.10)',
+        },
         bg: c('--bg-rgb'),
         'bg-subtle': c('--bg-subtle-rgb'),
         'bg-elev': c('--bg-elev-rgb'),
@@ -23,7 +28,6 @@ export default {
         line: c('--line-rgb'),
       },
       fontFamily: {
-        display: ['Newsreader Variable', 'Georgia', 'serif'],
         sans: ['Geist Variable', 'system-ui', 'sans-serif'],
         mono: ['Geist Mono Variable', 'ui-monospace', 'monospace'],
       },

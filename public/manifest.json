@@ -3,9 +3,9 @@
     "short_name": "Fernado George",
     "description": "Portfolio of Fernado George: retrieval systems, computer vision and the front ends that ship them.",
     "start_url": "/",
-    "display": "standalone",
-    "background_color": "#FBFAF8",
-    "theme_color": "#FBFAF8",
+    "display": "browser",
+    "background_color": "#FAF9F5",
+    "theme_color": "#FAF9F5",
     "icons": [
         {
             "src": "/favicon.svg",

@@ -7,7 +7,8 @@ const KONAMI_CODE = [
     "KeyB", "KeyA"
 ];
 
-const CONFETTI_COLORS = ["#FB923C", "#9A3412", "#FBFAF8", "#A8A096"];
+// v3 palette — ember, blue, paper, ink so particles read on both themes.
+const CONFETTI_COLORS = ["#ff8a5c", "#7db8ff", "#e8e6e0", "#101014"];
 
 // Every random value is drawn once here, so render stays pure and a re-render
 // cannot reshuffle particles mid-flight.
@@ -93,9 +94,9 @@ const EasterEgg = () => {
                     exit={{ opacity: 0, scale: 0.5 }}
                     className="fixed inset-0 z-[60] flex items-center justify-center pointer-events-none"
                 >
-                    <div className="bg-bg-elev border border-line rounded-xl text-ink px-8 py-6 shadow-2xl text-center">
+                    <div className="bg-bg-elev border border-line rounded-none text-ink px-8 py-6 shadow-lg text-center">
                         <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent mb-3">Konami accepted</p>
-                        <p className="font-display text-2xl font-semibold tracking-tight">30 extra lives not included.</p>
+                        <p className="font-mono text-xl font-bold uppercase tracking-tight">30 extra lives not included.</p>
                         <p className="font-mono text-xs text-ink-muted mt-3">↑↑↓↓←→←→BA — Fernado</p>
                     </div>
                 </motion.div>

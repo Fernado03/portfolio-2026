@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useId, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "../context/theme";
 import { OPEN_PALETTE_EVENT } from "../utils/commandPalette";
@@ -19,9 +19,9 @@ const iconPaths = {
     linkedin: "M6 9v11M6 4v.01M10 20v-6a3 3 0 016 0v6M10 9v11",
 };
 
-const CommandIcon = ({ name }) => (
+const CommandIcon = ({ name, className = "w-4 h-4 text-ink-muted shrink-0" }) => (
     <svg
-        className="w-4 h-4 text-ink-muted shrink-0"
+        className={className}
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -38,7 +38,13 @@ const CommandPalette = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [search, setSearch] = useState("");
     const [selectedIndex, setSelectedIndex] = useState(0);
+    const panelRef = useRef(null);
     const inputRef = useRef(null);
+    const selectedOptionRef = useRef(null);
+    const restoreFocusRef = useRef(null);
+    const paletteId = useId();
+    const titleId = `${paletteId}-title`;
+    const listboxId = `${paletteId}-listbox`;
     const { toggleTheme, isDark } = useTheme();
 
     const commands = [
@@ -57,10 +63,11 @@ const CommandPalette = () => {
     ];
 
     const scrollTo = (hash) => {
+        const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
         if (hash === "#") {
-            window.scrollTo({ top: 0, behavior: "smooth" });
+            window.scrollTo({ top: 0, behavior });
         } else {
-            document.querySelector(hash)?.scrollIntoView({ behavior: "smooth" });
+            document.querySelector(hash)?.scrollIntoView({ behavior });
         }
     };
 
@@ -69,10 +76,18 @@ const CommandPalette = () => {
             cmd.label.toLowerCase().includes(search.toLowerCase()) ||
             cmd.category.toLowerCase().includes(search.toLowerCase())
     );
+    const activeIndex = filteredCommands.length
+        ? Math.min(selectedIndex, filteredCommands.length - 1)
+        : 0;
+    const activeCommand = filteredCommands[activeIndex];
+    const activeCommandId = activeCommand?.id ?? null;
 
-    // Resetting here (not in an effect reacting to isOpen) keeps the state change in the
-    // event that caused it, so there is no render-then-correct pass.
+    const closePalette = () => setIsOpen(false);
+
     const openPalette = () => {
+        if (document.querySelector('[aria-modal="true"]')) return;
+
+        restoreFocusRef.current = document.activeElement;
         setSearch("");
         setSelectedIndex(0);
         setIsOpen(true);
@@ -80,13 +95,10 @@ const CommandPalette = () => {
 
     // ⌘K / Ctrl+K shortcut, plus an explicit open request from the navbar trigger.
     useEffect(() => {
-        const handleKeyDown = (e) => {
-            if ((e.metaKey || e.ctrlKey) && e.key === "k") {
-                e.preventDefault();
+        const handleKeyDown = (event) => {
+            if ((event.metaKey || event.ctrlKey) && event.key === "k") {
+                event.preventDefault();
                 openPalette();
-            }
-            if (e.key === "Escape") {
-                setIsOpen(false);
             }
         };
         window.addEventListener("keydown", handleKeyDown);
@@ -97,28 +109,89 @@ const CommandPalette = () => {
         };
     }, []);
 
-    // Focus the input once the palette is actually mounted.
     useEffect(() => {
-        if (isOpen) inputRef.current?.focus();
+        if (!isOpen) return undefined;
+
+        const { overflow } = document.body.style;
+        document.body.style.overflow = "hidden";
+        inputRef.current?.focus();
+
+        const handleModalKeyDown = (event) => {
+            if (event.key === "Escape") {
+                event.preventDefault();
+                closePalette();
+                return;
+            }
+            if (event.key !== "Tab") return;
+
+            const focusable = panelRef.current?.querySelectorAll(
+                'button:not([disabled]):not([tabindex="-1"]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+            );
+            if (!focusable?.length) {
+                event.preventDefault();
+                panelRef.current?.focus();
+                return;
+            }
+
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            const active = document.activeElement;
+            if (!panelRef.current?.contains(active)) {
+                event.preventDefault();
+                (event.shiftKey ? last : first).focus();
+            } else if (event.shiftKey && active === first) {
+                event.preventDefault();
+                last.focus();
+            } else if (!event.shiftKey && active === last) {
+                event.preventDefault();
+                first.focus();
+            } else if (active !== first && active !== last) {
+                event.preventDefault();
+                (event.shiftKey ? last : first).focus();
+            }
+        };
+
+        window.addEventListener("keydown", handleModalKeyDown);
+        return () => {
+            window.removeEventListener("keydown", handleModalKeyDown);
+            document.body.style.overflow = overflow;
+
+            const opener = restoreFocusRef.current;
+            restoreFocusRef.current = null;
+            if (opener?.isConnected) opener.focus?.({ preventScroll: true });
+        };
     }, [isOpen]);
 
+    useEffect(() => {
+        if (!isOpen || !activeCommandId) return;
+
+        selectedOptionRef.current?.scrollIntoView({
+            block: "nearest",
+            behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? "auto" : "smooth",
+        });
+    }, [isOpen, selectedIndex, search, isDark, activeCommandId]);
+
     // Arrow key navigation
-    const handleKeyDown = (e) => {
-        if (e.key === "ArrowDown") {
-            e.preventDefault();
-            setSelectedIndex((prev) => Math.min(prev + 1, filteredCommands.length - 1));
-        } else if (e.key === "ArrowUp") {
-            e.preventDefault();
-            setSelectedIndex((prev) => Math.max(prev - 1, 0));
-        } else if (e.key === "Enter" && filteredCommands[selectedIndex]) {
-            e.preventDefault();
-            executeCommand(filteredCommands[selectedIndex]);
+    const handleKeyDown = (event) => {
+        if (event.key === "ArrowDown") {
+            event.preventDefault();
+            if (filteredCommands.length) {
+                setSelectedIndex(Math.min(activeIndex + 1, filteredCommands.length - 1));
+            }
+        } else if (event.key === "ArrowUp") {
+            event.preventDefault();
+            if (filteredCommands.length) {
+                setSelectedIndex(Math.max(activeIndex - 1, 0));
+            }
+        } else if (event.key === "Enter" && activeCommand) {
+            event.preventDefault();
+            executeCommand(activeCommand);
         }
     };
 
     const executeCommand = (cmd) => {
         cmd.action();
-        setIsOpen(false);
+        closePalette();
     };
 
     return (
@@ -129,61 +202,88 @@ const CommandPalette = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    onClick={() => setIsOpen(false)}
-                    className="fixed inset-0 bg-[#0B0A09]/60 backdrop-blur-sm z-50"
+                    onClick={closePalette}
+                    className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
                 />
             )}
 
             {isOpen && (
                 <motion.div
                     key="palette-panel"
-                    initial={{ opacity: 0, scale: 0.95, y: -20 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.95, y: -20 }}
-                    transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                    ref={panelRef}
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby={titleId}
+                    tabIndex={-1}
+                    initial={{ opacity: 0, y: -16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -16 }}
+                    transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
                     className="fixed top-[20%] left-1/2 -translate-x-1/2 w-full max-w-lg z-50 px-4"
                 >
-                    <div className="bg-bg-elev rounded-xl border border-line shadow-2xl overflow-hidden">
+                    <div className="bg-bg-elev rounded-none border border-line shadow-lg overflow-hidden">
+                        {/* Title bar */}
+                        <div className="flex items-center justify-between px-4 py-2 border-b border-line text-ink">
+                            <span id={titleId} className="font-mono text-xs uppercase tracking-[0.2em]">
+                                Command palette
+                            </span>
+                            <span className="font-mono text-xs text-accent">⌘K</span>
+                        </div>
+
                         {/* Search Input */}
-                        <div className="flex items-center gap-3 px-4 py-4 bg-bg-subtle border-b border-line">
-                            <svg className="w-5 h-5 text-ink-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                            </svg>
+                        <div className="flex items-center gap-3 px-4 py-4 border-b border-line">
+                            <span className="font-mono text-lg leading-none text-accent">›</span>
                             <input
                                 ref={inputRef}
+                                role="combobox"
+                                aria-label="Search commands"
+                                aria-autocomplete="list"
+                                aria-expanded="true"
+                                aria-controls={listboxId}
+                                aria-activedescendant={activeCommand ? `${paletteId}-option-${activeCommand.id}` : undefined}
                                 type="text"
-                                placeholder="Search commands..."
+                                placeholder="SEARCH COMMANDS…"
                                 value={search}
                                 onChange={(e) => {
                                     setSearch(e.target.value);
                                     setSelectedIndex(0);
                                 }}
                                 onKeyDown={handleKeyDown}
-                                className="flex-1 bg-transparent text-ink placeholder-ink-muted outline-none text-base"
+                                className="flex-1 bg-transparent text-ink placeholder-ink-muted outline-none text-base font-mono"
                             />
-                            <kbd className="px-2 py-1 border border-line rounded font-mono text-xs text-ink-muted">ESC</kbd>
+                            <kbd className="px-1.5 py-1 border border-line rounded-none font-mono text-[0.625rem] text-ink-muted">ESC</kbd>
                         </div>
 
                         {/* Commands List */}
-                        <div className="max-h-80 overflow-y-auto py-2">
+                        <div id={listboxId} role="listbox" aria-label="Commands" tabIndex={-1} className="max-h-80 overflow-y-auto py-2">
                             {filteredCommands.length === 0 ? (
-                                <div className="px-4 py-8 text-center text-ink-muted">
+                                <div className="px-4 py-8 text-center font-mono text-xs uppercase tracking-[0.2em] text-ink-muted">
                                     No commands found
                                 </div>
                             ) : (
                                 filteredCommands.map((cmd, index) => (
                                     <button
                                         key={cmd.id}
+                                        id={`${paletteId}-option-${cmd.id}`}
+                                        ref={index === activeIndex ? selectedOptionRef : null}
+                                        role="option"
+                                        tabIndex={-1}
+                                        aria-selected={index === activeIndex}
                                         onClick={() => executeCommand(cmd)}
                                         onMouseEnter={() => setSelectedIndex(index)}
-                                        className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors ${index === selectedIndex
-                                            ? "bg-accent-muted text-ink"
-                                            : "text-ink-muted hover:bg-bg-subtle"
+                                        onFocus={() => setSelectedIndex(index)}
+                                        className={`w-full flex items-center gap-3 px-4 py-3 text-left ${index === activeIndex
+                                            ? "bg-accent/10 text-accent"
+                                            : "text-ink hover:bg-bg-subtle"
                                             }`}
                                     >
-                                        <CommandIcon name={cmd.icon} />
-                                        <span className="flex-1 font-medium">{cmd.label}</span>
-                                        <span className="font-mono text-xs uppercase text-ink-muted">{cmd.category}</span>
+                                        <span className="w-4 shrink-0 font-mono text-xs text-accent">›</span>
+                                        <CommandIcon
+                                            name={cmd.icon}
+                                            className={`w-4 h-4 shrink-0 ${index === activeIndex ? "text-accent" : "text-ink-muted"}`}
+                                        />
+                                        <span className="flex-1 font-mono text-sm uppercase tracking-[0.1em]">{cmd.label}</span>
+                                        <span className="font-mono text-[0.625rem] uppercase tracking-[0.2em] text-ink-muted">{cmd.category}</span>
                                     </button>
                                 ))
                             )}
@@ -193,11 +293,11 @@ const CommandPalette = () => {
                         <div className="flex items-center justify-between px-4 py-3 border-t border-line text-xs text-ink-muted">
                             <div className="flex items-center gap-4">
                                 <span className="flex items-center gap-1">
-                                    <kbd className="px-1.5 py-0.5 border border-line rounded font-mono text-[0.625rem]">↑↓</kbd>
+                                    <kbd className="px-1.5 py-0.5 border border-line rounded-none font-mono text-[0.625rem]">↑↓</kbd>
                                     Navigate
                                 </span>
                                 <span className="flex items-center gap-1">
-                                    <kbd className="px-1.5 py-0.5 border border-line rounded font-mono text-[0.625rem]">↵</kbd>
+                                    <kbd className="px-1.5 py-0.5 border border-line rounded-none font-mono text-[0.625rem]">↵</kbd>
                                     Select
                                 </span>
                             </div>

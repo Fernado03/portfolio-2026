@@ -1,9 +1,7 @@
 
 export const HERO_CONTENT = {
     name: "Fernado George Anak Mani",
-    title: "Data Scientist & Full-Stack Developer",
-    subtitle:
-        "I build retrieval and computer-vision systems that ship: a 71.6% F1 multimodal emotion thesis, a RAG assistant for a German client, and a CCTV-to-records pipeline running on real footage.",
+    title: "Data Scientist & AI Engineer",
     availability: "Seeking a data science / AI engineering graduate role — Malaysia or remote, from Sep 2026",
     resumeLink: "/Fernado_George_DataScience_Resume.pdf",
     email: "fernado_george_bi22@iluv.ums.edu.my",
@@ -16,7 +14,7 @@ export const HERO_CONTENT = {
         { value: "71.6%", label: "Thesis F1 (multimodal)" },
         { value: "3.75", label: "CGPA · Dean's List" },
         { value: "2", label: "Client systems in production" },
-        { value: "4", label: "Hackathons · 1 Gold, 1 runner-up" },
+        { value: "4", label: "Featured hackathon builds · 1 Gold, 1 runner-up" },
     ],
 };
 
@@ -24,18 +22,13 @@ export const FYP_CONTENT = {
     tagline: "Final Year Thesis",
     title: "Comparative Study of Hybrid Fusion for Robust Multimodal Emotion Recognition",
     description:
-        "Addressed the gap between lab performance and real-world application in Emotion Recognition. This study benchmarked Contextual vs. Statistical fusion strategies against noise and missing data, concluding that Ensemble methods offer the highest reliability (71.6% F1) while Contextual Bi-GRU offers the best efficiency.",
+        "Addressed the gap between lab performance and real-world application in Emotion Recognition. This study benchmarked Contextual vs. Statistical fusion strategies against noise and missing data, concluding that Ensemble methods offer the highest reliability while Contextual Bi-GRU offers the best efficiency.",
     features: [
         "Robustness benchmark: every model re-scored under Gaussian noise and dropped modalities, not just clean input.",
         "Contextual Bi-GRU: architecture capturing temporal emotion changes better than statistical baselines.",
         "Ensemble strategy: achieved 71.6% F1-score, maintaining stability even under noise.",
     ],
     techStack: ["Python", "PyTorch", "WavLM", "DINOv2", "ModernBERT"],
-    gallery: [
-        { src: "/projects/noise_robustness.png", caption: "Impact of added Gaussian noise on model performance" },
-        { src: "/projects/modal_reliance.png", caption: "Modal reliance analysis: impact of missing modalities" },
-        { src: "/projects/confusion_matrix.png", caption: "Confusion matrix: highlighting angry vs. frustrated ambiguity" },
-    ],
     demoLink: "https://thesis-presentation-beryl.vercel.app/",
     githubLink: "https://github.com/Fernado03/thesis-presentation",
     thesisLink: "/documents/Thesis_BI22110436.pdf",
@@ -54,7 +47,7 @@ export const PROJECTS = [
         role: "Team Leader of Development",
         badge: "Gold Medal — Festival Idea Sabah 2025",
         description:
-            "Built an AI scribe using Google Speech-to-Text & Gemini Pro 2.5. Implemented RAG with 'all-MiniLM-L6-v2' to minimize hallucinations. Proven to reduce documentation time by 3-4 hours daily and administrative costs by 30%.",
+            "Built an AI medical scribe with Google Speech-to-Text and Gemini Pro 2.5, using all-MiniLM-L6-v2 embeddings in a RAG pipeline that grounds generated notes in retrieved context.",
         techStack: ["Google Speech-to-Text", "Gemini Pro 2.5", "RAG", "GCP"],
         image: "/projects/ai_medical_slide_cover.jpg",
         link: "https://github.com/Fernado03/AIMS-final-mvp",
@@ -106,7 +99,7 @@ export const PROJECTS = [
         title: "Borneo Hackathon 2024 Portal",
         category: "Full-Stack Web App",
         role: "Full-Stack Developer",
-        badge: "Live — 60+ participants",
+        badge: "Event complete — 60+ participants · 100% uptime",
         description:
             "Handled real-time registration for 60+ international participants with 100% uptime across the event weekend.",
         techStack: ["React (Vite)", "Node.js", "MongoDB", "Tailwind CSS"],
@@ -162,17 +155,17 @@ export const ABOUT_CONTENT = {
         },
     ],
     profileImages: [
-        { src: "/about/profile_picture.png", alt: "Fernado George, portrait" },
-        { src: "/about/1748327868606.jpg", alt: "Fernado presenting at a university event" },
-        { src: "/about/FIS.jpg", alt: "Fernado at Festival Idea Sabah 2025" },
-        { src: "/about/photo_2025-05-25_00-26-26.jpg", alt: "Fernado with his hackathon team" },
-        { src: "/about/photo_2025-10-16_16-39-26.jpg", alt: "Fernado at a faculty programme" },
-        { src: "/about/IMG_5574.jpg", alt: "Fernado on convocation day" },
-        { src: "/about/IMG_5529.jpg", alt: "Fernado in academic robes" },
-        { src: "/about/IMG_5514.jpg", alt: "Fernado outdoors in Sabah" },
+        { src: "/about/profile_picture.png", alt: "Fernado George, portrait", label: "Portrait" },
+        { src: "/about/1748327868606.jpg", alt: "Fernado holding a microphone beside a group wearing lanyards", label: "Group speaker" },
+        { src: "/about/FIS.jpg", alt: "Fernado with three people in front of an event screen", label: "Group photo" },
+        { src: "/about/photo_2025-05-25_00-26-26.jpg", alt: "Fernado with four people beside an ELLM Startup Initiative banner", label: "Startup team" },
+        { src: "/about/photo_2025-10-16_16-39-26.jpg", alt: "Fernado with three people in front of an AI Medical Scribe poster", label: "Project team" },
+        { src: "/about/IMG_5574.jpg", alt: "Fernado with three people working on a laptop and circuit board", label: "Prototype work" },
+        { src: "/about/IMG_5529.jpg", alt: "Fernado demonstrating tabletop components to three seated participants", label: "Table demo" },
+        { src: "/about/IMG_5514.jpg", alt: "Fernado presenting an Arduino workshop slide", label: "Arduino workshop" },
     ],
     hackathons:
-        "Led teams across four hackathons — MarineHack, JomHack, Festival Idea Sabah and Borneo Hackathon — taking one Gold, one second place and one top-8 finish (MarineHack); a second top-8 finish came separately at the ELLM Startup Initiative. Owned architecture, task delegation and the final pitch each time.",
+        "Four hackathons — MarineHack, JomHack, Festival Idea Sabah and Borneo Hackathon — with one Gold, one second place and one top-8 finish (MarineHack), plus a second top-8 at the ELLM Startup Initiative. Roles ranged from leading the team and owning the backend to solo full-stack delivery.",
     experience: [
         {
             role: "AI/ML Development Intern",
@@ -188,6 +181,7 @@ export const ABOUT_CONTENT = {
             organization: "Persatuan Mahasiswa Fakulti Komputeran dan Informatik (PMFKI)",
             location: "Universiti Malaysia Sabah",
             period: "Nov 2023 – Aug 2024",
+            logo: "/logos/pmfki.png",
             description:
                 "Held the academic and career portfolio for the computing faculty's student association, running its academic programmes and industry engagement for a 10-month term.",
         },
@@ -196,6 +190,7 @@ export const ABOUT_CONTENT = {
             organization: "Persatuan Mahasiswa Fakulti Komputeran dan Informatik (PMFKI)",
             location: "Universiti Malaysia Sabah",
             period: "Nov 2022 – Aug 2023",
+            logo: "/logos/pmfki.png",
             description:
                 "Deputy secretary for the association: meeting records, committee correspondence and event documentation across a 10-month term.",
         },

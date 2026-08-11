@@ -12,8 +12,8 @@ const OUT = path.join(path.resolve("public"), "resized");
 const jobs = [
   // project covers: displayed ~540-550px → 800w + 400w
   { dir: "projects", widths: [800, 400], quality: 78 },
-  // about photos: displayed ~344-450px → 700w + 350w
-  { dir: "about", widths: [700, 350], quality: 78 },
+  // about photos: displayed ~344-450px → 1200w + 700w + 350w
+  { dir: "about", widths: [1200, 700, 350], quality: 78 },
   // award poster: primary FYP visual plus smaller card thumbnails
   { dir: "awards", widths: [800, 400], quality: 78 },
 ];

@@ -24,7 +24,7 @@ export const ThemeProvider = ({ children }) => {
     useEffect(() => {
         document.documentElement.classList.toggle("dark", isDark);
 
-        const color = isDark ? "#0B0A09" : "#FBFAF8";
+        const color = isDark ? "#101014" : "#FAF9F5";
         document.querySelectorAll('meta[name="theme-color"]').forEach((meta) => meta.setAttribute("content", color));
     }, [isDark]);
 

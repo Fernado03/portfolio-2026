@@ -4,15 +4,21 @@ import { PROJECTS } from "../constants";
 import { SPRING } from "../constants/animations";
 import { resizedImage } from "../utils/image";
 import { GitHubIcon } from "./ui/Icons";
-import Chip from "./ui/Chip";
 import Button from "./ui/Button";
+import Chip from "./ui/Chip";
 
 const HASH_PATTERN = /^#work\/(.+)$/;
 
 const slugFromHash = () => {
     if (typeof window === "undefined") return null;
     const match = window.location.hash.match(HASH_PATTERN);
-    return match ? decodeURIComponent(match[1]) : null;
+    if (!match) return null;
+
+    try {
+        return decodeURIComponent(match[1]);
+    } catch {
+        return null;
+    }
 };
 
 const isDesktopViewport = () =>
@@ -42,7 +48,7 @@ const LockIcon = ({ className = "h-4 w-4" }) => (
  */
 const ConfidentialPanel = ({ note }) => (
     <div className="flex h-full w-full flex-col items-start justify-end gap-2 bg-bg-subtle p-6">
-        <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-line text-ink-muted">
+        <span className="flex h-9 w-9 items-center justify-center rounded-none border border-line text-ink-muted">
             <LockIcon />
         </span>
         <p className="font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-ink-muted">
@@ -54,33 +60,42 @@ const ConfidentialPanel = ({ note }) => (
 
 const ProjectMeta = ({ project }) => (
     <>
-        <div className="mt-3 mb-3 flex flex-wrap items-center gap-x-3 gap-y-2">
-            {project.role && <span className="text-xs text-ink-muted">{project.role}</span>}
-            {project.badge && (
-                <span className="rounded-md bg-accent-muted px-1.5 py-0.5 font-mono text-xs text-accent">
-                    {project.badge}
-                </span>
+        <div className="mt-4 mb-6 border-y border-line divide-y divide-line">
+            {project.role && (
+                <div className="flex items-baseline gap-4 py-2.5">
+                    <span className="w-16 shrink-0 font-mono text-[0.625rem] uppercase tracking-[0.2em] text-ink-muted">Role</span>
+                    <span className="font-mono text-xs uppercase tracking-[0.1em] text-ink">{project.role}</span>
+                </div>
             )}
+            {project.badge && (
+                <div className="flex items-baseline gap-4 py-2.5">
+                    <span className="w-16 shrink-0 font-mono text-[0.625rem] uppercase tracking-[0.2em] text-ink-muted">Badge</span>
+                    <span className="font-mono text-xs uppercase tracking-[0.1em] text-accent">{project.badge}</span>
+                </div>
+            )}
+            <div className="flex items-baseline gap-4 py-2.5">
+                <span className="w-16 shrink-0 font-mono text-[0.625rem] uppercase tracking-[0.2em] text-ink-muted">Stack</span>
+                <span className="flex flex-wrap gap-1.5">
+                    {project.techStack.map((tech) => (
+                        <Chip key={tech}>{tech}</Chip>
+                    ))}
+                </span>
+            </div>
         </div>
-        <p className="mb-6 text-sm leading-relaxed text-ink-muted">{project.description}</p>
-        <div className="mb-6 flex flex-wrap gap-2">
-            {project.techStack.map((tech) => (
-                <Chip key={tech}>{tech}</Chip>
-            ))}
-        </div>
+        <p className="mb-6 text-base leading-7 text-ink-muted">{project.description}</p>
     </>
 );
 
 const ProjectLinks = ({ project }) => (
     <div className="flex flex-wrap items-center gap-3">
         {project.link && (
-            <Button variant="secondary" href={project.link} className="text-xs">
+            <Button variant="secondary" href={project.link}>
                 <GitHubIcon className="h-4 w-4" />
                 {project.linkText || "GitHub"}
             </Button>
         )}
         {project.documentLink && (
-            <Button variant="tertiary" href={project.documentLink} className="text-xs">
+            <Button variant="secondary" href={project.documentLink}>
                 <DocIcon />
                 PDF
             </Button>
@@ -103,6 +118,7 @@ const ProjectDrawer = () => {
     const [slug, setSlug] = useState(slugFromHash);
     const [isDesktop, setIsDesktop] = useState(isDesktopViewport);
     const panelRef = useRef(null);
+    const closeButtonRef = useRef(null);
     const restoreRef = useRef(null);
 
     // undefined (slug set, no matching project) collapses to null so "closed"
@@ -126,11 +142,10 @@ const ProjectDrawer = () => {
         return () => query.removeEventListener("change", onChange);
     }, []);
 
-    // pushState — never location.hash = "" — so the fragment is dropped
-    // outright instead of leaving a bare "#", and closing never scroll-jumps.
-    // pushState doesn't fire hashchange, hence the explicit setSlug alongside it.
+    // replaceState drops the fragment without creating a history entry or
+    // firing hashchange, hence the explicit state update alongside it.
     const handleClose = useCallback(() => {
-        history.pushState(null, "", window.location.pathname + window.location.search);
+        window.history.replaceState(null, "", window.location.pathname + window.location.search);
         setSlug(null);
     }, []);
 
@@ -140,6 +155,7 @@ const ProjectDrawer = () => {
         if (!project) return;
 
         restoreRef.current = document.activeElement;
+        closeButtonRef.current?.focus();
         const { overflow } = document.body.style;
         document.body.style.overflow = "hidden";
 
@@ -185,7 +201,7 @@ const ProjectDrawer = () => {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     onClick={handleClose}
-                    className="fixed inset-0 z-50 bg-[#0B0A09]/70 backdrop-blur-sm"
+                    className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm"
                 />
             )}
 
@@ -200,20 +216,24 @@ const ProjectDrawer = () => {
                     animate={{ [axis]: 0 }}
                     exit={{ [axis]: "100%" }}
                     transition={SPRING}
-                    className="fixed left-0 right-0 bottom-0 z-50 flex max-h-[88dvh] flex-col overflow-hidden rounded-t-2xl border-t border-line bg-bg-elev shadow-2xl md:left-auto md:top-0 md:w-full md:max-w-2xl md:max-h-none md:rounded-t-none md:border-t-0 md:border-l"
+                    className="fixed left-0 right-0 bottom-0 z-50 flex max-h-[88dvh] flex-col overflow-hidden rounded-none border-t border-line bg-bg md:left-auto md:top-0 md:w-full md:max-w-2xl md:max-h-none md:rounded-none md:border-t-0 md:border-l md:border-line"
                 >
                     <button
                         type="button"
-                        autoFocus
+                        ref={closeButtonRef}
                         onClick={handleClose}
                         aria-label="Close project details"
-                        className="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-[#0B0A09] text-[#F5F3EF] transition-transform hover:scale-105 active:scale-95"
+                        className="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-none border border-line text-ink transition-colors hover:text-accent"
                     >
                         <CloseIcon />
                     </button>
 
-                    <div className="min-h-0 flex-1 overflow-y-auto">
-                        <div className="relative aspect-[16/10] w-full overflow-hidden bg-bg-subtle">
+                    <div
+                        tabIndex={0}
+                        aria-label={`Scrollable project details for ${project.title}`}
+                        className="min-h-0 flex-1 overflow-y-auto"
+                    >
+                        <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-line bg-bg-subtle">
                             {project.image ? (
                                 <img
                                     {...resizedImage(project.image)}
@@ -221,7 +241,7 @@ const ProjectDrawer = () => {
                                     alt=""
                                     loading="lazy"
                                     decoding="async"
-                                    className="h-full w-full object-cover"
+                                    className="h-full w-full border border-line object-cover"
                                 />
                             ) : (
                                 <ConfidentialPanel note={project.confidentialNote} />
@@ -229,10 +249,10 @@ const ProjectDrawer = () => {
                         </div>
 
                         <div className="px-6 py-6 md:px-8 md:py-8">
-                            <p className="font-mono text-xs uppercase tracking-wider text-accent">
+                            <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
                                 {project.category}
                             </p>
-                            <h2 className="mt-2 font-display text-2xl font-semibold text-ink">
+                            <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-ink">
                                 {project.title}
                             </h2>
                             <ProjectMeta project={project} />

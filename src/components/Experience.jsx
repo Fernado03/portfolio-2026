@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { ABOUT_CONTENT } from "../constants";
-import { FADE_IN_VARIANTS, SPRING } from "../constants/animations";
+import { CHAPTER_VARIANTS, CHAPTER_T } from "../constants/animations";
 import Section from "./ui/Section";
 import SectionHeader from "./ui/SectionHeader";
 
@@ -37,81 +37,66 @@ const Experience = () => {
                 eyebrow="Journey"
                 title="Education & experience"
                 description="Where the work happened — degree, faculty association terms, and the internship shipping client systems."
-                scale="minor"
             />
 
-            {/* Left-rail editorial list */}
-            <div className="border-y border-line divide-y divide-line">
-                {timelineItems.map((item, index) => {
-                    const isExperience = item.type === "experience";
-
+            {/* Ledger rows — period | role, hard rules, no cards. */}
+            <motion.ul
+                variants={CHAPTER_VARIANTS}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-80px" }}
+                transition={CHAPTER_T}
+                className="divide-y divide-line border-y border-line"
+                role="list"
+            >
+                {timelineItems.map((item) => {
+                    const isCurrent = item.period.includes("Present");
                     return (
-                        <motion.div
-                            key={item.id}
-                            variants={FADE_IN_VARIANTS}
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ once: true, margin: "-60px" }}
-                            transition={{ ...SPRING, delay: index * 0.05 }}
-                            className="grid md:grid-cols-12 gap-2 py-2.5 md:gap-4 md:py-3"
-                        >
-                            {/* Left rail — sticky year block */}
-                            <div className="md:col-span-3 md:border-r md:border-line md:pr-6">
-                                <div className="md:sticky md:top-24">
-                                    <div className="font-display text-2xl font-semibold text-ink">
-                                        {startYearOf(item.period)}
-                                    </div>
-                                    <div className="font-mono text-xs text-ink-muted mt-1">
-                                        {item.period}
-                                    </div>
-                                    <div
-                                        className={`font-mono text-xs uppercase tracking-wider mt-2 ${isExperience ? "text-accent" : "text-ink-muted"}`}
-                                    >
-                                        {isExperience ? "Experience" : "Education"}
-                                    </div>
-                                </div>
+                        <li key={item.id} className="grid gap-4 py-5 md:py-6 sm:grid-cols-[9rem_3.5rem_minmax(0,1fr)] sm:gap-6">
+                            <div className="flex items-baseline justify-between gap-3 sm:block sm:space-y-1">
+                                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-muted">
+                                    {item.period}
+                                </p>
+                                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-muted">
+                                    {item.type === "experience" ? "Experience" : "Education"}
+                                </p>
                             </div>
 
-                            {/* Right content */}
-                            <div className="md:col-span-9">
-                                <div className="flex items-start gap-4">
-                                    {item.logo && (
-                                        <div className="shrink-0 w-12 h-12 rounded-lg border border-line bg-bg-subtle flex items-center justify-center overflow-hidden">
-                                            <img
-                                                src={item.logo}
-                                                alt={`${item.subtitle} logo`}
-                                                width={32}
-                                                height={32}
-                                                loading="lazy"
-                                                decoding="async"
-                                                className="w-8 h-8 object-contain"
-                                            />
-                                        </div>
-                                    )}
-                                    <div className="min-w-0">
-                                        <h3 className="font-display font-semibold text-xl text-ink">
-                                            {item.title}
-                                        </h3>
-                                        <p className={`text-sm mt-1 ${isExperience ? "text-accent" : "text-ink-muted"}`}>
-                                            {item.subtitle}
-                                        </p>
-                                        {item.location && (
-                                            <p className="font-mono text-xs text-ink-muted mt-1">
-                                                {item.location}
-                                            </p>
-                                        )}
-                                    </div>
-                                </div>
-                                {item.details && (
-                                    <p className="text-sm text-ink-muted leading-relaxed mt-3 max-w-[65ch]">
-                                        {item.details}
-                                    </p>
+                            <div className="grid grid-cols-[3.5rem_minmax(0,1fr)] gap-4 sm:contents">
+                                {item.logo ? (
+                                    <img
+                                        src={item.logo}
+                                        alt={`${item.subtitle} logo`}
+                                        loading="lazy"
+                                        decoding="async"
+                                        className="h-14 w-14 border border-line bg-bg-elev object-contain p-1.5"
+                                    />
+                                ) : (
+                                    <span aria-hidden="true" className="h-14 w-14 border border-line bg-bg-subtle" />
                                 )}
+
+                                <div className="min-w-0">
+                                    <h3 className="font-sans font-semibold text-ink">
+                                        {isCurrent && <span className="text-accent2">▪ </span>}
+                                        {item.title}
+                                    </h3>
+                                    <p className="mt-0.5 font-mono text-[11px] uppercase tracking-[0.15em] text-ink-muted">
+                                        {item.subtitle}
+                                        {item.location && (
+                                            <span className="text-ink-muted"> — {item.location}</span>
+                                        )}
+                                    </p>
+                                    {item.details && (
+                                        <p className="mt-2.5 max-w-[65ch] text-base leading-7 text-ink-muted">
+                                            {item.details}
+                                        </p>
+                                    )}
+                                </div>
                             </div>
-                        </motion.div>
+                        </li>
                     );
                 })}
-            </div>
+            </motion.ul>
         </Section>
     );
 };

@@ -1,15 +1,15 @@
 const VARIANT_CLASSES = {
-    // text-bg inverts with the surface, so the label stays readable on both accent values.
+    // text-black on accent keeps contrast above the v2 text-bg flip; matches mock spec.
     primary:
-        "bg-accent text-bg hover:bg-accent-strong active:scale-[0.98] transition-all duration-200 px-5 py-2.5",
+        "bg-ink text-bg hover:bg-accent hover:text-black active:scale-[0.98] transition-all duration-200 px-5 py-2.5",
     secondary:
-        "border border-line text-ink hover:border-accent/50 hover:text-accent active:scale-[0.98] transition-all duration-200 px-5 py-2.5",
+        "border border-line text-ink hover:border-ink active:scale-[0.98] transition-all duration-200 px-5 py-2.5",
     tertiary:
         "text-accent underline underline-offset-4 decoration-accent/40 hover:decoration-accent active:scale-[0.98] transition-all duration-200 py-2",
 };
 
 const BASE_CLASSES =
-    "rounded-lg text-sm font-medium inline-flex items-center justify-center gap-2 min-h-11";
+    "rounded-none text-xs font-mono uppercase tracking-wider inline-flex items-center justify-center gap-2 min-h-11";
 
 // Anything leaving the site (or opening a document) gets its own tab.
 const isExternal = (href) => /^https?:/i.test(href) || /\.pdf($|\?)/i.test(href);

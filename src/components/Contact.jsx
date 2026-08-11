@@ -1,11 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HERO_CONTENT } from "../constants";
-import { SPRING, FADE_IN_VARIANTS } from "../constants/animations";
+import { SPRING } from "../constants/animations";
 import Section from "./ui/Section";
 import SectionHeader from "./ui/SectionHeader";
-import Button from "./ui/Button";
-import { GitHubIcon, LinkedInIcon } from "./ui/Icons";
 
 const CopyIcon = () => (
     <svg
@@ -20,39 +18,6 @@ const CopyIcon = () => (
     >
         <path d="M8 16H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2" />
         <path d="M8 20h8a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2z" />
-    </svg>
-);
-
-const ArrowUpRightIcon = () => (
-    <svg
-        className="w-4 h-4 ml-auto shrink-0 text-ink-muted group-hover:text-accent transition-colors"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        strokeWidth={1.5}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-    >
-        <path d="M7 17L17 7" />
-        <path d="M7 7h10v10" />
-    </svg>
-);
-
-
-const WhatsAppIcon = () => (
-    <svg
-        className="w-5 h-5 shrink-0"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        strokeWidth={1.5}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-    >
-        <path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.5L3 21l2-5.4A8.5 8.5 0 1 1 21 11.5z" />
-        <path d="M9 9.5c.5 2.5 3 5 5.5 5.5l1.5-1.5-2-1-1 .5c-.5-.5-1.5-1.5-2-2l.5-1-1-2L9 9.5z" />
     </svg>
 );
 
@@ -82,31 +47,42 @@ const Contact = () => {
         copyTimeoutRef.current = setTimeout(() => setCopied(""), 2000);
     };
 
-    const links = [
-        { label: "LinkedIn", href: HERO_CONTENT.linkedin, icon: <LinkedInIcon /> },
-        { label: "GitHub", href: HERO_CONTENT.github, icon: <GitHubIcon /> },
-        {
-            label: "WhatsApp",
-            href: `https://wa.me/${HERO_CONTENT.phone.replace("+", "")}`,
-            icon: <WhatsAppIcon />,
-        },
-    ];
+    const primaryEmail = HERO_CONTENT.altEmail;
+    const altEmail = HERO_CONTENT.email;
 
-    const emails = [
+    const channels = [
         {
-            address: HERO_CONTENT.email,
-            label: "university email",
-            className: "font-mono text-lg md:text-xl text-ink hover:text-accent",
+            label: "Phone",
+            href: `tel:${HERO_CONTENT.phone}`,
+            value: HERO_CONTENT.phone,
+            valueClass: "text-sm",
+            external: false,
         },
         {
-            address: HERO_CONTENT.altEmail,
-            label: "personal email",
-            className: "inline-flex items-center min-h-11 font-mono text-sm md:text-base text-ink-muted hover:text-accent",
+            label: "LinkedIn",
+            href: HERO_CONTENT.linkedin,
+            value: "LinkedIn ↗",
+            valueClass: "text-xs uppercase tracking-[0.2em]",
+            external: true,
+        },
+        {
+            label: "GitHub",
+            href: HERO_CONTENT.github,
+            value: "GitHub ↗",
+            valueClass: "text-xs uppercase tracking-[0.2em]",
+            external: true,
+        },
+        {
+            label: "Resume",
+            href: HERO_CONTENT.resumeLink,
+            value: "Résumé ↗",
+            valueClass: "text-xs uppercase tracking-[0.2em]",
+            external: true,
         },
     ];
 
     return (
-        <Section id="contact" className="flex items-center">
+        <Section id="contact">
             {/* Copied Toast */}
             <AnimatePresence>
                 {copied && (
@@ -115,7 +91,7 @@ const Contact = () => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 24 }}
                         transition={SPRING}
-                        className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 bg-bg-elev text-ink border border-line px-4 py-2 rounded-lg shadow-lg flex items-center gap-2 font-mono text-xs"
+                        className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 bg-bg-elev text-ink border border-line px-4 py-2 rounded-none flex items-center gap-2 font-mono text-xs"
                         role="status"
                     >
                         <svg
@@ -142,86 +118,73 @@ const Contact = () => {
                 description="I am looking for a data science or AI engineering graduate role from September 2026, in Malaysia or remote. Email is the fastest way to reach me."
             />
 
-            <div className="grid md:grid-cols-12 gap-7 md:gap-12">
-                {/* Left: email hero treatment */}
-                <motion.div
-                    variants={FADE_IN_VARIANTS}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: "-80px" }}
-                    transition={{ ...SPRING, delay: 0.1 }}
-                    className="md:col-span-7"
-                >
-                    {emails.map(({ address, label, className }, index) => (
-                        <div
-                            key={address}
-                            className={`flex flex-wrap items-center gap-3 min-h-11 ${index > 0 ? "mt-5" : ""}`}
+            <div
+                className="grid gap-6 border-y border-line py-6 md:grid-cols-[12rem_minmax(0,1fr)] md:items-center"
+            >
+                <div>
+                    <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent">Best route</p>
+                    <p className="mt-2 text-base leading-7 text-ink-muted">Email for roles, interviews, or collaboration.</p>
+                </div>
+
+                <div className="min-w-0 md:border-l md:border-line md:pl-8">
+                    <div className="grid min-w-0 grid-cols-[minmax(0,1fr)_2.75rem] items-center gap-3">
+                        <a
+                            href={`mailto:${primaryEmail}`}
+                            className="min-w-0 break-all font-mono text-base text-ink underline decoration-line underline-offset-4 transition-colors hover:text-accent hover:decoration-accent md:text-xl"
                         >
-                            <a
-                                href={`mailto:${address}`}
-                                className={`${className} transition-colors break-all`}
-                            >
-                                {address}
-                            </a>
-                            <button
-                                type="button"
-                                onClick={(e) => handleCopy(e, address)}
-                                className="inline-flex items-center justify-center min-h-11 min-w-11 border border-line rounded-md px-2 text-ink-muted hover:text-accent hover:border-accent/50 transition-colors active:scale-[0.98]"
-                                aria-label={`Copy ${label} to clipboard`}
-                            >
-                                <CopyIcon />
-                            </button>
-                        </div>
+                            {primaryEmail}
+                        </a>
+                        <button
+                            type="button"
+                            onClick={(e) => handleCopy(e, primaryEmail)}
+                            className="inline-flex h-11 w-11 shrink-0 items-center justify-center border border-line bg-bg text-ink-muted transition-colors hover:border-accent hover:text-accent"
+                            aria-label="Copy personal email to clipboard"
+                        >
+                            <CopyIcon />
+                        </button>
+                    </div>
+                    <div className="mt-3 grid min-w-0 grid-cols-[minmax(0,1fr)_2.75rem] items-center gap-3">
+                        <a
+                            href={`mailto:${altEmail}`}
+                            className="min-w-0 break-all font-mono text-sm text-ink-muted transition-colors hover:text-accent"
+                        >
+                            {altEmail}
+                        </a>
+                        <button
+                            type="button"
+                            onClick={(e) => handleCopy(e, altEmail)}
+                            className="inline-flex h-11 w-11 shrink-0 items-center justify-center border border-line bg-bg text-ink-muted transition-colors hover:border-accent hover:text-accent"
+                            aria-label="Copy university email to clipboard"
+                        >
+                            <CopyIcon />
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                className="mt-8"
+            >
+                <div className="grid border-y border-line sm:grid-cols-2 lg:grid-cols-4 lg:divide-x lg:divide-line">
+                    {channels.map((link) => (
+                        <a
+                            key={link.label}
+                            href={link.href}
+                            {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : null)}
+                            className="group flex min-h-20 items-center justify-between gap-4 border-b border-line px-0 py-4 text-ink transition-colors hover:text-accent sm:px-4 sm:[&:nth-last-child(-n+2)]:border-b-0 lg:border-b-0 lg:first:pl-0"
+                        >
+                            <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-ink-muted transition-colors group-hover:text-accent">
+                                {link.label}
+                            </span>
+                            <span className={`font-mono text-right ${link.valueClass}`}>{link.value}</span>
+                        </a>
                     ))}
+                </div>
 
-                    <div className="mt-9">
-                        <Button variant="primary" href={HERO_CONTENT.resumeLink}>
-                            <svg
-                                className="w-4 h-4"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                strokeWidth={1.5}
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                aria-hidden="true"
-                            >
-                                <path d="M12 10v6m0 0l-3-3m3 3l3-3" />
-                                <path d="M20 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5.586a1 1 0 0 1 .707.293l5.414 5.414a1 1 0 0 1 .293.707V19a2 2 0 0 1-2 2h3" />
-                            </svg>
-                            Download resume
-                        </Button>
-                    </div>
-                </motion.div>
-
-                {/* Right: elsewhere links */}
-                <motion.div
-                    variants={FADE_IN_VARIANTS}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: "-80px" }}
-                    transition={{ ...SPRING, delay: 0.2 }}
-                    className="md:col-span-5"
-                >
-                    <p className="font-mono text-xs uppercase tracking-[0.2em] text-ink-muted mb-4">
-                        Elsewhere
-                    </p>
-                    <div className="border-y border-line divide-y divide-line">
-                        {links.map((link) => (
-                            <a
-                                key={link.label}
-                                href={link.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="group flex items-center gap-3 py-3.5 min-h-11 text-ink hover:text-accent active:scale-[0.99] transition-colors"
-                            >
-                                {link.icon}
-                                <span className="font-medium">{link.label}</span>
-                                <ArrowUpRightIcon />
-                            </a>
-                        ))}
-                    </div>
-                </motion.div>
+                <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.2em] text-accent2">
+                    <span aria-hidden className="mr-2 inline-block h-2 w-2 rounded-full bg-accent2" />
+                    {HERO_CONTENT.availability}
+                </p>
             </div>
         </Section>
     );

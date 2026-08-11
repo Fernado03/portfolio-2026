@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { CUT } from "../constants/animations";
 
 const ScrollToTop = () => {
     const [isVisible, setIsVisible] = useState(false);
@@ -13,14 +14,14 @@ const ScrollToTop = () => {
             }
         };
 
-        window.addEventListener("scroll", toggleVisibility);
+        window.addEventListener("scroll", toggleVisibility, { passive: true });
         return () => window.removeEventListener("scroll", toggleVisibility);
     }, []);
 
     const scrollToTop = () => {
         window.scrollTo({
             top: 0,
-            behavior: "smooth",
+            behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
         });
     };
 
@@ -28,14 +29,13 @@ const ScrollToTop = () => {
         <AnimatePresence>
             {isVisible && (
                 <motion.button
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.5 }}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 12 }}
+                    transition={CUT}
                     onClick={scrollToTop}
-                    className="fixed bottom-6 right-6 z-40 h-10 w-10 rounded-lg bg-bg-elev border border-line text-ink-muted hover:text-accent hover:border-accent/50 active:scale-95 transition-colors flex items-center justify-center"
+                    className="fixed bottom-6 right-6 z-40 hidden h-11 w-11 items-center justify-center rounded-none border border-line bg-bg-elev text-ink-muted transition-colors hover:border-accent hover:text-accent active:scale-95 sm:flex"
                     aria-label="Scroll to top"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
                 >
                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 10l7-7m0 0l7 7m-7-7v18" />

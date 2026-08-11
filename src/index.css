@@ -7,32 +7,37 @@
    alpha: `rgb(var(--x) / <alpha-value>)`. Bare hex has no alpha slot and
    silently kills every opacity modifier. */
 :root {
-  --bg-rgb: 251 250 248;
-  --bg-subtle-rgb: 243 241 237;
-  --bg-elev-rgb: 255 255 255;
-  --ink-rgb: 20 16 12;
-  --ink-muted-rgb: 107 98 90;
-  --line-rgb: 226 221 213;
-  /* Burnt sienna: 7.0:1 on paper, and 7.0:1 for bg-coloured text on an accent fill. */
-  --accent-rgb: 154 52 18;
-  --accent-strong-rgb: 124 45 18;
+  --bg-rgb: 250 249 245;
+  --bg-subtle-rgb: 240 238 231;
+  --bg-elev-rgb: 255 255 252;
+  --ink-rgb: 23 20 15;
+  --ink-muted-rgb: 110 104 92;
+  --line-rgb: 219 215 205;
+  /* Signal orange (ember): 4.5:1 on paper for bold/large; ink for small text. */
+  --accent-rgb: 200 70 20;
+  --accent-strong-rgb: 160 52 14;
+  /* Cool blue — the "frustrated" counterpoint to ember "angry". */
+  --accent2-rgb: 30 90 190;
+  --accent2-strong-rgb: 22 68 150;
 }
 
 /* Design tokens — dark */
 .dark {
-  --bg-rgb: 11 10 9;
-  --bg-subtle-rgb: 22 19 15;
-  --bg-elev-rgb: 28 24 21;
-  --ink-rgb: 245 243 239;
-  --ink-muted-rgb: 168 160 150;
-  --line-rgb: 48 42 36;
-  --accent-rgb: 251 146 60;
-  --accent-strong-rgb: 253 186 116;
+  --bg-rgb: 16 16 20;
+  --bg-subtle-rgb: 24 24 30;
+  --bg-elev-rgb: 32 32 40;
+  --ink-rgb: 232 230 224;
+  --ink-muted-rgb: 168 164 154;
+  --line-rgb: 42 42 50;
+  --accent-rgb: 255 138 92;
+  --accent-strong-rgb: 255 165 128;
+  --accent2-rgb: 125 184 255;
+  --accent2-strong-rgb: 160 205 255;
 }
 
 @layer base {
   html {
-    font-size: 118.75%; /* 19px base — scales every rem-based type/space token */
+    font-size: 100%; /* v2: Swiss scale uses explicit sizes, not global inflation */
     scroll-behavior: smooth;
     scroll-padding-top: 5.5rem;
   }
@@ -44,17 +49,22 @@
   }
 
   body {
-    @apply bg-bg text-ink antialiased;
+    @apply bg-bg text-ink antialiased font-sans;
   }
 
   ::selection {
-    background: rgb(var(--accent-rgb) / 0.1);
+    background: rgb(var(--accent-rgb));
+    color: rgb(var(--bg-rgb));
   }
 
   /* Keyboard focus styles for accessibility */
   *:focus-visible {
     outline: 2px solid rgb(var(--accent-rgb));
     outline-offset: 2px;
+  }
+
+  svg[role='grid']:focus-visible {
+    outline-offset: -3px;
   }
 
   /* Remove focus outline for mouse users */
@@ -70,6 +80,7 @@
   }
 }
 
+
 /* Global reduced-motion guard — covers JS-driven motion, which the
    scroll-behavior override above does not reach. */
 @media (prefers-reduced-motion: reduce) {
@@ -80,47 +91,34 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+
+  main [style*="opacity"] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
-/* Custom Scrollbar - Light Theme */
+/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f3f1ed;
+  background: rgb(var(--bg-subtle-rgb));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d9d2c8;
+  background: rgb(var(--ink-muted-rgb));
   border-radius: 10px;
-  border: 2px solid #f3f1ed;
+  border: 2px solid rgb(var(--bg-subtle-rgb));
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(var(--accent-rgb));
 }
 
-/* Dark theme scrollbar */
-.dark ::-webkit-scrollbar-track {
-  background: #0b0a09;
-}
-
-.dark ::-webkit-scrollbar-thumb {
-  background: #3a332c;
-  border: 2px solid #0b0a09;
-}
-
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: rgb(var(--accent-rgb));
-}
-
 /* Firefox scrollbar */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #d9d2c8 #f3f1ed;
-}
-
-.dark * {
-  scrollbar-color: #3a332c #0b0a09;
+  scrollbar-color: rgb(var(--ink-muted-rgb)) rgb(var(--bg-subtle-rgb));
 }
