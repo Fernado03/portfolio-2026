@@ -235,6 +235,14 @@ export const AWARDS = [
         title: "Best Research Award — Final Year Project 2026",
         image: "/awards/best_research_certificate.jpg",
     },
+    {
+        title: "Certificate of Internship — Breakfast Byte Sdn Bhd 2026",
+        image: "/awards/breakfast_byte_carwash.jpg",
+    },
+    {
+        title: "Certificate of Internship — Enterprise AI Chatbot Platform 2026",
+        image: "/awards/breakfast_byte_ai_chatbot.jpg",
+    },
     { title: "Gold Medal — Festival Idea Sabah 2025", image: "/awards/festival_idea_sabah.jpg" },
     { title: "2nd Prize — JomHack Varsity Challenge 2025", image: "/awards/jomhack.jpg" },
     { title: "Top 8 Finalist — MarineHack 2025" },
