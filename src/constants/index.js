@@ -171,7 +171,7 @@ export const ABOUT_CONTENT = {
             role: "AI/ML Development Intern",
             organization: "Breakfast Byte Sdn. Bhd.",
             location: "Kuching, Sarawak",
-            period: "Mar 2026 – Present",
+            period: "Mar 2026 – Aug 2026",
             logo: "/logos/breakfast-byte.com.png",
             description:
                 "Two client systems in production: KI Konnekt, a hybrid BM25/FAISS retrieval assistant for a German client, and a CCTV-to-records computer-vision pipeline for a Sarawak car-wash operator. Both are written up in Projects.",
