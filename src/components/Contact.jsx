@@ -47,8 +47,8 @@ const Contact = () => {
         copyTimeoutRef.current = setTimeout(() => setCopied(""), 2000);
     };
 
-    const primaryEmail = HERO_CONTENT.altEmail;
-    const altEmail = HERO_CONTENT.email;
+    const primaryEmail = HERO_CONTENT.email;
+    const altEmail = HERO_CONTENT.altEmail;
 
     const channels = [
         {
@@ -115,7 +115,7 @@ const Contact = () => {
                 index="07"
                 eyebrow="Contact"
                 title="Hiring for data science in 2026?"
-                description="I am looking for a data science or AI engineering graduate role from September 2026, in Malaysia or remote. Email is the fastest way to reach me."
+                description="I am looking for a data science or AI engineering graduate role from November 2026, in Malaysia or remote. Email is the fastest way to reach me."
             />
 
             <div

@@ -6,7 +6,7 @@ const Footer = () => {
                     Set in Geist — © {new Date().getFullYear()}
                 </p>
                 <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent2">
-                    Seeking DS/AI grad role — Sep 2026
+                    Graduating Nov 2026 — open to DS/AI roles
                 </p>
             </div>
         </footer>

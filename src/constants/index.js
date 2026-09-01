@@ -2,7 +2,7 @@
 export const HERO_CONTENT = {
     name: "Fernado George Anak Mani",
     title: "Data Scientist & AI Engineer",
-    availability: "Seeking a data science / AI engineering graduate role — Malaysia or remote, from Sep 2026",
+    availability: "Internship completed — available for full-time data science / AI engineering roles from September 2026",
     resumeLink: "/Fernado_George_DataScience_Resume.pdf",
     email: "fernado_george_bi22@iluv.ums.edu.my",
     altEmail: "milobio351@gmail.com",
@@ -135,6 +135,19 @@ export const PROJECTS = [
         link: "https://github.com/Fernado03/bh2025-aramniaga",
         documentLink: "/documents/aramniaga.pdf",
     },
+    {
+        id: 8,
+        slug: "jobpulse",
+        title: "JobPulse (Job-Market Intelligence)",
+        category: "Data Engineering & MLOps",
+        role: "Solo Developer",
+        badge: "End-to-end pipeline — Docker & Kubernetes",
+        description:
+            "Automated job-market analytics: raw postings land in a star-schema warehouse (SQLite/SQLAlchemy), feed analytical views and a Power BI export, and drive MLflow-tracked model training plus a LangGraph/CrewAI multi-agent weekly briefing — all orchestrated by Docker Compose and deployable to Kubernetes (minikube).",
+        techStack: ["Python", "SQLAlchemy", "LangGraph", "CrewAI", "MLflow", "Docker", "Kubernetes", "Power BI"],
+        image: "/projects/jobpulse_dashboard.png",
+        link: "https://github.com/Fernado03/jobpulse",
+    },
 ];
 
 export const ABOUT_CONTENT = {
@@ -158,7 +171,6 @@ export const ABOUT_CONTENT = {
         { src: "/about/profile_picture.png", alt: "Fernado George, portrait", label: "Portrait" },
         { src: "/about/1748327868606.jpg", alt: "Fernado holding a microphone beside a group wearing lanyards", label: "Group speaker" },
         { src: "/about/FIS.jpg", alt: "Fernado with three people in front of an event screen", label: "Group photo" },
-        { src: "/about/photo_2025-05-25_00-26-26.jpg", alt: "Fernado with four people beside an ELLM Startup Initiative banner", label: "Startup team" },
         { src: "/about/photo_2025-10-16_16-39-26.jpg", alt: "Fernado with three people in front of an AI Medical Scribe poster", label: "Project team" },
         { src: "/about/IMG_5574.jpg", alt: "Fernado with three people working on a laptop and circuit board", label: "Prototype work" },
         { src: "/about/IMG_5529.jpg", alt: "Fernado demonstrating tabletop components to three seated participants", label: "Table demo" },
@@ -171,10 +183,10 @@ export const ABOUT_CONTENT = {
             role: "AI/ML Development Intern",
             organization: "Breakfast Byte Sdn. Bhd.",
             location: "Kuching, Sarawak",
-            period: "Mar 2026 – Aug 2026",
+            period: "Mar 2026 – Aug 2026 · Completed",
             logo: "/logos/breakfast-byte.com.png",
             description:
-                "Two client systems in production: KI Konnekt, a hybrid BM25/FAISS retrieval assistant for a German client, and a CCTV-to-records computer-vision pipeline for a Sarawak car-wash operator. Both are written up in Projects.",
+                "Six-month AI/ML internship, now completed. Two client systems in production: KI Konnekt, a hybrid BM25/FAISS retrieval assistant for a German client, and a CCTV-to-records computer-vision pipeline for a Sarawak car-wash operator — both written up in Projects. Also shipped JobPulse, an open-source job-market analytics pipeline: star-schema warehouse, Power BI export, MLflow-tracked training, and multi-agent weekly briefings deployed via Docker and Kubernetes.",
         },
         {
             role: "Ketua Exco Akademik dan Kerjaya",
@@ -187,7 +199,6 @@ export const ABOUT_CONTENT = {
         },
         {
             role: "Timbalan Setiausaha",
-            organization: "Persatuan Mahasiswa Fakulti Komputeran dan Informatik (PMFKI)",
             location: "Universiti Malaysia Sabah",
             period: "Nov 2022 – Aug 2023",
             logo: "/logos/pmfki.png",
@@ -222,7 +233,6 @@ export const SKILLS = [
             "Node.js",
             "Tailwind CSS",
             "Docker",
-            "GCP",
             "MongoDB",
             "Gradio",
             "Git",
