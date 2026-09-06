@@ -137,16 +137,16 @@ export const PROJECTS = [
     },
     {
         id: 8,
-        slug: "jobpulse",
-        title: "JobPulse (Job-Market Intelligence)",
+        slug: "hydrogrid",
+        title: "HydroGrid Sarawak (Energy & Hydrogen Intelligence)",
         category: "Data Engineering & MLOps",
         role: "Solo Developer",
-        badge: "End-to-end pipeline — Docker & Kubernetes",
+        badge: "End-to-end telemetry platform — Docker & Kubernetes",
         description:
-            "Automated job-market analytics: raw postings land in a star-schema warehouse (SQLite/SQLAlchemy), feed analytical views and a Power BI export, and drive MLflow-tracked model training plus a LangGraph/CrewAI multi-agent weekly briefing — all orchestrated by Docker Compose and deployable to Kubernetes (minikube).",
-        techStack: ["Python", "SQLAlchemy", "LangGraph", "CrewAI", "MLflow", "Docker", "Kubernetes", "Power BI"],
-        image: "/projects/jobpulse_dashboard.png",
-        link: "https://github.com/Fernado03/jobpulse",
+            "Renewable-energy telemetry platform ingesting live Open-Meteo data into a PostgreSQL star-schema warehouse with a DuckDB OLAP layer and n8n orchestration. LightGBM inflow forecasting and Isolation Forest anomaly detection (MLflow-tracked) are served via FastAPI, with a LangGraph self-correcting SQL agent, a CrewAI strategic panel, and a Streamlit SCADA command center — containerized with Docker Compose and deployable to Kubernetes.",
+        techStack: ["Python", "PostgreSQL", "DuckDB", "LightGBM", "LangGraph", "CrewAI", "FastAPI", "Streamlit", "MLflow", "Docker", "Kubernetes"],
+        image: "/projects/hydrogrid_dashboard.png",
+        link: "https://github.com/Fernado03/hydrogrid-sarawak",
     },
 ];
 
@@ -186,7 +186,7 @@ export const ABOUT_CONTENT = {
             period: "Mar 2026 – Aug 2026 · Completed",
             logo: "/logos/breakfast-byte.com.png",
             description:
-                "Six-month AI/ML internship, now completed. Two client systems in production: KI Konnekt, a hybrid BM25/FAISS retrieval assistant for a German client, and a CCTV-to-records computer-vision pipeline for a Sarawak car-wash operator — both written up in Projects. Also shipped JobPulse, an open-source job-market analytics pipeline: star-schema warehouse, Power BI export, MLflow-tracked training, and multi-agent weekly briefings deployed via Docker and Kubernetes.",
+                "Six-month AI/ML internship, now completed. Two client systems in production: KI Konnekt, a hybrid BM25/FAISS retrieval assistant for a German client, and a CCTV-to-records computer-vision pipeline for a Sarawak car-wash operator — both written up in Projects. Also built HydroGrid Sarawak, an open-source renewable-energy telemetry platform: PostgreSQL star-schema warehouse with DuckDB OLAP, MLflow-tracked forecasting and anomaly detection served via FastAPI, and LangGraph/CrewAI agents deployed via Docker and Kubernetes.",
         },
         {
             role: "Ketua Exco Akademik dan Kerjaya",
