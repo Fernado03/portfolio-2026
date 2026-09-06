@@ -211,7 +211,7 @@ export const ABOUT_CONTENT = {
 export const SKILLS = [
     {
         category: "Languages",
-        items: ["Python", "Java", "C++", "R", "SQL", "JavaScript", "HTML/CSS"],
+        items: ["Python", "Java", "C++", "R", "SQL", "SQLAlchemy", "JavaScript", "HTML/CSS"],
     },
     {
         category: "AI & ML",
@@ -221,21 +221,25 @@ export const SKILLS = [
             "LLMs (OpenAI, Gemini, Ollama)",
             "RAG (FAISS, BM25)",
             "Computer Vision",
-            "Generative AI",
+            "LightGBM & Forecasting",
         ],
     },
     {
         category: "Frameworks & Tools",
         items: [
-            "TensorFlow",
             "PyTorch",
+            "TensorFlow",
+            "FastAPI",
             "React (Vite)",
             "Node.js",
             "Tailwind CSS",
-            "Docker",
-            "MongoDB",
-            "Gradio",
-            "Git",
+            "Gradio & Streamlit",
+            "LangGraph & CrewAI",
+            "MLflow",
+            "Docker & Kubernetes",
+            "PostgreSQL, MySQL & MongoDB",
+            "AWS (ECS, ECR, S3)",
+            "Git & CI/CD",
         ],
     },
 ];
