@@ -1,11 +1,16 @@
 
 export const HERO_CONTENT = {
     name: "Fernado George Anak Mani",
+    shortName: "Fernado George",
     title: "Data Scientist & AI Engineer",
-    availability: "Internship completed — available for full-time data science / AI engineering roles from September 2026",
+    location: "Malaysian Borneo",
+    availability: "Internship completed — available now for full-time data science / AI engineering roles",
+    availabilityShort: "Available now · full-time DS / AI roles",
+    contactNote: "Looking for a data science or AI engineering role in Malaysia or remote. Email is the fastest way to reach me.",
     resumeLink: "/Fernado_George_DataScience_Resume.pdf",
-    email: "fernado_george_bi22@iluv.ums.edu.my",
-    altEmail: "milobio351@gmail.com",
+    // Personal address first: the university one may stop working after graduation.
+    email: "milobio351@gmail.com",
+    altEmail: "fernado_george_bi22@iluv.ums.edu.my",
     phone: "+60143207322",
     linkedin: "https://linkedin.com/in/fernado-george",
     github: "https://github.com/Fernado03",
@@ -30,7 +35,9 @@ export const FYP_CONTENT = {
     ],
     techStack: ["Python", "PyTorch", "WavLM", "DINOv2", "ModernBERT"],
     demoLink: "https://thesis-presentation-beryl.vercel.app/",
-    githubLink: "https://github.com/Fernado03/thesis-presentation",
+    // The repo is not public (404 for visitors), so the Code button is hidden. Put the URL back
+    // once it's public: "https://github.com/Fernado03/thesis-presentation".
+    githubLink: null,
     thesisLink: "/documents/Thesis_BI22110436.pdf",
     award: {
         title: "Best Research Award — Final Year Project 2026",
@@ -38,10 +45,20 @@ export const FYP_CONTENT = {
     },
 };
 
+// Filter chips for the Work section; each project lists the ids that apply in `tags`.
+export const PROJECT_FILTERS = [
+    { id: "llm", label: "LLMs & RAG" },
+    { id: "ml", label: "Applied ML & vision" },
+    { id: "data", label: "Data & MLOps" },
+    { id: "impact", label: "Social impact" },
+    { id: "web", label: "Full-stack" },
+];
+
 export const PROJECTS = [
     {
         id: 1,
         slug: "kinavis",
+        tags: ["llm"],
         title: "KinaVis (AI Medical Scribe)",
         category: "AI & Healthcare",
         role: "Team Leader of Development",
@@ -56,6 +73,7 @@ export const PROJECTS = [
     {
         id: 2,
         slug: "ki-konnekt",
+        tags: ["llm"],
         title: "KI Konnekt (client RAG assistant)",
         category: "Retrieval & LLM Systems",
         role: "AI/ML Development Intern — Breakfast Byte",
@@ -69,6 +87,7 @@ export const PROJECTS = [
     {
         id: 3,
         slug: "cctv-records",
+        tags: ["ml", "data"],
         title: "CCTV-to-records pipeline (car wash)",
         category: "Computer Vision",
         role: "AI/ML Development Intern — Breakfast Byte",
@@ -82,6 +101,7 @@ export const PROJECTS = [
     {
         id: 4,
         slug: "matchkami",
+        tags: ["llm", "impact"],
         title: "MatchKami (TITANS)",
         category: "NLP & Social Impact",
         role: "Lead Developer",
@@ -96,6 +116,7 @@ export const PROJECTS = [
     {
         id: 5,
         slug: "borneo-hackathon-2024",
+        tags: ["web"],
         title: "Borneo Hackathon 2024 Portal",
         category: "Full-Stack Web App",
         role: "Full-Stack Developer",
@@ -110,6 +131,7 @@ export const PROJECTS = [
     {
         id: 6,
         slug: "barnaclean",
+        tags: ["ml", "web"],
         title: "BarnaClean (SeaWise)",
         category: "AI & Marine Tech",
         role: "AI/ML Engineer",
@@ -124,6 +146,7 @@ export const PROJECTS = [
     {
         id: 7,
         slug: "aramniaga",
+        tags: ["llm", "impact", "web"],
         title: "AramNiaga (SixSeven)",
         category: "Social Impact & AI",
         role: "Team Leader & Backend Developer",
@@ -138,6 +161,7 @@ export const PROJECTS = [
     {
         id: 8,
         slug: "hydrogrid",
+        tags: ["data", "ml", "llm"],
         title: "HydroGrid Sarawak (Energy & Hydrogen Intelligence)",
         category: "Data Engineering & MLOps",
         role: "Solo Developer",
@@ -151,6 +175,12 @@ export const PROJECTS = [
 ];
 
 export const ABOUT_CONTENT = {
+    bio: [
+        "I started out writing small game mods, which turned into a habit of taking systems apart to see how they decide things. That is still what I do, now with retrieval systems and computer vision.",
+        "My thesis benchmarked multimodal emotion models under noise and missing inputs, reaching 71.6% F1. My internship work turned a client's document archive into a queryable assistant and their CCTV feed into structured service records. I build the model and the interface that puts it in someone's hands.",
+        "Off-hours, I fish.",
+    ],
+    focus: "Retrieval systems · Computer vision",
     education: [
         {
             degree: "Bachelor of Computer Science (Data Science) With Honours",
@@ -181,6 +211,8 @@ export const ABOUT_CONTENT = {
     experience: [
         {
             role: "AI/ML Development Intern",
+            // Project slugs linked from the Experience section.
+            projects: ["ki-konnekt", "cctv-records", "hydrogrid"],
             organization: "Breakfast Byte Sdn. Bhd.",
             location: "Kuching, Sarawak",
             period: "Mar 2026 – Aug 2026 · Completed",
@@ -190,6 +222,7 @@ export const ABOUT_CONTENT = {
         },
         {
             role: "Ketua Exco Akademik dan Kerjaya",
+            roleEn: "Head of Academic & Career Committee",
             organization: "Persatuan Mahasiswa Fakulti Komputeran dan Informatik (PMFKI)",
             location: "Universiti Malaysia Sabah",
             period: "Nov 2023 – Aug 2024",
@@ -199,6 +232,7 @@ export const ABOUT_CONTENT = {
         },
         {
             role: "Timbalan Setiausaha",
+            roleEn: "Deputy Secretary",
             location: "Universiti Malaysia Sabah",
             period: "Nov 2022 – Aug 2023",
             logo: "/logos/pmfki.png",
@@ -248,6 +282,7 @@ export const AWARDS = [
     {
         title: "Best Research Award — Final Year Project 2026",
         image: "/awards/best_research_certificate.jpg",
+        highlight: true,
     },
     {
         title: "Certificate of Internship — Breakfast Byte Sdn Bhd 2026",
@@ -257,8 +292,8 @@ export const AWARDS = [
         title: "Certificate of Internship — Enterprise AI Chatbot Platform 2026",
         image: "/awards/breakfast_byte_ai_chatbot.jpg",
     },
-    { title: "Gold Medal — Festival Idea Sabah 2025", image: "/awards/festival_idea_sabah.jpg" },
-    { title: "2nd Prize — JomHack Varsity Challenge 2025", image: "/awards/jomhack.jpg" },
+    { title: "Gold Medal — Festival Idea Sabah 2025", image: "/awards/festival_idea_sabah.jpg", highlight: true },
+    { title: "2nd Prize — JomHack Varsity Challenge 2025", image: "/awards/jomhack.jpg", highlight: true },
     { title: "Top 8 Finalist — MarineHack 2025" },
     { title: "Best Computer Science Student Award (Matriculation)" },
     { title: "Top 8 Finalist — ELLM Startup Initiative", image: "/awards/ellm.png" },

@@ -2,88 +2,91 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Design tokens — light (primary surface).
-   Values are space-separated RGB channel triplets so Tailwind can compose
-   alpha: `rgb(var(--x) / <alpha-value>)`. Bare hex has no alpha slot and
-   silently kills every opacity modifier. */
+/* Space-separated RGB triplets so Tailwind opacity modifiers compose:
+   `rgb(var(--x) / <alpha-value>)`. */
 :root {
-  --bg-rgb: 250 249 245;
-  --bg-subtle-rgb: 240 238 231;
-  --bg-elev-rgb: 255 255 252;
-  --ink-rgb: 23 20 15;
-  --ink-muted-rgb: 110 104 92;
-  --line-rgb: 219 215 205;
-  /* Signal orange (ember): 4.5:1 on paper for bold/large; ink for small text. */
-  --accent-rgb: 200 70 20;
-  --accent-strong-rgb: 160 52 14;
-  /* Cool blue — the "frustrated" counterpoint to ember "angry". */
-  --accent2-rgb: 30 90 190;
-  --accent2-strong-rgb: 22 68 150;
-}
-
-/* Design tokens — dark */
-.dark {
-  --bg-rgb: 16 16 20;
-  --bg-subtle-rgb: 24 24 30;
-  --bg-elev-rgb: 32 32 40;
-  --ink-rgb: 232 230 224;
-  --ink-muted-rgb: 168 164 154;
-  --line-rgb: 42 42 50;
-  --accent-rgb: 255 138 92;
-  --accent-strong-rgb: 255 165 128;
-  --accent2-rgb: 125 184 255;
-  --accent2-strong-rgb: 160 205 255;
+  color-scheme: dark;
+  --bg: 9 11 14;
+  --surface: 17 20 25;
+  --surface-2: 25 29 36;
+  --line: 40 45 54;
+  --ink: 236 238 241;
+  --muted: 146 154 167;
+  --accent: 198 242 78;
+  --series-classical: 148 163 184;
+  --series-statistical: 251 191 36;
+  --series-contextual: 94 234 212;
 }
 
 @layer base {
   html {
-    font-size: 100%; /* v2: Swiss scale uses explicit sizes, not global inflation */
     scroll-behavior: smooth;
-    scroll-padding-top: 5.5rem;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
+    scroll-padding-top: 5rem;
   }
 
   body {
-    @apply bg-bg text-ink antialiased font-sans;
+    @apply bg-bg font-sans text-ink antialiased;
   }
 
   ::selection {
-    background: rgb(var(--accent-rgb));
-    color: rgb(var(--bg-rgb));
+    background: rgb(var(--accent));
+    color: rgb(var(--bg));
   }
 
-  /* Keyboard focus styles for accessibility */
   *:focus-visible {
-    outline: 2px solid rgb(var(--accent-rgb));
-    outline-offset: 2px;
+    outline: 2px solid rgb(var(--accent));
+    outline-offset: 3px;
   }
 
-  svg[role='grid']:focus-visible {
-    outline-offset: -3px;
+  dialog::backdrop {
+    background: rgb(4 5 7 / 0.8);
+    backdrop-filter: blur(6px);
   }
 
-  /* Remove focus outline for mouse users */
-  *:focus:not(:focus-visible) {
-    outline: none;
-  }
-
-  /* Crafted hover affordance: links/buttons get a pointer, interactive hover states handle the rest */
-  a,
-  button,
-  [role='button'] {
-    cursor: pointer;
+  /* Lock page scroll while a modal dialog is open. */
+  html:has(dialog[open]) {
+    overflow: hidden;
   }
 }
 
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-page px-5 sm:px-8;
+  }
 
-/* Global reduced-motion guard — covers JS-driven motion, which the
-   scroll-behavior override above does not reach. */
+  .eyebrow {
+    @apply font-mono text-xs uppercase tracking-[0.18em] text-muted;
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-full border border-line bg-surface px-2.5 py-1 font-mono text-[11px] leading-none text-muted;
+  }
+
+  .btn {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-semibold transition-colors duration-200;
+  }
+
+  .btn-primary {
+    @apply btn bg-accent text-bg hover:bg-ink;
+  }
+
+  .btn-ghost {
+    @apply btn border border-line text-ink hover:border-ink/50 hover:bg-surface;
+  }
+
+  .grid-backdrop {
+    background-image:
+      linear-gradient(rgb(var(--line) / 0.5) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(var(--line) / 0.5) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   *,
   *::before,
   *::after {
@@ -91,34 +94,9 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-
-  main [style*="opacity"] {
-    opacity: 1 !important;
-    transform: none !important;
-  }
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgb(var(--bg-subtle-rgb));
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgb(var(--ink-muted-rgb));
-  border-radius: 10px;
-  border: 2px solid rgb(var(--bg-subtle-rgb));
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgb(var(--accent-rgb));
-}
-
-/* Firefox scrollbar */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgb(var(--ink-muted-rgb)) rgb(var(--bg-subtle-rgb));
+  scrollbar-color: rgb(var(--line)) rgb(var(--bg));
 }

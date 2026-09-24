@@ -1,193 +1,159 @@
-import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
 import { HERO_CONTENT } from "../constants";
-import { SPRING } from "../constants/animations";
-import Section from "./ui/Section";
-import SectionHeader from "./ui/SectionHeader";
+import { ArrowUpRight, Check, Clock, Copy, Download, GitHub, LinkedIn, Mail, MapPin, Phone } from "./ui/Icons";
+import Reveal from "./ui/Reveal";
 
-const CopyIcon = () => (
-    <svg
-        className="w-4 h-4"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        strokeWidth={1.5}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-    >
-        <path d="M8 16H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2" />
-        <path d="M8 20h8a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2z" />
-    </svg>
-);
+const TIME_ZONE = "Asia/Kuala_Lumpur";
+const timeFormat = new Intl.DateTimeFormat("en-GB", { timeZone: TIME_ZONE, hour: "2-digit", minute: "2-digit" });
+const hourFormat = new Intl.DateTimeFormat("en-GB", { timeZone: TIME_ZONE, hour: "numeric", hourCycle: "h23" });
 
-const Contact = () => {
-    const [copied, setCopied] = useState("");
-    const copyTimeoutRef = useRef(null);
+const partOfDay = (hour) => (hour < 5 ? "Night" : hour < 12 ? "Morning" : hour < 18 ? "Afternoon" : hour < 22 ? "Evening" : "Night");
+
+function useMalaysiaTime() {
+    const [now, setNow] = useState(() => new Date());
+    useEffect(() => {
+        const id = setInterval(() => setNow(new Date()), 15_000);
+        return () => clearInterval(id);
+    }, []);
+    const hour = Number(hourFormat.format(now));
+    return { time: timeFormat.format(now), period: partOfDay(hour) };
+}
+
+function CopyButton({ value, label }) {
+    const [copied, setCopied] = useState(false);
 
     useEffect(() => {
-        return () => clearTimeout(copyTimeoutRef.current);
-    }, []);
+        if (!copied) return undefined;
+        const id = setTimeout(() => setCopied(false), 1800);
+        return () => clearTimeout(id);
+    }, [copied]);
 
-    const handleCopy = async (e, text) => {
-        e.preventDefault();
-        e.stopPropagation();
-        try {
-            await navigator.clipboard.writeText(text);
-        } catch {
-            const textarea = document.createElement("textarea");
-            textarea.value = text;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand("copy");
-            document.body.removeChild(textarea);
-        }
-        setCopied(text);
-        clearTimeout(copyTimeoutRef.current);
-        copyTimeoutRef.current = setTimeout(() => setCopied(""), 2000);
-    };
+    return (
+        <button
+            type="button"
+            onClick={async () => {
+                try {
+                    await navigator.clipboard.writeText(value);
+                    setCopied(true);
+                } catch {
+                    window.location.href = `mailto:${value}`;
+                }
+            }}
+            className="flex h-11 shrink-0 items-center gap-2 rounded-full border border-line px-3.5 text-sm text-muted transition-colors hover:border-ink/50 hover:text-ink sm:px-4"
+            aria-label={`Copy ${label}`}
+        >
+            {copied ? <Check width={16} height={16} className="text-accent" /> : <Copy width={16} height={16} />}
+            <span aria-live="polite" className="hidden sm:inline">
+                {copied ? "Copied" : "Copy"}
+            </span>
+        </button>
+    );
+}
 
-    const primaryEmail = HERO_CONTENT.email;
-    const altEmail = HERO_CONTENT.altEmail;
+function StatusCard() {
+    const { time, period } = useMalaysiaTime();
+    const rows = [
+        { icon: Clock, label: "Local time", value: `${time} · GMT+8`, hint: `${period} in Malaysia` },
+        { icon: MapPin, label: "Based in", value: HERO_CONTENT.location, hint: "Open to roles in Malaysia or remote" },
+    ];
+    return (
+        <div className="rounded-2xl border border-line bg-surface/80 p-5 backdrop-blur">
+            <p className="flex items-center gap-2.5 text-sm font-medium">
+                <span className="relative flex h-2 w-2">
+                    <span className="absolute inset-0 animate-pulse-ring rounded-full bg-accent" />
+                    <span className="relative h-2 w-2 rounded-full bg-accent" />
+                </span>
+                {HERO_CONTENT.availabilityShort}
+            </p>
+            <dl className="mt-5 space-y-4 border-t border-line pt-5">
+                {rows.map(({ icon: Icon, label, value, hint }) => (
+                    <div key={label}>
+                        <dt className="eyebrow flex items-center gap-2">
+                            <Icon width={16} height={16} className="shrink-0 text-muted" aria-hidden />
+                            {label}
+                        </dt>
+                        <dd className="mt-1 pl-6 font-medium tabular-nums">{value}</dd>
+                        <dd className="pl-6 text-xs text-muted">{hint}</dd>
+                    </div>
+                ))}
+            </dl>
+        </div>
+    );
+}
 
+export default function Contact() {
     const channels = [
-        {
-            label: "Phone",
-            href: `tel:${HERO_CONTENT.phone}`,
-            value: HERO_CONTENT.phone,
-            valueClass: "text-sm",
-            external: false,
-        },
-        {
-            label: "LinkedIn",
-            href: HERO_CONTENT.linkedin,
-            value: "LinkedIn ↗",
-            valueClass: "text-xs uppercase tracking-[0.2em]",
-            external: true,
-        },
-        {
-            label: "GitHub",
-            href: HERO_CONTENT.github,
-            value: "GitHub ↗",
-            valueClass: "text-xs uppercase tracking-[0.2em]",
-            external: true,
-        },
-        {
-            label: "Resume",
-            href: HERO_CONTENT.resumeLink,
-            value: "Résumé ↗",
-            valueClass: "text-xs uppercase tracking-[0.2em]",
-            external: true,
-        },
+        { href: HERO_CONTENT.linkedin, label: "LinkedIn", value: "in/fernado-george", icon: LinkedIn, external: true },
+        { href: HERO_CONTENT.github, label: "GitHub", value: "@Fernado03", icon: GitHub, external: true },
+        { href: `tel:${HERO_CONTENT.phone}`, label: "Phone", value: HERO_CONTENT.phone, icon: Phone },
+        { href: HERO_CONTENT.resumeLink, label: "Resume", value: "Download PDF", icon: Download, external: true },
     ];
 
     return (
-        <Section id="contact">
-            {/* Copied Toast */}
-            <AnimatePresence>
-                {copied && (
-                    <motion.div
-                        initial={{ opacity: 0, y: 24 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 24 }}
-                        transition={SPRING}
-                        className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 bg-bg-elev text-ink border border-line px-4 py-2 rounded-none flex items-center gap-2 font-mono text-xs"
-                        role="status"
-                    >
-                        <svg
-                            className="w-4 h-4 text-accent"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            strokeWidth={1.5}
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            aria-hidden="true"
-                        >
-                            <path d="M5 13l4 4L19 7" />
-                        </svg>
-                        Email copied
-                    </motion.div>
-                )}
-            </AnimatePresence>
-
-            <SectionHeader
-                index="07"
-                eyebrow="Contact"
-                title="Hiring for data science in 2026?"
-                description="I am looking for a data science or AI engineering graduate role from November 2026, in Malaysia or remote. Email is the fastest way to reach me."
+        <section id="contact" aria-labelledby="contact-title" className="relative overflow-hidden border-t border-line py-24 sm:py-32">
+            <div
+                aria-hidden
+                className="grid-backdrop pointer-events-none absolute inset-0 [mask-image:radial-gradient(ellipse_70%_70%_at_50%_100%,black,transparent)]"
             />
+            <div aria-hidden className="pointer-events-none absolute -bottom-80 left-1/2 h-[44rem] w-[70rem] -translate-x-1/2 bg-[radial-gradient(closest-side,rgb(var(--accent)/0.08),transparent)]" />
 
-            <div
-                className="grid gap-6 border-y border-line py-6 md:grid-cols-[12rem_minmax(0,1fr)] md:items-center"
-            >
-                <div>
-                    <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent">Best route</p>
-                    <p className="mt-2 text-base leading-7 text-ink-muted">Email for roles, interviews, or collaboration.</p>
+            <div className="container-page relative">
+                <div className="grid grid-cols-[minmax(0,1fr)] items-end gap-10 lg:grid-cols-[minmax(0,1fr)_22rem]">
+                    <Reveal>
+                        <p className="eyebrow">
+                            <span className="text-accent">06</span>
+                            <span className="mx-2 text-line">/</span>
+                            Contact
+                        </p>
+                        <h2 id="contact-title" className="mt-5 max-w-4xl font-display text-[clamp(2.75rem,8vw,6rem)] font-semibold leading-[0.95] tracking-[-0.035em]">
+                            Let&apos;s build something <span className="text-accent">that ships.</span>
+                        </h2>
+                        <p className="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-muted">{HERO_CONTENT.contactNote}</p>
+                    </Reveal>
+                    <Reveal delay={0.06}>
+                        <StatusCard />
+                    </Reveal>
                 </div>
 
-                <div className="min-w-0 md:border-l md:border-line md:pl-8">
-                    <div className="grid min-w-0 grid-cols-[minmax(0,1fr)_2.75rem] items-center gap-3">
-                        <a
-                            href={`mailto:${primaryEmail}`}
-                            className="min-w-0 break-all font-mono text-base text-ink underline decoration-line underline-offset-4 transition-colors hover:text-accent hover:decoration-accent md:text-xl"
-                        >
-                            {primaryEmail}
-                        </a>
-                        <button
-                            type="button"
-                            onClick={(e) => handleCopy(e, primaryEmail)}
-                            className="inline-flex h-11 w-11 shrink-0 items-center justify-center border border-line bg-bg text-ink-muted transition-colors hover:border-accent hover:text-accent"
-                            aria-label="Copy personal email to clipboard"
-                        >
-                            <CopyIcon />
-                        </button>
-                    </div>
-                    <div className="mt-3 grid min-w-0 grid-cols-[minmax(0,1fr)_2.75rem] items-center gap-3">
-                        <a
-                            href={`mailto:${altEmail}`}
-                            className="min-w-0 break-all font-mono text-sm text-ink-muted transition-colors hover:text-accent"
-                        >
-                            {altEmail}
-                        </a>
-                        <button
-                            type="button"
-                            onClick={(e) => handleCopy(e, altEmail)}
-                            className="inline-flex h-11 w-11 shrink-0 items-center justify-center border border-line bg-bg text-ink-muted transition-colors hover:border-accent hover:text-accent"
-                            aria-label="Copy university email to clipboard"
-                        >
-                            <CopyIcon />
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div
-                className="mt-8"
-            >
-                <div className="grid border-y border-line sm:grid-cols-2 lg:grid-cols-4 lg:divide-x lg:divide-line">
-                    {channels.map((link) => (
-                        <a
-                            key={link.label}
-                            href={link.href}
-                            {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : null)}
-                            className="group flex min-h-20 items-center justify-between gap-4 border-b border-line px-0 py-4 text-ink transition-colors hover:text-accent sm:px-4 sm:[&:nth-last-child(-n+2)]:border-b-0 lg:border-b-0 lg:first:pl-0"
-                        >
-                            <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-ink-muted transition-colors group-hover:text-accent">
-                                {link.label}
-                            </span>
-                            <span className={`font-mono text-right ${link.valueClass}`}>{link.value}</span>
-                        </a>
+                <Reveal delay={0.08} className="mt-12 grid grid-cols-[minmax(0,1fr)] gap-3 lg:grid-cols-2">
+                    {[
+                        { email: HERO_CONTENT.email, label: "Personal email" },
+                        { email: HERO_CONTENT.altEmail, label: "University email" },
+                    ].map(({ email, label }) => (
+                        <div key={email} className="flex items-center gap-3 rounded-2xl border border-line bg-surface/80 p-3 pl-4 backdrop-blur sm:pl-5">
+                            <Mail width={20} height={20} className="shrink-0 text-accent" />
+                            <div className="min-w-0 flex-1">
+                                <p className="font-mono text-[10px] uppercase tracking-wider text-muted">{label}</p>
+                                <a href={`mailto:${email}`} className="block truncate text-sm font-medium hover:text-accent sm:text-base">
+                                    {email}
+                                </a>
+                            </div>
+                            <CopyButton value={email} label={label} />
+                        </div>
                     ))}
-                </div>
+                </Reveal>
 
-                <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.2em] text-accent2">
-                    <span aria-hidden className="mr-2 inline-block h-2 w-2 rounded-full bg-accent2" />
-                    {HERO_CONTENT.availability}
-                </p>
+                <Reveal delay={0.12}>
+                    <ul className="mt-3 grid grid-cols-2 gap-3 lg:grid-cols-4">
+                        {channels.map(({ href, label, value, icon: Icon, external }) => (
+                            <li key={label} className="min-w-0">
+                                <a
+                                    href={href}
+                                    {...(external ? { target: "_blank", rel: "noopener noreferrer" } : null)}
+                                    className="group flex h-full items-start justify-between gap-3 rounded-2xl border border-line bg-surface/80 p-5 backdrop-blur transition-colors hover:border-muted/50"
+                                >
+                                    <span className="min-w-0">
+                                        <Icon width={20} height={20} className="text-muted transition-colors group-hover:text-ink" />
+                                        <span className="mt-6 block font-medium">{label}</span>
+                                        <span className="mt-0.5 block truncate font-mono text-xs text-muted">{value}</span>
+                                    </span>
+                                    <ArrowUpRight width={16} height={16} className="shrink-0 text-muted transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </Reveal>
             </div>
-        </Section>
+        </section>
     );
-};
-
-export default Contact;
+}

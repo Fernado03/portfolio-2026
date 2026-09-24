@@ -1,16 +1,44 @@
-# React + Vite
+# Fernado George — Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Personal portfolio for a data scientist and AI engineer. Single-page React app built with Vite, Tailwind CSS and Framer Motion, deployed on Vercel.
 
-Currently, two official plugins are available:
+## Develop
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Requires Node `^20.19.0 || >=22.12.0`.
 
-## React Compiler
+```sh
+npm ci
+npm run dev       # http://localhost:5173
+npm run build     # lints (zero warnings allowed), then builds to dist/
+npm run preview   # serve the production build
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Editing content
 
-## Expanding the ESLint configuration
+All copy lives in `src/constants/`. Components only handle layout.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- `index.js`: hero, projects, experience, education, skills, awards and contact details.
+- `thesis.js`: figure data behind the Research charts and the hero graphic.
+
+Documents such as the resume and case-study PDFs are served from `public/`.
+
+## Images
+
+Original photos live in `assets-src/` and are not deployed. After adding or replacing one, regenerate the responsive WebP variants:
+
+```sh
+node scripts/resize-images.mjs
+```
+
+Reference images by their original path (for example `/projects/cover.jpg`). `src/utils/image.js` maps that path to the generated `public/resized/` variants.
+
+## Layout
+
+```
+src/
+  components/        page sections (Hero, Work, Research, Experience, About, Recognition, Contact)
+  components/charts/ interactive thesis figures
+  components/ui/     shared primitives (Section, Dialog, Reveal, Icons)
+  constants/         site content
+  hooks/             active-section tracking, element sizing
+```

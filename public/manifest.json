@@ -4,8 +4,8 @@
     "description": "Portfolio of Fernado George: retrieval systems, computer vision and the front ends that ship them.",
     "start_url": "/",
     "display": "browser",
-    "background_color": "#FAF9F5",
-    "theme_color": "#FAF9F5",
+    "background_color": "#090B0E",
+    "theme_color": "#090B0E",
     "icons": [
         {
             "src": "/favicon.svg",

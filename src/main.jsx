@@ -1,7 +1,8 @@
 import { Component, StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import '@fontsource-variable/geist'
-import '@fontsource-variable/geist-mono'
+import '@fontsource-variable/bricolage-grotesque'
+import '@fontsource-variable/inter'
+import '@fontsource-variable/jetbrains-mono'
 import './index.css'
 import App from './App.jsx'
 import { HERO_CONTENT } from './constants/index.js'
@@ -25,9 +26,9 @@ class ErrorBoundary extends Component {
             display: 'grid',
             placeItems: 'center',
             padding: '2rem',
-            background: 'rgb(var(--bg-rgb))',
-            color: 'rgb(var(--ink-rgb))',
-            fontFamily: 'var(--font-sans, system-ui, sans-serif)',
+            background: 'rgb(var(--bg))',
+            color: 'rgb(var(--ink))',
+            fontFamily: 'system-ui, sans-serif',
             textAlign: 'center',
           }}
         >
@@ -35,17 +36,17 @@ class ErrorBoundary extends Component {
             <h1 style={{ fontSize: '1.5rem', fontWeight: 700, margin: '0 0 0.75rem' }}>
               Fernado George — something went wrong.
             </h1>
-            <p style={{ margin: '0 0 1.5rem', color: 'rgb(var(--ink-muted-rgb))' }}>
+            <p style={{ margin: '0 0 1.5rem', color: 'rgb(var(--muted))' }}>
               This page hit an unexpected error. A reload usually fixes it.
             </p>
             <button
               type="button"
               onClick={() => window.location.reload()}
               style={{
-                background: 'rgb(var(--accent-strong-rgb))',
-                color: '#fff',
+                background: 'rgb(var(--accent))',
+                color: 'rgb(var(--bg))',
                 border: 0,
-                borderRadius: '0.5rem',
+                borderRadius: '999px',
                 padding: '0.625rem 1.25rem',
                 fontSize: '0.95rem',
                 fontWeight: 600,
@@ -56,8 +57,8 @@ class ErrorBoundary extends Component {
             </button>
             <p style={{ margin: '1.5rem 0 0', fontSize: '0.9rem' }}>
               <a
-                href={`mailto:${HERO_CONTENT.altEmail}`}
-                style={{ color: 'rgb(var(--accent-strong-rgb))' }}
+                href={`mailto:${HERO_CONTENT.email}`}
+                style={{ color: 'rgb(var(--accent))' }}
               >
                 Contact Fernado George
               </a>
