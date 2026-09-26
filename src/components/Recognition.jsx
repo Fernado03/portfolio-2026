@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { AWARDS } from "../constants";
 import { resizedImage } from "../utils/image";
-import { splitDash } from "../utils/text";
+import { splitEvent } from "../utils/text";
 import { Expand, Trophy } from "./ui/Icons";
 import Lightbox from "./ui/Lightbox";
 import Reveal from "./ui/Reveal";
@@ -13,7 +13,8 @@ const GALLERY = ORDERED.filter((a) => a.image).map((a) => ({ ...resizedImage(a.i
 const galleryIndex = (award) => GALLERY.findIndex((g) => g.title === award.title);
 const medalTone = (name) => (/2nd|silver/i.test(name) ? "text-slate-300" : "text-amber-300");
 
-// Tilt follows the pointer on hover-capable devices; values land in CSS variables.
+// Tilt and sheen follow the pointer on hover-capable devices; values land in CSS variables that
+// only feed transforms, so tracking never repaints the card.
 const tilt = (e) => {
     if (e.pointerType !== "mouse") return;
     const r = e.currentTarget.getBoundingClientRect();
@@ -21,7 +22,8 @@ const tilt = (e) => {
     const y = (e.clientY - r.top) / r.height - 0.5;
     e.currentTarget.style.setProperty("--rx", `${(-y * 7).toFixed(2)}deg`);
     e.currentTarget.style.setProperty("--ry", `${(x * 9).toFixed(2)}deg`);
-    e.currentTarget.style.setProperty("--gx", `${((x + 0.5) * 100).toFixed(0)}%`);
+    // The sheen band is twice the card's width, so ±25% of its own width spans the card.
+    e.currentTarget.style.setProperty("--sx", `${(x * 50).toFixed(2)}%`);
 };
 const untilt = (e) => {
     e.currentTarget.style.setProperty("--rx", "0deg");
@@ -29,7 +31,7 @@ const untilt = (e) => {
 };
 
 function Highlight({ award, onOpen }) {
-    const [name, event] = splitDash(award.title);
+    const [name, event] = splitEvent(award.title);
     const img = resizedImage(award.image);
     return (
         <button
@@ -53,10 +55,10 @@ function Highlight({ award, onOpen }) {
                     />
                     <div
                         aria-hidden
-                        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                        style={{ background: "linear-gradient(105deg, transparent 30%, rgb(255 255 255 / 0.14) var(--gx, 50%), transparent 70%)" }}
+                        className="pointer-events-none absolute inset-y-0 -left-1/2 w-[200%] opacity-0 transition-opacity duration-300 [transform:translateX(var(--sx,0%))] group-hover:opacity-100 group-hover:will-change-transform"
+                        style={{ background: "linear-gradient(105deg, transparent 40%, rgb(255 255 255 / 0.14) 50%, transparent 60%)" }}
                     />
-                    <span className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full border border-line bg-bg/80 text-muted backdrop-blur transition-colors group-hover:text-ink">
+                    <span className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full border border-line bg-bg/90 text-muted transition-colors group-hover:text-ink">
                         <Expand width={15} height={15} />
                     </span>
                 </div>
@@ -73,7 +75,7 @@ function Highlight({ award, onOpen }) {
 }
 
 function Tile({ award, onOpen }) {
-    const [name, event] = splitDash(award.title);
+    const [name, event] = splitEvent(award.title);
     const img = award.image ? resizedImage(award.image) : null;
     const body = (
         <>

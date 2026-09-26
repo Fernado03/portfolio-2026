@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion, useScroll, useSpring } from "framer-motion";
+import { m, useScroll, useSpring } from "framer-motion";
 import { HERO_CONTENT } from "../constants";
 import useActiveSection from "../hooks/useActiveSection";
 import { ArrowUpRight, Close, Menu } from "./ui/Icons";
@@ -48,7 +48,7 @@ export default function Nav() {
                 solid ? "border-line bg-bg/95" : "border-transparent"
             }`}
         >
-            <motion.div aria-hidden className="absolute inset-x-0 bottom-0 h-px origin-left bg-accent" style={{ scaleX: progress }} />
+            <m.div aria-hidden className="absolute inset-x-0 bottom-0 h-px origin-left bg-accent" style={{ scaleX: progress }} />
             <nav aria-label="Primary" className="container-page flex h-16 items-center justify-between gap-6">
                 <a href="#top" className="group flex items-center gap-3" onClick={() => setMenuOpen(false)}>
                     <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent font-display text-sm font-bold text-bg transition-transform group-hover:-rotate-6">

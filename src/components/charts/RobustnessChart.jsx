@@ -108,7 +108,7 @@ export default function RobustnessChart() {
 
                 {col !== null && width > 0 && (
                     <div
-                        className="pointer-events-none absolute top-2 w-60 rounded-lg border border-line bg-bg/95 p-3 shadow-xl shadow-black/40 backdrop-blur"
+                        className="pointer-events-none absolute top-2 w-60 rounded-lg border border-line bg-bg p-3 shadow-xl shadow-black/40"
                         style={col > last / 2 ? { right: width - x(col) + 12 } : { left: x(col) + 12 }}
                     >
                         <p className="mb-2 font-mono text-[11px] text-muted">σ = {NOISE_SIGMAS[col]} · F1 %</p>

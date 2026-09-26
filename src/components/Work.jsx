@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, m } from "framer-motion";
 import { PROJECT_FILTERS, PROJECTS } from "../constants";
 import { splitTitle } from "../utils/text";
 import ProjectDetail from "./ProjectDetail";
@@ -37,11 +37,12 @@ function fitClasses(featured, wideMd, wideLg) {
     return "object-cover object-left-top md:object-top";
 }
 
-// Spotlight position is written straight to CSS variables to avoid re-rendering on every move.
-const trackSpotlight = (e) => {
+// The spotlight follows the pointer with a transform written straight to the element: no React
+// re-render, no repaint, just compositing.
+const trackSpotlight = (e, spot) => {
+    if (!spot) return;
     const r = e.currentTarget.getBoundingClientRect();
-    e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
-    e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
+    spot.style.transform = `translate(${e.clientX - r.left}px, ${e.clientY - r.top}px)`;
 };
 
 // Bento placement for the unfiltered grid: the first project spans two columns, and the last one
@@ -59,6 +60,7 @@ function placement(index, count, bento) {
 }
 
 function ProjectCard({ project, featured, wideMd, wideLg, onOpen }) {
+    const spot = useRef(null);
     const { name, aside } = splitTitle(project.title);
     const wide = featured || wideMd || wideLg;
     const chips = fitChips(project.techStack, featured ? 64 : 24);
@@ -66,7 +68,7 @@ function ProjectCard({ project, featured, wideMd, wideLg, onOpen }) {
 
     return (
         <article
-            onPointerMove={trackSpotlight}
+            onPointerMove={(e) => trackSpotlight(e, spot.current)}
             className={cx(
                 "group relative flex h-full overflow-hidden rounded-2xl border border-line bg-surface transition-colors duration-300 hover:border-muted/40",
                 featured ? "flex-col md:flex-row lg:flex-col" : "flex-row",
@@ -77,8 +79,12 @@ function ProjectCard({ project, featured, wideMd, wideLg, onOpen }) {
             <div
                 aria-hidden
                 className="pointer-events-none absolute inset-0 z-10 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                style={{ background: "radial-gradient(520px circle at var(--mx) var(--my), rgb(var(--accent) / 0.09), transparent 45%)" }}
-            />
+            >
+                <div
+                    ref={spot}
+                    className="absolute -left-[234px] -top-[234px] h-[468px] w-[468px] bg-[radial-gradient(closest-side,rgb(var(--accent)/0.09),transparent)] group-hover:will-change-transform"
+                />
+            </div>
             <div
                 className={cx(
                     "relative shrink-0",
@@ -96,7 +102,7 @@ function ProjectCard({ project, featured, wideMd, wideLg, onOpen }) {
                     sizes={featured ? "(min-width: 1024px) 800px, 100vw" : "(min-width: 1024px) 400px, (min-width: 768px) 50vw, 40vw"}
                     className="absolute inset-0"
                 />
-                <span className="chip absolute left-3 top-3 hidden bg-bg/85 text-ink backdrop-blur md:inline-flex">{project.category}</span>
+                <span className="chip absolute left-3 top-3 hidden bg-bg/90 text-ink md:inline-flex">{project.category}</span>
                 {featured && (
                     <span className="absolute right-3 top-3 hidden rounded-full bg-accent px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-bg md:inline-flex">
                         Featured
@@ -154,7 +160,8 @@ function ProjectCard({ project, featured, wideMd, wideLg, onOpen }) {
 
 export default function Work() {
     const [filter, setFilter] = useState("all");
-    const [openSlug, setOpenSlug] = useState(slugFromHash);
+    // Closed in the pre-rendered HTML; a #project/<slug> link opens the dialog once the page hydrates.
+    const [openSlug, setOpenSlug] = useState(null);
 
     // Deep links: #project/<slug> opens that project (shareable, and used by the Experience section).
     useEffect(() => {
@@ -162,6 +169,7 @@ export default function Work() {
             const slug = slugFromHash();
             if (slug) setOpenSlug(slug);
         };
+        onHash();
         window.addEventListener("hashchange", onHash);
         return () => window.removeEventListener("hashchange", onHash);
     }, []);
@@ -213,12 +221,12 @@ export default function Work() {
                     ))}
                 </div>
 
-                <motion.ul layout className="grid grid-cols-[minmax(0,1fr)] gap-3 md:grid-cols-2 md:gap-4 lg:grid-cols-3 lg:gap-5">
+                <m.ul layout className="grid grid-cols-[minmax(0,1fr)] gap-3 md:grid-cols-2 md:gap-4 lg:grid-cols-3 lg:gap-5">
                     <AnimatePresence mode="popLayout" initial={false}>
                         {visible.map((project, i) => {
                             const { featured, wideMd, lgSpan } = placement(i, visible.length, bento);
                             return (
-                                <motion.li
+                                <m.li
                                     key={project.slug}
                                     layout="position"
                                     initial={{ opacity: 0, scale: 0.96 }}
@@ -240,11 +248,11 @@ export default function Work() {
                                         wideLg={!featured && lgSpan > 1}
                                         onOpen={() => show(project.slug)}
                                     />
-                                </motion.li>
+                                </m.li>
                             );
                         })}
                     </AnimatePresence>
-                </motion.ul>
+                </m.ul>
 
                 <p className="mt-6 hidden items-center gap-2 font-mono text-[11px] text-muted md:flex">
                     <ArrowRight width={14} height={14} /> Open any project for the full write-up · ← → to browse

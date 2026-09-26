@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { MODAL_RELIANCE, MODALITY_CONDITIONS } from "../../constants/thesis";
+import { rovingKeyDown } from "../../utils/roving";
 import { FAMILIES } from "./families";
 import FamilyLegend from "./FamilyLegend";
 
@@ -36,7 +37,9 @@ export default function AblationChart() {
                         type="button"
                         role="radio"
                         aria-checked={cond === i}
+                        tabIndex={cond === i ? 0 : -1}
                         onClick={() => setCond(i)}
+                        onKeyDown={(e) => rovingKeyDown(e, i, MODALITY_CONDITIONS.length, setCond)}
                         className={`shrink-0 rounded-full border px-3 py-1.5 text-xs transition-colors ${
                             cond === i ? "border-accent bg-accent text-bg" : "border-line text-muted hover:border-muted/60 hover:text-ink"
                         }`}
@@ -50,7 +53,7 @@ export default function AblationChart() {
                 {rows.map((r) => {
                     const dimmed = focus && focus !== r.family;
                     return (
-                        <motion.li
+                        <m.li
                             layout="position"
                             transition={{ type: "spring", stiffness: 380, damping: 36 }}
                             key={r.model}
@@ -66,7 +69,7 @@ export default function AblationChart() {
                                 />
                             </span>
                             <span className="text-right font-mono text-xs tabular-nums text-ink">{r.value.toFixed(1)}</span>
-                        </motion.li>
+                        </m.li>
                     );
                 })}
             </ol>

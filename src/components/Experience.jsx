@@ -27,7 +27,6 @@ function FeaturedRole({ item }) {
 
     return (
         <article className="relative overflow-hidden rounded-2xl border border-line bg-surface">
-            <div aria-hidden className="pointer-events-none absolute -right-40 -top-40 h-96 w-96 bg-[radial-gradient(closest-side,rgb(var(--accent)/0.12),transparent)]" />
             <div className="relative p-5 sm:p-7">
                 <div className="flex flex-wrap items-start gap-4">
                     <Logo src={item.logo} alt={item.organization} size="h-14 w-14" />

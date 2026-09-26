@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { resizedImage } from "../utils/image";
-import { Lock } from "./ui/Icons";
+import { Lock, Pause, Play } from "./ui/Icons";
 import { RagIllustration, VisionIllustration } from "./work/Illustrations";
 
 const ILLUSTRATIONS = {
@@ -37,6 +38,24 @@ function Redacted() {
     );
 }
 
+// The dialog view loops indefinitely beside the write-up, so it gets a pause control (WCAG 2.2.2).
+function LiveIllustration({ Illustration }) {
+    const [paused, setPaused] = useState(false);
+    return (
+        <div className={`absolute inset-0 ${paused ? "[&_*]:[animation-play-state:paused]" : ""}`}>
+            <Illustration live />
+            <button
+                type="button"
+                onClick={() => setPaused((p) => !p)}
+                aria-label={paused ? "Play the illustration" : "Pause the illustration"}
+                className="absolute bottom-2 right-2 flex h-8 w-8 items-center justify-center rounded-full border border-line bg-bg/85 text-muted transition-colors hover:border-muted/60 hover:text-ink motion-reduce:hidden"
+            >
+                {paused ? <Play width={14} height={14} /> : <Pause width={14} height={14} />}
+            </button>
+        </div>
+    );
+}
+
 // `live` is the dialog view: full colour and always-on motion. Cards stay muted until hovered
 // so eight differently branded covers read as one set. Callers supply positioning and size.
 // `backdrop` adds a blurred copy behind the cover for when fitClass letterboxes it (object-contain).
@@ -45,7 +64,7 @@ export default function ProjectVisual({ project, sizes, live = false, backdrop =
         const Illustration = ILLUSTRATIONS[project.slug];
         return (
             <div className={`overflow-hidden bg-surface-2 ${className}`}>
-                {Illustration ? <Illustration live={live} /> : <Redacted />}
+                {!Illustration ? <Redacted /> : live ? <LiveIllustration Illustration={Illustration} /> : <Illustration />}
                 {project.confidentialNote && <p className="sr-only">{project.confidentialNote}</p>}
             </div>
         );
@@ -58,7 +77,14 @@ export default function ProjectVisual({ project, sizes, live = false, backdrop =
     return (
         <div className={`overflow-hidden bg-surface-2 ${className}`}>
             {backdrop && (
-                <img src={img.src} alt="" aria-hidden className={`absolute inset-0 h-full w-full scale-110 object-cover opacity-50 blur-2xl ${muted}`} />
+                <img
+                    src={img.src}
+                    alt=""
+                    aria-hidden
+                    loading="lazy"
+                    decoding="async"
+                    className={`absolute inset-0 h-full w-full scale-110 object-cover opacity-50 blur-2xl ${muted}`}
+                />
             )}
             <img
                 src={img.src}

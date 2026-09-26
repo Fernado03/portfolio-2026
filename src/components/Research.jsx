@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FYP_CONTENT } from "../constants";
 import { EMOTIONS, MODAL_RELIANCE, MODALITY_CONDITIONS } from "../constants/thesis";
 import { resizedImage } from "../utils/image";
+import { rovingKeyDown } from "../utils/roving";
 import AblationChart from "./charts/AblationChart";
 import ConfusionChart from "./charts/ConfusionChart";
 import RobustnessChart from "./charts/RobustnessChart";
@@ -143,7 +144,9 @@ export default function Research() {
                                     id={`fig-tab-${f.id}`}
                                     aria-selected={tab === i}
                                     aria-controls="fig-panel"
+                                    tabIndex={tab === i ? 0 : -1}
                                     onClick={() => setTab(i)}
+                                    onKeyDown={(e) => rovingKeyDown(e, i, FIGURES.length, setTab, { horizontal: true })}
                                     className={`flex-1 whitespace-nowrap rounded-full px-2 py-2 text-xs transition-colors sm:px-3 sm:text-sm ${
                                         tab === i ? "bg-surface-2 text-ink" : "text-muted hover:text-ink"
                                     }`}

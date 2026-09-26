@@ -1,7 +1,7 @@
 import { Component, StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { createRoot, hydrateRoot } from 'react-dom/client'
 import '@fontsource-variable/bricolage-grotesque'
-import '@fontsource-variable/inter'
+import '@fontsource-variable/ibm-plex-sans'
 import '@fontsource-variable/jetbrains-mono'
 import './index.css'
 import App from './App.jsx'
@@ -34,7 +34,7 @@ class ErrorBoundary extends Component {
         >
           <div style={{ maxWidth: '28rem' }}>
             <h1 style={{ fontSize: '1.5rem', fontWeight: 700, margin: '0 0 0.75rem' }}>
-              Fernado George — something went wrong.
+              Something went wrong.
             </h1>
             <p style={{ margin: '0 0 1.5rem', color: 'rgb(var(--muted))' }}>
               This page hit an unexpected error. A reload usually fixes it.
@@ -71,10 +71,15 @@ class ErrorBoundary extends Component {
   }
 }
 
-createRoot(document.getElementById('root')).render(
+const container = document.getElementById('root')
+const tree = (
   <StrictMode>
     <ErrorBoundary>
       <App />
     </ErrorBoundary>
-  </StrictMode>,
+  </StrictMode>
 )
+
+// Production builds ship pre-rendered markup (scripts/prerender.mjs); the dev server does not.
+if (container.hasChildNodes()) hydrateRoot(container, tree)
+else createRoot(container).render(tree)

@@ -18,6 +18,26 @@
   --series-contextual: 94 234 212;
 }
 
+/* Metric-matched fallbacks (Capsize values against Arial and its metric clones) so text painted
+   before the web fonts arrive keeps its line breaks when they swap in: no layout shift in the hero. */
+@font-face {
+  font-family: "IBM Plex Sans Fallback";
+  src: local("Arial"), local("ArialMT"), local("Arimo"), local("Liberation Sans");
+  ascent-override: 101.32%;
+  descent-override: 27.18%;
+  line-gap-override: 0%;
+  size-adjust: 101.17%;
+}
+
+@font-face {
+  font-family: "Bricolage Grotesque Fallback";
+  src: local("Arial"), local("ArialMT"), local("Arimo"), local("Liberation Sans");
+  ascent-override: 88.21%;
+  descent-override: 25.61%;
+  line-gap-override: 0%;
+  size-adjust: 105.43%;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -39,8 +59,7 @@
   }
 
   dialog::backdrop {
-    background: rgb(4 5 7 / 0.8);
-    backdrop-filter: blur(6px);
+    background: rgb(4 5 7 / 0.85);
   }
 
   /* Lock page scroll while a modal dialog is open. */

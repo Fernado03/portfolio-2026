@@ -1,22 +1,24 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useInView } from "framer-motion";
 import { HERO_CONTENT } from "../constants";
+import useBrowserValue from "../hooks/useBrowserValue";
 import { ArrowUpRight, Check, Clock, Copy, Download, GitHub, LinkedIn, Mail, MapPin, Phone } from "./ui/Icons";
 import Reveal from "./ui/Reveal";
 
 const TIME_ZONE = "Asia/Kuala_Lumpur";
-const timeFormat = new Intl.DateTimeFormat("en-GB", { timeZone: TIME_ZONE, hour: "2-digit", minute: "2-digit" });
-const hourFormat = new Intl.DateTimeFormat("en-GB", { timeZone: TIME_ZONE, hour: "numeric", hourCycle: "h23" });
+const timeFormat = new Intl.DateTimeFormat("en-GB", { timeZone: TIME_ZONE, hour: "2-digit", minute: "2-digit", hourCycle: "h23" });
+const readTime = () => timeFormat.format(new Date());
+const every15s = (onChange) => {
+    const id = setInterval(onChange, 15_000);
+    return () => clearInterval(id);
+};
 
 const partOfDay = (hour) => (hour < 5 ? "Night" : hour < 12 ? "Morning" : hour < 18 ? "Afternoon" : hour < 22 ? "Evening" : "Night");
 
+// "14:05" in Malaysia, or null in the pre-rendered HTML (the build time would be wrong by the time anyone reads it).
 function useMalaysiaTime() {
-    const [now, setNow] = useState(() => new Date());
-    useEffect(() => {
-        const id = setInterval(() => setNow(new Date()), 15_000);
-        return () => clearInterval(id);
-    }, []);
-    const hour = Number(hourFormat.format(now));
-    return { time: timeFormat.format(now), period: partOfDay(hour) };
+    const time = useBrowserValue(readTime, null, every15s);
+    return { time, period: time && partOfDay(Number(time.slice(0, 2))) };
 }
 
 function CopyButton({ value, label }) {
@@ -52,15 +54,18 @@ function CopyButton({ value, label }) {
 
 function StatusCard() {
     const { time, period } = useMalaysiaTime();
+    // The brief availability pulse starts when the card scrolls into view rather than on page load.
+    const dot = useRef(null);
+    const dotInView = useInView(dot, { once: true, margin: "-80px" });
     const rows = [
-        { icon: Clock, label: "Local time", value: `${time} · GMT+8`, hint: `${period} in Malaysia` },
+        { icon: Clock, label: "Local time", value: time ? `${time} · GMT+8` : "GMT+8", hint: period ? `${period} in Malaysia` : "Malaysia" },
         { icon: MapPin, label: "Based in", value: HERO_CONTENT.location, hint: "Open to roles in Malaysia or remote" },
     ];
     return (
-        <div className="rounded-2xl border border-line bg-surface/80 p-5 backdrop-blur">
+        <div className="rounded-2xl border border-line bg-surface p-5">
             <p className="flex items-center gap-2.5 text-sm font-medium">
-                <span className="relative flex h-2 w-2">
-                    <span className="absolute inset-0 animate-pulse-ring rounded-full bg-accent" />
+                <span ref={dot} className="relative flex h-2 w-2">
+                    {dotInView && <span className="absolute inset-0 animate-pulse-brief rounded-full bg-accent opacity-0" />}
                     <span className="relative h-2 w-2 rounded-full bg-accent" />
                 </span>
                 {HERO_CONTENT.availabilityShort}
@@ -95,7 +100,6 @@ export default function Contact() {
                 aria-hidden
                 className="grid-backdrop pointer-events-none absolute inset-0 [mask-image:radial-gradient(ellipse_70%_70%_at_50%_100%,black,transparent)]"
             />
-            <div aria-hidden className="pointer-events-none absolute -bottom-80 left-1/2 h-[44rem] w-[70rem] -translate-x-1/2 bg-[radial-gradient(closest-side,rgb(var(--accent)/0.08),transparent)]" />
 
             <div className="container-page relative">
                 <div className="grid grid-cols-[minmax(0,1fr)] items-end gap-10 lg:grid-cols-[minmax(0,1fr)_22rem]">
@@ -120,7 +124,7 @@ export default function Contact() {
                         { email: HERO_CONTENT.email, label: "Personal email" },
                         { email: HERO_CONTENT.altEmail, label: "University email" },
                     ].map(({ email, label }) => (
-                        <div key={email} className="flex items-center gap-3 rounded-2xl border border-line bg-surface/80 p-3 pl-4 backdrop-blur sm:pl-5">
+                        <div key={email} className="flex items-center gap-3 rounded-2xl border border-line bg-surface p-3 pl-4 sm:pl-5">
                             <Mail width={20} height={20} className="shrink-0 text-accent" />
                             <div className="min-w-0 flex-1">
                                 <p className="font-mono text-[10px] uppercase tracking-wider text-muted">{label}</p>
@@ -140,7 +144,7 @@ export default function Contact() {
                                 <a
                                     href={href}
                                     {...(external ? { target: "_blank", rel: "noopener noreferrer" } : null)}
-                                    className="group flex h-full items-start justify-between gap-3 rounded-2xl border border-line bg-surface/80 p-5 backdrop-blur transition-colors hover:border-muted/50"
+                                    className="group flex h-full items-start justify-between gap-3 rounded-2xl border border-line bg-surface p-5 transition-colors hover:border-muted/50"
                                 >
                                     <span className="min-w-0">
                                         <Icon width={20} height={20} className="text-muted transition-colors group-hover:text-ink" />

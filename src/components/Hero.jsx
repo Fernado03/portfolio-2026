@@ -1,14 +1,13 @@
-import { motion } from "framer-motion";
 import { HERO_CONTENT } from "../constants";
 import FusionGraphic from "./FusionGraphic";
 import CountUp from "./ui/CountUp";
 import { ArrowRight, ArrowUpRight, GitHub, LinkedIn } from "./ui/Icons";
 
-const rise = (delay) => ({
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.6, ease: [0.2, 0.7, 0.2, 1], delay },
-});
+// The headline and lede are the LCP candidates, so they render at full opacity from the first paint
+// (Chromium ignores opacity: 0 elements for LCP). Only the supporting pieces rise in, via a CSS
+// entrance that starts on first paint instead of waiting for the lazily loaded Motion features;
+// reduced-motion users get no entrance at all.
+const rise = (ms) => ({ style: { animationDelay: `${ms}ms` } });
 
 export default function Hero() {
     return (
@@ -17,39 +16,32 @@ export default function Hero() {
                 aria-hidden
                 className="grid-backdrop pointer-events-none absolute inset-0 [mask-image:radial-gradient(ellipse_70%_60%_at_50%_0%,black,transparent)]"
             />
-            <div
-                aria-hidden
-                className="pointer-events-none absolute -top-72 left-1/2 h-[48rem] w-[72rem] -translate-x-1/2 bg-[radial-gradient(closest-side,rgb(var(--accent)/0.09),transparent)]"
-            />
 
             <div className="container-page relative grid grid-cols-[minmax(0,1fr)] items-center gap-14 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-16">
                 <div>
-                    <motion.p {...rise(0)} className="inline-flex items-center gap-2.5 rounded-full border border-line bg-surface/70 py-1.5 pl-3 pr-4 text-xs text-muted backdrop-blur">
+                    <p {...rise(0)} className="inline-flex items-center gap-2.5 rounded-full border border-line bg-surface py-1.5 pl-3 pr-4 text-xs text-muted motion-safe:animate-rise">
                         <span className="relative flex h-2 w-2">
-                            <span className="absolute inset-0 animate-pulse-ring rounded-full bg-accent" />
+                            <span className="absolute inset-0 animate-pulse-brief rounded-full bg-accent opacity-0" />
                             <span className="relative h-2 w-2 rounded-full bg-accent" />
                         </span>
                         {HERO_CONTENT.availabilityShort}
-                    </motion.p>
+                    </p>
 
-                    <motion.p {...rise(0.05)} className="eyebrow mt-8">
-                        {HERO_CONTENT.shortName} — {HERO_CONTENT.title}
-                    </motion.p>
+                    <p {...rise(50)} className="eyebrow mt-8 motion-safe:animate-rise">
+                        {HERO_CONTENT.shortName} · {HERO_CONTENT.title}
+                    </p>
 
-                    <motion.h1
-                        {...rise(0.1)}
-                        className="mt-4 font-display text-[clamp(2.75rem,7vw,5.25rem)] font-semibold leading-[0.95] tracking-[-0.035em]"
-                    >
+                    <h1 className="mt-4 font-display text-[clamp(2.75rem,7vw,5.25rem)] font-semibold leading-[0.95] tracking-[-0.035em]">
                         Models that leave the <span className="text-accent">notebook.</span>
-                    </motion.h1>
+                    </h1>
 
-                    <motion.p {...rise(0.18)} className="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-muted">
+                    <p className="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-muted">
                         I&apos;m a data scientist and AI engineer in {HERO_CONTENT.location}. I build retrieval assistants,
                         computer-vision pipelines and the interfaces that put them in people&apos;s hands, then measure
                         whether they hold up outside the lab.
-                    </motion.p>
+                    </p>
 
-                    <motion.div {...rise(0.26)} className="mt-9 flex flex-wrap items-center gap-3">
+                    <div {...rise(120)} className="mt-9 flex flex-wrap items-center gap-3 motion-safe:animate-rise">
                         <a href="#work" className="btn-primary group">
                             See selected work
                             <ArrowRight width={16} height={16} className="transition-transform group-hover:translate-x-0.5" />
@@ -76,17 +68,17 @@ export default function Hero() {
                         >
                             <LinkedIn width={18} height={18} />
                         </a>
-                    </motion.div>
+                    </div>
                 </div>
 
-                <motion.div {...rise(0.3)}>
+                <div {...rise(200)} className="motion-safe:animate-rise">
                     <FusionGraphic />
-                </motion.div>
+                </div>
             </div>
 
-            <motion.dl
-                {...rise(0.4)}
-                className="container-page relative mt-16 grid grid-cols-2 gap-x-6 gap-y-8 sm:mt-20 lg:grid-cols-4"
+            <dl
+                {...rise(300)}
+                className="container-page relative mt-16 grid grid-cols-2 gap-x-6 gap-y-8 motion-safe:animate-rise sm:mt-20 lg:grid-cols-4"
             >
                 {HERO_CONTENT.proof.map(({ value, label }) => (
                     <div key={label} className="flex flex-col-reverse justify-end border-t border-line pt-5">
@@ -96,7 +88,7 @@ export default function Hero() {
                         </dd>
                     </div>
                 ))}
-            </motion.dl>
+            </dl>
         </section>
     );
 }

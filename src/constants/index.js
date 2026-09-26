@@ -4,7 +4,7 @@ export const HERO_CONTENT = {
     shortName: "Fernado George",
     title: "Data Scientist & AI Engineer",
     location: "Malaysian Borneo",
-    availability: "Internship completed — available now for full-time data science / AI engineering roles",
+    availability: "Internship completed and available now for full-time data science / AI engineering roles",
     availabilityShort: "Available now · full-time DS / AI roles",
     contactNote: "Looking for a data science or AI engineering role in Malaysia or remote. Email is the fastest way to reach me.",
     resumeLink: "/Fernado_George_DataScience_Resume.pdf",
@@ -40,7 +40,7 @@ export const FYP_CONTENT = {
     githubLink: null,
     thesisLink: "/documents/Thesis_BI22110436.pdf",
     award: {
-        title: "Best Research Award — Final Year Project 2026",
+        title: "Best Research Award · Final Year Project 2026",
         image: "/awards/best_research_certificate.jpg",
     },
 };
@@ -62,7 +62,7 @@ export const PROJECTS = [
         title: "KinaVis (AI Medical Scribe)",
         category: "AI & Healthcare",
         role: "Team Leader of Development",
-        badge: "Gold Medal — Festival Idea Sabah 2025",
+        badge: "Gold Medal · Festival Idea Sabah 2025",
         description:
             "Built an AI medical scribe with Google Speech-to-Text and Gemini Pro 2.5, using all-MiniLM-L6-v2 embeddings in a RAG pipeline that grounds generated notes in retrieved context.",
         techStack: ["Google Speech-to-Text", "Gemini Pro 2.5", "RAG", "GCP"],
@@ -76,13 +76,13 @@ export const PROJECTS = [
         tags: ["llm"],
         title: "KI Konnekt (client RAG assistant)",
         category: "Retrieval & LLM Systems",
-        role: "AI/ML Development Intern — Breakfast Byte",
-        badge: "Client work — in production",
+        role: "AI/ML Development Intern · Breakfast Byte",
+        badge: "Client work, in production",
         description:
             "Gradio-based AI assistant for a German client, running local Ollama models alongside OpenAI workflows. Hybrid BM25 + FAISS retrieval over a multi-format document pipeline (PDF, DOCX, spreadsheets) with streaming responses, so staff query internal documents in natural language instead of searching folders.",
         techStack: ["Python", "Gradio", "Ollama", "OpenAI", "FAISS", "BM25"],
         confidential: true,
-        confidentialNote: "Client project — screenshots and repository are private.",
+        confidentialNote: "Client project: screenshots and repository are private.",
     },
     {
         id: 3,
@@ -90,13 +90,13 @@ export const PROJECTS = [
         tags: ["ml", "data"],
         title: "CCTV-to-records pipeline (car wash)",
         category: "Computer Vision",
-        role: "AI/ML Development Intern — Breakfast Byte",
-        badge: "Client work — in production",
+        role: "AI/ML Development Intern · Breakfast Byte",
+        badge: "Client work, in production",
         description:
             "End-to-end vision pipeline converting a Sarawak car-wash operator's daily CCTV footage into structured service records: vehicle-session detection, multi-bay assignment, license-plate OCR, and wash-action classification, surfaced through a local operator dashboard.",
         techStack: ["Python", "OpenCV", "Object Detection", "OCR", "Video Analytics"],
         confidential: true,
-        confidentialNote: "Client project — footage and repository are private.",
+        confidentialNote: "Client project: footage and repository are private.",
     },
     {
         id: 4,
@@ -105,9 +105,9 @@ export const PROJECTS = [
         title: "MatchKami (TITANS)",
         category: "NLP & Social Impact",
         role: "Lead Developer",
-        badge: "2nd Prize — JomHack Varsity Challenge 2025",
+        badge: "2nd Prize · JomHack Varsity Challenge 2025",
         description:
-            "AI-powered matchmaking engine connecting under-resourced schools with NGOs. A Telegram-first intake flow turns a plain-language description of need into a structured request, then ranks verified donors against it — no web portal for schools to learn.",
+            "AI-powered matchmaking engine connecting under-resourced schools with NGOs. A Telegram-first intake flow turns a plain-language description of need into a structured request, then ranks verified donors against it. There's no web portal for schools to learn.",
         techStack: ["AI Chatbot", "Telegram API", "NLP", "Python"],
         image: "/projects/matchkami_cover_slide.jpg",
         privateRepo: true,
@@ -120,7 +120,7 @@ export const PROJECTS = [
         title: "Borneo Hackathon 2024 Portal",
         category: "Full-Stack Web App",
         role: "Full-Stack Developer",
-        badge: "Event complete — 60+ participants · 100% uptime",
+        badge: "Event complete · 60+ participants · 100% uptime",
         description:
             "Handled real-time registration for 60+ international participants with 100% uptime across the event weekend.",
         techStack: ["React (Vite)", "Node.js", "MongoDB", "Tailwind CSS"],
@@ -135,9 +135,9 @@ export const PROJECTS = [
         title: "BarnaClean (SeaWise)",
         category: "AI & Marine Tech",
         role: "AI/ML Engineer",
-        badge: "Top 8 Finalist — MarineHack 2025",
+        badge: "Top 8 Finalist · MarineHack 2025",
         description:
-            "Predictive maintenance system that flags a hull's biofouling growth before drag builds, so cleaning gets scheduled ahead of the fuel-cost spike instead of after it — pairing the growth model with A* route optimization. On simulated voyage data the combined model projected up to 30% fuel savings — a simulation result, not a sea trial.",
+            "Predictive maintenance system that flags a hull's biofouling growth before drag builds, so cleaning gets scheduled ahead of the fuel-cost spike instead of after it. The growth model is paired with A* route optimization. On simulated voyage data the combined model projected up to 30% fuel savings (a simulation result, not a sea trial).",
         techStack: ["FastAPI (Python)", "React", "A* Algorithm", "Biofouling ML"],
         image: "/projects/barnaclean_cover.jpg",
         link: "https://github.com/Fernado03/barnacleAI",
@@ -152,7 +152,7 @@ export const PROJECTS = [
         role: "Team Leader & Backend Developer",
         badge: "Borneo Hackathon 2025",
         description:
-            "'Zero-tech' AI coaching app for rural micro-entrepreneurs: a localized 'Cikgu' chatbot speaking Bahasa Pasar, photo-to-copywriting generation, and daily missions like 'log today's sales in one voice note' — built for owners whose only device is a shared phone.",
+            "'Zero-tech' AI coaching app for rural micro-entrepreneurs: a localized 'Cikgu' chatbot speaking Bahasa Pasar, photo-to-copywriting generation, and daily missions like 'log today's sales in one voice note'. It's built for owners whose only device is a shared phone.",
         techStack: ["React Native", "Python (NLP)", "Gemini AI", "Gamification"],
         image: "/projects/aramniaga_cover.jpg",
         link: "https://github.com/Fernado03/bh2025-aramniaga",
@@ -165,9 +165,9 @@ export const PROJECTS = [
         title: "HydroGrid Sarawak (Energy & Hydrogen Intelligence)",
         category: "Data Engineering & MLOps",
         role: "Solo Developer",
-        badge: "End-to-end telemetry platform — Docker & Kubernetes",
+        badge: "End-to-end telemetry platform · Docker & Kubernetes",
         description:
-            "Renewable-energy telemetry platform ingesting live Open-Meteo data into a PostgreSQL star-schema warehouse with a DuckDB OLAP layer and n8n orchestration. LightGBM inflow forecasting and Isolation Forest anomaly detection (MLflow-tracked) are served via FastAPI, with a LangGraph self-correcting SQL agent, a CrewAI strategic panel, and a Streamlit SCADA command center — containerized with Docker Compose and deployable to Kubernetes.",
+            "Renewable-energy telemetry platform ingesting live Open-Meteo data into a PostgreSQL star-schema warehouse with a DuckDB OLAP layer and n8n orchestration. LightGBM inflow forecasting and Isolation Forest anomaly detection (MLflow-tracked) are served via FastAPI, with a LangGraph self-correcting SQL agent, a CrewAI strategic panel, and a Streamlit SCADA command center. Everything is containerized with Docker Compose and deployable to Kubernetes.",
         techStack: ["Python", "PostgreSQL", "DuckDB", "LightGBM", "LangGraph", "CrewAI", "FastAPI", "Streamlit", "MLflow", "Docker", "Kubernetes"],
         image: "/projects/hydrogrid_dashboard.png",
         link: "https://github.com/Fernado03/hydrogrid-sarawak",
@@ -207,7 +207,7 @@ export const ABOUT_CONTENT = {
         { src: "/about/IMG_5514.jpg", alt: "Fernado presenting an Arduino workshop slide", label: "Arduino workshop" },
     ],
     hackathons:
-        "Four hackathons — MarineHack, JomHack, Festival Idea Sabah and Borneo Hackathon — with one Gold, one second place and one top-8 finish (MarineHack), plus a second top-8 at the ELLM Startup Initiative. Roles ranged from leading the team and owning the backend to solo full-stack delivery.",
+        "Four hackathons (MarineHack, JomHack, Festival Idea Sabah and Borneo Hackathon) with one Gold, one second place and one top-8 finish (MarineHack), plus a second top-8 at the ELLM Startup Initiative. Roles ranged from leading the team and owning the backend to solo full-stack delivery.",
     experience: [
         {
             role: "AI/ML Development Intern",
@@ -218,7 +218,7 @@ export const ABOUT_CONTENT = {
             period: "Mar 2026 – Aug 2026 · Completed",
             logo: "/logos/breakfast-byte.com.png",
             description:
-                "Six-month AI/ML internship, now completed. Two client systems in production: KI Konnekt, a hybrid BM25/FAISS retrieval assistant for a German client, and a CCTV-to-records computer-vision pipeline for a Sarawak car-wash operator — both written up in Projects. Also built HydroGrid Sarawak, an open-source renewable-energy telemetry platform: PostgreSQL star-schema warehouse with DuckDB OLAP, MLflow-tracked forecasting and anomaly detection served via FastAPI, and LangGraph/CrewAI agents deployed via Docker and Kubernetes.",
+                "Six-month AI/ML internship, now completed. Two client systems in production: KI Konnekt, a hybrid BM25/FAISS retrieval assistant for a German client, and a CCTV-to-records computer-vision pipeline for a Sarawak car-wash operator, both written up in Projects. Also built HydroGrid Sarawak, an open-source renewable-energy telemetry platform: PostgreSQL star-schema warehouse with DuckDB OLAP, MLflow-tracked forecasting and anomaly detection served via FastAPI, and LangGraph/CrewAI agents deployed via Docker and Kubernetes.",
         },
         {
             role: "Ketua Exco Akademik dan Kerjaya",
@@ -278,23 +278,24 @@ export const SKILLS = [
     },
 ];
 
+// Titles read "Award · Event"; the Recognition section shows the two parts on separate lines.
 export const AWARDS = [
     {
-        title: "Best Research Award — Final Year Project 2026",
+        title: "Best Research Award · Final Year Project 2026",
         image: "/awards/best_research_certificate.jpg",
         highlight: true,
     },
     {
-        title: "Certificate of Internship — Breakfast Byte Sdn Bhd 2026",
+        title: "Certificate of Internship · Breakfast Byte Sdn Bhd 2026",
         image: "/awards/breakfast_byte_carwash.jpg",
     },
     {
-        title: "Certificate of Internship — Enterprise AI Chatbot Platform 2026",
+        title: "Certificate of Internship · Enterprise AI Chatbot Platform 2026",
         image: "/awards/breakfast_byte_ai_chatbot.jpg",
     },
-    { title: "Gold Medal — Festival Idea Sabah 2025", image: "/awards/festival_idea_sabah.jpg", highlight: true },
-    { title: "2nd Prize — JomHack Varsity Challenge 2025", image: "/awards/jomhack.jpg", highlight: true },
-    { title: "Top 8 Finalist — MarineHack 2025" },
+    { title: "Gold Medal · Festival Idea Sabah 2025", image: "/awards/festival_idea_sabah.jpg", highlight: true },
+    { title: "2nd Prize · JomHack Varsity Challenge 2025", image: "/awards/jomhack.jpg", highlight: true },
+    { title: "Top 8 Finalist · MarineHack 2025" },
     { title: "Best Computer Science Student Award (Matriculation)" },
-    { title: "Top 8 Finalist — ELLM Startup Initiative", image: "/awards/ellm.png" },
+    { title: "Top 8 Finalist · ELLM Startup Initiative", image: "/awards/ellm.png" },
 ];

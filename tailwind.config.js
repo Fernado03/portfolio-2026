@@ -27,8 +27,8 @@ export default {
         },
       },
       fontFamily: {
-        display: ['"Bricolage Grotesque Variable"', 'system-ui', 'sans-serif'],
-        sans: ['"Inter Variable"', 'system-ui', 'sans-serif'],
+        display: ['"Bricolage Grotesque Variable"', '"Bricolage Grotesque Fallback"', 'system-ui', 'sans-serif'],
+        sans: ['"IBM Plex Sans Variable"', '"IBM Plex Sans Fallback"', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono Variable"', 'ui-monospace', 'monospace'],
       },
       maxWidth: {
@@ -44,6 +44,10 @@ export default {
         },
         'dialog-in': {
           from: { opacity: '0', transform: 'translateY(12px) scale(0.98)' },
+          to: { opacity: '1', transform: 'none' },
+        },
+        rise: {
+          from: { opacity: '0', transform: 'translateY(20px)' },
           to: { opacity: '1', transform: 'none' },
         },
         marquee: {
@@ -69,7 +73,10 @@ export default {
       animation: {
         'dash-flow': 'dash-flow 1.6s linear infinite',
         'pulse-ring': 'pulse-ring 1.8s cubic-bezier(0.2, 0.6, 0.3, 1) infinite',
+        // Three pulses, 4.8 s: autoplaying motion without a pause control must stop within 5 s (WCAG 2.2.2).
+        'pulse-brief': 'pulse-ring 1.6s cubic-bezier(0.2, 0.6, 0.3, 1) 3',
         'dialog-in': 'dialog-in 0.28s cubic-bezier(0.2, 0.7, 0.2, 1)',
+        rise: 'rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both',
         marquee: 'marquee 60s linear infinite',
         flow: 'flow 1.2s linear infinite',
         stream: 'stream 2.6s ease-out infinite',

@@ -1,6 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import { useReducedMotion } from "framer-motion";
 import { CONFUSION, EMOTIONS } from "../constants/thesis";
+import useBrowserValue from "../hooks/useBrowserValue";
+
+const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
+const prefersReducedMotion = () => window.matchMedia(REDUCED_MOTION).matches;
+const onMotionPreferenceChange = (onChange) => {
+    const query = window.matchMedia(REDUCED_MOTION);
+    query.addEventListener("change", onChange);
+    return () => query.removeEventListener("change", onChange);
+};
 
 const INPUTS = [
     { label: "Audio", model: "WavLM", glyph: "wave" },
@@ -51,10 +59,13 @@ function Glyph({ type }) {
 }
 
 // Cycles through the thesis emotions on its own; hovering or focusing pauses it, picking a label or
-// pressing Pause stops it, and it idles while scrolled out of view. `autoPlay={false}` renders a
-// still (used for the social preview card).
+// pressing Pause stops it, and it idles while scrolled out of view. The flowing connectors follow the
+// same state, so Pause stills everything. `autoPlay={false}` renders a still (used for the social
+// preview card).
 export default function FusionGraphic({ autoPlay = true, defaultIndex = 2 }) {
-    const reduceMotion = useReducedMotion();
+    // Not Motion's useReducedMotion: it reads the media query during hydration, so reduced-motion
+    // visitors would render different markup from the pre-rendered HTML.
+    const reduceMotion = useBrowserValue(prefersReducedMotion, false, onMotionPreferenceChange);
     const figure = useRef(null);
     const [active, setActive] = useState(defaultIndex);
     const [auto, setAuto] = useState(autoPlay);
@@ -98,7 +109,6 @@ export default function FusionGraphic({ autoPlay = true, defaultIndex = 2 }) {
                     <button
                         type="button"
                         onClick={() => setAuto((a) => !a)}
-                        aria-pressed={auto}
                         aria-label={auto ? "Pause the emotion demo" : "Play the emotion demo"}
                         className="flex items-center gap-1.5 rounded-full px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wider text-accent transition-colors hover:text-ink"
                     >
@@ -137,7 +147,7 @@ export default function FusionGraphic({ autoPlay = true, defaultIndex = 2 }) {
                                 strokeWidth="1.5"
                                 strokeDasharray="4 16"
                                 vectorEffect="non-scaling-stroke"
-                                className="animate-dash-flow"
+                                className={`animate-dash-flow ${cycling ? "" : "[animation-play-state:paused]"}`}
                             />
                         </g>
                     ))}
@@ -174,10 +184,11 @@ export default function FusionGraphic({ autoPlay = true, defaultIndex = 2 }) {
                                         aria-pressed={isTrue}
                                     >
                                         <span className={`font-mono text-[11px] ${isTrue ? "text-ink" : "text-muted group-hover:text-ink"}`}>{emotion}</span>
+                                        {/* Bars slide with a transform, not width, so the autoplay loop never triggers layout. */}
                                         <span className="h-2 overflow-hidden rounded-full bg-line/60">
                                             <span
-                                                className={`block h-full rounded-full transition-[width] duration-700 ease-out ${isTrue ? "bg-accent" : "bg-muted/50"}`}
-                                                style={{ width: `${Math.max(dist[i] * 100, 1.5)}%` }}
+                                                className={`block h-full rounded-full transition-transform duration-700 ease-out ${isTrue ? "bg-accent" : "bg-muted/50"}`}
+                                                style={{ transform: `translateX(${Math.max(dist[i] * 100, 1.5) - 100}%)` }}
                                             />
                                         </span>
                                         <span className={`text-right font-mono text-[11px] tabular-nums ${isTrue ? "text-accent" : "text-muted"}`}>

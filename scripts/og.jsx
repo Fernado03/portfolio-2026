@@ -1,7 +1,7 @@
 import { StrictMode, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import "@fontsource-variable/bricolage-grotesque";
-import "@fontsource-variable/inter";
+import "@fontsource-variable/ibm-plex-sans";
 import "@fontsource-variable/jetbrains-mono";
 import "../src/index.css";
 import FusionGraphic from "../src/components/FusionGraphic";
@@ -20,11 +20,10 @@ export default function OgCard() {
     return (
         <main data-ready={ready} className="relative flex overflow-hidden bg-bg text-ink" style={{ width: 1200, height: 630 }}>
             <div aria-hidden className="grid-backdrop absolute inset-0 [mask-image:radial-gradient(ellipse_75%_85%_at_72%_45%,black,transparent)]" />
-            <div aria-hidden className="absolute bg-[radial-gradient(closest-side,rgb(var(--accent)/0.12),transparent)]" style={{ right: -300, top: -100, width: 1000, height: 840 }} />
 
             <div className="relative z-10 flex flex-col justify-between" style={{ width: 640, padding: "64px 0 60px 76px" }}>
                 <div>
-                    <p className="inline-flex items-center gap-2.5 rounded-full border border-line bg-surface/70 py-1.5 pl-3 pr-4 text-sm text-muted">
+                    <p className="inline-flex items-center gap-2.5 rounded-full border border-line bg-surface py-1.5 pl-3 pr-4 text-sm text-muted">
                         <span className="h-2 w-2 rounded-full bg-accent" />
                         {HERO_CONTENT.availabilityShort}
                     </p>
