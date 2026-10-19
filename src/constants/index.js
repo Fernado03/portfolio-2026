@@ -17,7 +17,7 @@ export const HERO_CONTENT = {
     // Hero proof strip — every figure traceable to a section further down the page.
     proof: [
         { value: "71.6%", label: "Thesis F1 (multimodal)" },
-        { value: "3.75", label: "CGPA · Dean's List" },
+        { value: "3.78", label: "CGPA · Dean's List" },
         { value: "2", label: "Client systems in production" },
         { value: "4", label: "Featured hackathon builds · 1 Gold, 1 runner-up" },
     ],
@@ -185,8 +185,8 @@ export const ABOUT_CONTENT = {
         {
             degree: "Bachelor of Computer Science (Data Science) With Honours",
             university: "Universiti Malaysia Sabah",
-            year: "2022 – Present",
-            details: "CGPA 3.75 · Dean's List",
+            year: "2022 – Nov 2026 (Expected)",
+            details: "CGPA 3.78 · Dean's List",
             logo: "/logos/ums.png",
         },
         {
