@@ -199,7 +199,7 @@ export default function Work() {
             index="01"
             eyebrow="Selected work"
             title="Things I've built and shipped"
-            intro={`${PROJECTS.length} builds across retrieval, computer vision, forecasting and social-impact products, including two client systems running in production.`}
+            intro={`${PROJECTS.length} builds across retrieval, document AI, computer vision, forecasting and social-impact products, including two client systems running in production.`}
         >
             <Reveal>
                 <div role="group" aria-label="Filter projects" className="-mx-5 mb-6 flex gap-2 overflow-x-auto px-5 pb-1 sm:mx-0 sm:flex-wrap sm:px-0">

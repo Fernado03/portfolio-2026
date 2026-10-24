@@ -172,6 +172,20 @@ export const PROJECTS = [
         image: "/projects/hydrogrid_dashboard.png",
         link: "https://github.com/Fernado03/hydrogrid-sarawak",
     },
+    {
+        id: 9,
+        slug: "kenyalang-ledger",
+        tags: ["llm", "ml", "web"],
+        title: "Kenyalang Ledger (Receipt Digitizer)",
+        category: "Document AI & Accounting",
+        role: "Solo Developer",
+        badge: "311 backend tests · audited and re-verified",
+        description:
+            "Receipt workspace for the kind of business that runs on thermal paper: phone photos in, a FastAPI and React review console out. EasyOCR keeps normalized bounding boxes, so every extracted field traces back to the pixels it came from, and an LLM stage structures the raw tokens. The reconciler is tax-basis aware, which is the interesting part: Malaysian receipts print GST-inclusive line amounts, and the first version assumed exclusive, so every GST receipt failed the arithmetic check and the export carried the wrong tax basis. Found by driving the app end to end, fixed, and written up in a public audit report. Exports a purchase-journal CSV and a MyInvois-shaped JSON draft, the latter never submitted to LHDN.",
+        techStack: ["Python", "FastAPI", "React", "EasyOCR", "OpenAI", "SQLAlchemy", "pytest", "Vitest"],
+        image: "/projects/kenyalang-ledger.jpg",
+        link: "https://github.com/Fernado03/kenyalang-ledger",
+    },
 ];
 
 export const ABOUT_CONTENT = {
