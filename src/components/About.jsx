@@ -20,7 +20,7 @@ export default function About() {
     const facts = [
         { label: "Based in", value: HERO_CONTENT.location },
         { label: "Focus", value: ABOUT_CONTENT.focus },
-        { label: "Studying", value: `${primaryEdu.degree}, ${primaryEdu.university}` },
+        { label: "Education", value: `${primaryEdu.degree}, ${primaryEdu.university}` },
         { label: "Grades", value: primaryEdu.details },
     ];
 

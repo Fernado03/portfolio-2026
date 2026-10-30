@@ -199,7 +199,7 @@ export const ABOUT_CONTENT = {
         {
             degree: "Bachelor of Computer Science (Data Science) With Honours",
             university: "Universiti Malaysia Sabah",
-            year: "2022 – Nov 2026 (Expected)",
+            year: "2022 – 2026 · Graduated",
             details: "CGPA 3.78 · Dean's List",
             logo: "/logos/ums.png",
         },
